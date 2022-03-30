@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="white">White</string>
+    <string name="black">Black</string>
+    <string name="gray">Gray</string>
+    <string name="purple">Purple</string>
+    <string name="teal">Teal</string>
+</resources>
