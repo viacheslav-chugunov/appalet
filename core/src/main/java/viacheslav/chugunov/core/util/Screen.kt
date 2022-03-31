@@ -12,10 +12,17 @@ sealed class Screen(
      *
      * @property previous previous preview shown, when user invokes "Back" button on UI.
      * @property next next preview shown, when user invokes "Next" button on UI.
+     * @property number an individual position in all previews
+     * @property COUNT all previews count
      * */
     abstract class Preview(route: String) : Screen(route, showButtonBar = true) {
         abstract val previous: Preview
         abstract val next: Preview
+        abstract val number: Int
+
+        companion object {
+            const val COUNT = 2
+        }
     }
 
 
@@ -23,11 +30,13 @@ sealed class Screen(
     object Login : Preview(Route.LOGIN) {
         override val previous: Preview = List
         override val next: Preview = List
+        override val number: Int = 1
     }
 
     object List : Preview(Route.LIST) {
         override val previous: Preview = Login
         override val next: Preview = Login
+        override val number: Int = 2
     }
 
 

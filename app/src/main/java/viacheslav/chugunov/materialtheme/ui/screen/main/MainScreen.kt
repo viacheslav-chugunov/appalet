@@ -1,10 +1,20 @@
 package viacheslav.chugunov.materialtheme.ui.screen.main
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -15,6 +25,8 @@ import viacheslav.chugunov.materialtheme.ui.theme.MaterialThemeTheme
 import viacheslav.chugunov.materialtheme.R
 import viacheslav.chugunov.core.util.Screen
 import viacheslav.chugunov.materialtheme.extension.*
+import viacheslav.chugunov.materialtheme.ui.screen.preview.ListScreen
+import viacheslav.chugunov.materialtheme.ui.screen.preview.LoginScreen
 import viacheslav.chugunov.materialtheme.ui.theme.LocalWindow
 import viacheslav.chugunov.materialtheme.ui.view.BottomAppBarView
 import viacheslav.chugunov.materialtheme.ui.view.ClickableIconView
@@ -36,6 +48,7 @@ fun MainScreen() {
         navHostController = navController,
         theme = model.theme,
         modeDay = model.modeDay,
+        preview = model.preview,
         onChangeThemePerform = viewModel::changeTheme,
         onDayModePerform = viewModel::changeDayMode,
         onPreviousPerform = viewModel::showPreviousPreview,
@@ -49,6 +62,7 @@ private fun DrawScreen(
     navHostController: NavHostController,
     theme: Theme,
     modeDay: Boolean,
+    preview: Screen.Preview,
     onChangeThemePerform: () -> Unit,
     onDayModePerform: () -> Unit,
     onPreviousPerform: () -> Unit,
@@ -61,6 +75,19 @@ private fun DrawScreen(
     }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                backgroundColor = theme.primaryRegular,
+                contentColor = theme.primaryOnRegular,
+            ) {
+                Text(
+                    text = "${preview.number}/${Screen.Preview.COUNT}",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontSize = 16.sp
+                )
+            }
+        },
         bottomBar = {
             BottomAppBarView {
                 ClickableIconView(
@@ -78,7 +105,10 @@ private fun DrawScreen(
             }
         },
         floatingActionButton = {
-            FloatingActionButtonView(iconId = R.drawable.ic_refresh, onPerform = onChangeThemePerform)
+            FloatingActionButtonView(
+                iconId = R.drawable.ic_refresh,
+                onPerform = onChangeThemePerform
+            )
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
@@ -86,17 +116,22 @@ private fun DrawScreen(
     ) {
         AnimatedNavHost(
             navController = navHostController,
-            startDestination = Screen.Route.LOGIN
+            startDestination = Screen.Route.LOGIN,
+            modifier = Modifier.padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding())
         ) {
             composable(
-                route = Screen.Route.LOGIN
+                route = Screen.Route.LOGIN,
+                enterTransition = { fadeIn(spring(stiffness = Spring.StiffnessVeryLow)) },
+                exitTransition = { fadeOut(spring(stiffness = Spring.StiffnessVeryLow)) }
             ) {
-                Text(text = "login")
+                LoginScreen()
             }
             composable(
-                route = Screen.Route.LIST
+                route = Screen.Route.LIST,
+                enterTransition = { fadeIn(spring(stiffness = Spring.StiffnessVeryLow)) },
+                exitTransition = { fadeOut(spring(stiffness = Spring.StiffnessVeryLow)) }
             ) {
-                Text(text = "list")
+                ListScreen()
             }
         }
     }
