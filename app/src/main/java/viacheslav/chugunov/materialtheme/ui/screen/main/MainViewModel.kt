@@ -5,26 +5,35 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import viacheslav.chugunov.core.model.Theme
+import viacheslav.chugunov.core.model.domain.Theme
+import viacheslav.chugunov.core.model.ui.MainState
 import viacheslav.chugunov.core.repository.ThemeRepository
+import viacheslav.chugunov.core.util.Screen
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val themeRepository: ThemeRepository
+class MainViewModel(
+    private val themeRepository: ThemeRepository,
+    state: MainState
 ) : ViewModel() {
-    private var model = MainModel()
-    private val _modelFlow = MutableStateFlow(model)
-    val modelFlow = _modelFlow.asStateFlow()
+    private var model = state
+    private val modelMutableFlow = MutableStateFlow(model)
+    val modelFlow = modelMutableFlow.asStateFlow()
+
+    @Inject constructor(
+        themeRepository: ThemeRepository
+    ): this(themeRepository, MainState.Empty)
 
     init { changeTheme() }
 
     fun updateModel(
         theme: Theme = model.theme,
-        modeDay: Boolean = model.modeDay
+        modeDay: Boolean = model.modeDay,
+        preview: Screen.Preview = model.preview,
+        openScreen: Screen? = model.openScreen
     ) {
-        model = MainModel(theme, modeDay)
-        _modelFlow.value = model
+        model = MainModel(theme, modeDay, preview, openScreen)
+        modelMutableFlow.value = model
     }
 
     fun changeTheme() {
@@ -37,6 +46,15 @@ class MainViewModel @Inject constructor(
         val isLight = model.modeDay
         val theme = if (isLight) Theme.Dark(model.theme) else Theme.Light(model.theme)
         updateModel(theme = theme, modeDay = !isLight)
-        Log.d("MyTest", theme.toString())
+    }
+
+    fun showPreviousPreview() {
+        val preview = model.preview.previous
+        updateModel(preview = preview, openScreen = preview)
+    }
+
+    fun showNextPreview() {
+        val preview = model.preview.next
+        updateModel(preview = preview, openScreen = preview)
     }
 }

@@ -2,7 +2,7 @@ package viacheslav.chugunov.theme
 
 import viacheslav.chugunov.core.datasource.RandomThemeDataSource
 import viacheslav.chugunov.core.util.ColorDescriptionFactory
-import viacheslav.chugunov.core.model.Theme
+import viacheslav.chugunov.core.model.domain.Theme
 
 class DefaultRandomThemeDataSource(
     private val colorFactory: ColorDescriptionFactory

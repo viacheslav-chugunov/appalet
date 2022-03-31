@@ -2,22 +2,17 @@ package viacheslav.chugunov.materialtheme.ui.theme
 
 import android.app.Activity
 import android.view.Window
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import viacheslav.chugunov.core.model.Theme
+import viacheslav.chugunov.core.model.domain.Theme
 import viacheslav.chugunov.materialtheme.extension.background
-import viacheslav.chugunov.materialtheme.ui.screen.preview.LoginScreen
 
 @Composable
 fun MaterialThemeTheme(

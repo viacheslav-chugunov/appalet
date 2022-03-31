@@ -1,8 +1,12 @@
 package viacheslav.chugunov.materialtheme.ui.screen.main
 
-import viacheslav.chugunov.core.model.Theme
+import viacheslav.chugunov.core.model.domain.Theme
+import viacheslav.chugunov.core.model.ui.MainState
+import viacheslav.chugunov.core.util.Screen
 
 data class MainModel(
-    val theme: Theme = Theme.Empty,
-    val modeDay: Boolean = true
-)
+    override val theme: Theme,
+    override val modeDay: Boolean,
+    override val preview: Screen.Preview,
+    override val openScreen: Screen?
+) : MainState

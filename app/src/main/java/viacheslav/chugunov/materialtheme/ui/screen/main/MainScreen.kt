@@ -1,40 +1,52 @@
 package viacheslav.chugunov.materialtheme.ui.screen.main
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import viacheslav.chugunov.core.model.Theme
+import androidx.navigation.NavHostController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import viacheslav.chugunov.core.model.domain.Theme
 import viacheslav.chugunov.materialtheme.ui.theme.MaterialThemeTheme
 import viacheslav.chugunov.materialtheme.R
+import viacheslav.chugunov.core.util.Screen
 import viacheslav.chugunov.materialtheme.extension.*
 import viacheslav.chugunov.materialtheme.ui.theme.LocalWindow
+import viacheslav.chugunov.materialtheme.ui.view.BottomAppBarView
+import viacheslav.chugunov.materialtheme.ui.view.ClickableIconView
+import viacheslav.chugunov.materialtheme.ui.view.FloatingActionButtonView
 
+@ExperimentalAnimationApi
 @Composable
 fun MainScreen() {
     val viewModel: MainViewModel = hiltViewModel()
     val model = viewModel.modelFlow.collectAsState().value
+    val navController = rememberAnimatedNavController()
+
+    model.openScreen?.also { screen ->
+        viewModel.updateModel(openScreen = null)
+        navController.navigate(screen)
+    }
 
     DrawScreen(
+        navHostController = navController,
         theme = model.theme,
         modeDay = model.modeDay,
         onChangeThemePerform = viewModel::changeTheme,
         onDayModePerform = viewModel::changeDayMode,
-        onPreviousPerform = {},
-        onNextPerform = {}
+        onPreviousPerform = viewModel::showPreviousPreview,
+        onNextPerform = viewModel::showNextPreview
     )
 }
 
+@ExperimentalAnimationApi
 @Composable
 private fun DrawScreen(
+    navHostController: NavHostController,
     theme: Theme,
     modeDay: Boolean,
     onChangeThemePerform: () -> Unit,
@@ -50,49 +62,42 @@ private fun DrawScreen(
 
     Scaffold(
         bottomBar = {
-            BottomAppBar(
-                backgroundColor = theme.primaryRegular,
-                contentColor = theme.primaryOnRegular
-            ) {
-                Icon(
-                    painter = painterResource(if (modeDay) R.drawable.ic_day else R.drawable.ic_night),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clickable { onDayModePerform() }
-                        .padding(all = 8.dp),
+            BottomAppBarView {
+                ClickableIconView(
+                    iconId = if (modeDay) R.drawable.ic_day else R.drawable.ic_night,
+                    onPerform = onDayModePerform
                 )
-                Icon(
-                    painter = painterResource(R.drawable.ic_back),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clickable { onPreviousPerform() }
-                        .padding(all = 8.dp)
+                ClickableIconView(
+                    iconId = R.drawable.ic_back,
+                    onPerform = onPreviousPerform
                 )
-                Icon(
-                    painter = painterResource(R.drawable.ic_next),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clickable { onNextPerform() }
-                        .padding(all = 8.dp)
+                ClickableIconView(
+                    iconId = R.drawable.ic_next,
+                    onPerform = onNextPerform
                 )
             }
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = onChangeThemePerform,
-                backgroundColor = theme.secondaryRegular,
-                contentColor = theme.secondaryOnRegular
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_refresh),
-                    contentDescription = null
-                )
-            }
+            FloatingActionButtonView(iconId = R.drawable.ic_refresh, onPerform = onChangeThemePerform)
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         backgroundColor = theme.background
     ) {
-
+        AnimatedNavHost(
+            navController = navHostController,
+            startDestination = Screen.Route.LOGIN
+        ) {
+            composable(
+                route = Screen.Route.LOGIN
+            ) {
+                Text(text = "login")
+            }
+            composable(
+                route = Screen.Route.LIST
+            ) {
+                Text(text = "list")
+            }
+        }
     }
 }

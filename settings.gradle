@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "MaterialTheme"
 include ':app'
 include ':core'
-include ':features:theme'
+include ':features:theming'

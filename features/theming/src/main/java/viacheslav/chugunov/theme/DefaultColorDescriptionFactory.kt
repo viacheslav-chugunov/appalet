@@ -1,7 +1,7 @@
 package viacheslav.chugunov.theme
 
-import viacheslav.chugunov.core.model.ColorDescription
-import viacheslav.chugunov.core.model.ColorSet
+import viacheslav.chugunov.core.model.domain.ColorDescription
+import viacheslav.chugunov.core.model.domain.ColorSet
 import viacheslav.chugunov.core.util.ColorDescriptionFactory
 
 class DefaultColorDescriptionFactory : ColorDescriptionFactory {
