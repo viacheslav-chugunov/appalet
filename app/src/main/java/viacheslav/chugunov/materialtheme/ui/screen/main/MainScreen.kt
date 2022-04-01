@@ -1,9 +1,6 @@
 package viacheslav.chugunov.materialtheme.ui.screen.main
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -11,8 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -23,13 +18,19 @@ import viacheslav.chugunov.materialtheme.ui.theme.MaterialThemeTheme
 import viacheslav.chugunov.materialtheme.R
 import viacheslav.chugunov.core.util.Screen
 import viacheslav.chugunov.materialtheme.extension.*
+import viacheslav.chugunov.materialtheme.ui.animation.slideInLeft
+import viacheslav.chugunov.materialtheme.ui.animation.slideInRight
+import viacheslav.chugunov.materialtheme.ui.animation.slideOutLeft
+import viacheslav.chugunov.materialtheme.ui.animation.slideOutRight
 import viacheslav.chugunov.materialtheme.ui.screen.preview.ListScreen
 import viacheslav.chugunov.materialtheme.ui.screen.preview.InputScreen
+import viacheslav.chugunov.materialtheme.ui.screen.preview.DialogScreen
 import viacheslav.chugunov.materialtheme.ui.theme.LocalWindow
 import viacheslav.chugunov.materialtheme.ui.view.BottomAppBarView
 import viacheslav.chugunov.materialtheme.ui.view.ClickableIconView
 import viacheslav.chugunov.materialtheme.ui.view.FloatingActionButtonView
 import viacheslav.chugunov.materialtheme.ui.view.TopAppBarView
+import java.lang.IllegalStateException
 
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
@@ -45,7 +46,7 @@ fun MainScreen() {
         modeDay = model.modeDay,
         preview = model.preview,
         onChangeThemePerform = viewModel::changeTheme,
-        onDayModePerform = viewModel::changeDayMode,
+        onModeDayPerform = viewModel::changeDayMode,
         onPreviousPerform = {
             navController.navigate(model.preview.previous)
             viewModel.updatePreviewToPrevious()
@@ -66,7 +67,7 @@ private fun DrawScreen(
     modeDay: Boolean,
     preview: Screen.Preview,
     onChangeThemePerform: () -> Unit,
-    onDayModePerform: () -> Unit,
+    onModeDayPerform: () -> Unit,
     onPreviousPerform: () -> Unit,
     onNextPerform: () -> Unit
 ) = MaterialThemeTheme(theme) {
@@ -84,7 +85,7 @@ private fun DrawScreen(
             BottomAppBarView {
                 ClickableIconView(
                     iconId = if (modeDay) R.drawable.ic_day else R.drawable.ic_night,
-                    onPerform = onDayModePerform
+                    onPerform = onModeDayPerform
                 )
                 ClickableIconView(
                     iconId = R.drawable.ic_back,
@@ -114,10 +115,20 @@ private fun DrawScreen(
             composable(
                 route = Screen.Route.INPUT,
                 enterTransition = {
-                    slideInHorizontally { -it }
+                    when (val route = initialState.destination.route) {
+                        Screen.Route.INPUT -> fadeIn()
+                        Screen.Route.DIALOG -> slideInLeft()
+                        Screen.Route.LIST -> slideInRight()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
                 },
                 exitTransition = {
-                    slideOutHorizontally { -it }
+                    when (val route = targetState.destination.route) {
+                        Screen.Route.INPUT -> fadeOut()
+                        Screen.Route.DIALOG -> slideOutLeft()
+                        Screen.Route.LIST -> slideOutRight()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
                 }
             ) {
                 InputScreen()
@@ -125,13 +136,50 @@ private fun DrawScreen(
             composable(
                 route = Screen.Route.LIST,
                 enterTransition = {
-                    slideInHorizontally { it }
+                    when (val route = initialState.destination.route) {
+                        Screen.Route.LIST -> fadeIn()
+                        Screen.Route.INPUT -> slideInLeft()
+                        Screen.Route.DIALOG -> slideInRight()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
                 },
                 exitTransition = {
-                    slideOutHorizontally { it }
+                    when (val route = targetState.destination.route) {
+                        Screen.Route.LIST -> fadeOut()
+                        Screen.Route.INPUT -> slideOutLeft()
+                        Screen.Route.DIALOG -> slideOutRight()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
                 }
             ) {
                 ListScreen()
+            }
+            composable(
+                route = Screen.Route.DIALOG,
+                enterTransition = {
+                    when (val route = initialState.destination.route) {
+                        Screen.Route.DIALOG -> fadeIn()
+                        Screen.Route.LIST -> slideInLeft()
+                        Screen.Route.INPUT -> slideInRight()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
+                },
+                exitTransition = {
+                    when (val route = targetState.destination.route) {
+                        Screen.Route.DIALOG -> fadeOut()
+                        Screen.Route.LIST -> slideOutLeft()
+                        Screen.Route.INPUT -> slideOutRight()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
+                }
+            ) {
+                DialogScreen(
+                    modeDay = modeDay,
+                    onChangeThemePerform = onChangeThemePerform,
+                    onModeDayPerform = onModeDayPerform,
+                    onPreviousPerform = onPreviousPerform,
+                    onNextPerform = onNextPerform
+                )
             }
         }
     }

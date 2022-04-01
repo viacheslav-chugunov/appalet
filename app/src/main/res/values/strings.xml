@@ -5,4 +5,46 @@
     <string name="input">Input</string>
     <string name="title">Title</string>
     <string name="subtitle">Subtitle</string>
+    <string name="multiline_text">
+        \t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis metus at diam pharetra fermentum
+        et et magna. Morbi id urna at ipsum sollicitudin mollis. Pellentesque vehicula erat libero, ac
+        ultrices enim maximus sit amet. Cras massa sapien, sollicitudin cursus est sed, dignissim maximus
+        velit. Aenean ornare ac eros sed rutrum. Aenean libero elit, tincidunt sed posuere nec, lobortis a
+        urna. In cursus, ante maximus ultrices imperdiet, urna ipsum sodales arcu, ut placerat dui lacus non
+        turpis. Quisque in laoreet dolor. Aenean nec quam bibendum, rhoncus urna in, hendrerit ipsum.
+        Suspendisse eget dapibus justo, id maximus magna. Praesent tempor nisi velit, ut placerat massa
+        efficitur eu. Etiam at urna eget nibh iaculis rutrum non tincidunt erat. Mauris tempus, neque et
+        porta finibus, velit turpis viverra orci, sed fringilla felis nunc et quam. Aliquam erat volutpat.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada dolor at dui lobortis imperdiet.
+        \n
+        \n
+        \t\t\tDuis elementum, est vitae lobortis ultrices, arcu diam condimentum velit, at posuere justo lacus ut
+        lorem. Aliquam vitae enim et dui mollis faucibus. Fusce vel aliquam dui, eget consectetur nunc. Ut
+        nec commodo nisi. Ut auctor, massa a volutpat luctus, tellus turpis feugiat massa, sit amet aliquet
+        nisl ipsum a magna. Fusce venenatis vitae dolor ut porttitor. Pellentesque lacinia nisi et eros dictum
+        elementum.
+        \n
+        \n
+        \t\t\tVestibulum eleifend vestibulum ultrices. Praesent eu arcu iaculis felis lacinia ultricies.
+        Integer ac consequat mi, sed aliquet velit. Pellentesque habitant morbi tristique senectus et
+        netus et malesuada fames ac turpis egestas. Integer ac ipsum ipsum. Nam quis mi mi. Morbi eget
+        erat fermentum dui scelerisque rutrum. Nullam rutrum malesuada turpis et finibus. Curabitur
+        finibus ornare felis sit amet blandit. Quisque eros magna, pellentesque ut rutrum vitae,
+        scelerisque nec magna. Suspendisse nunc velit, pretium laoreet semper sit amet, finibus ac risus.
+        Proin quis orci nec nisi sagittis semper sit amet dignissim erat.
+        \n
+        \n
+        \t\t\tNam ac condimentum nisi, eget placerat ante. Curabitur ac elit porta, porta dui ut, pellentesque
+        felis. Vestibulum sit amet ex consectetur, dictum mauris a, tristique arcu. Vivamus est sapien,
+        fermentum ut consectetur non, eleifend id lectus. Sed laoreet, magna in cursus laoreet, nisi ante
+        bibendum orci, ut vehicula erat sem id felis. Proin congue odio erat, vitae posuere erat vehicula
+        sit amet. Vivamus luctus libero tellus, nec auctor nulla vehicula nec. Nam lacinia mollis nibh sed
+        porttitor. Donec semper tellus neque, ac laoreet dolor elementum dictum. Quisque ut libero at mauris
+        sodales sodales. Donec sit amet tristique ipsum. Duis tristique mi id velit vestibulum ultricies.
+        \n
+        \n
+        \t\t\tNullam posuere massa ut lobortis ornare. Nam eget mollis erat. Cras nec iaculis arcu, a condimentum
+        massa. Nullam porttitor fermentum ante at ornare. Curabitur auctor condimentum tempus. Quisque
+        feugiat gravida vulputate. Vestibulum lobortis cursus bibendum. Proin sed velit est.
+    </string>
 </resources>

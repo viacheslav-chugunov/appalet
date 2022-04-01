@@ -21,22 +21,28 @@ sealed class Screen(
         abstract val number: Int
 
         companion object {
-            const val COUNT = 2
+            const val COUNT = 3
         }
     }
 
 
 
     object Input : Preview(Route.INPUT) {
-        override val previous: Preview = List
+        override val previous: Preview = Dialog
         override val next: Preview = List
         override val number: Int = 1
     }
 
     object List : Preview(Route.LIST) {
         override val previous: Preview = Input
-        override val next: Preview = Input
+        override val next: Preview = Dialog
         override val number: Int = 2
+    }
+
+    object Dialog : Preview(Route.DIALOG) {
+        override val previous: Preview = List
+        override val next: Preview = Input
+        override val number: Int = 3
     }
 
 
@@ -44,5 +50,6 @@ sealed class Screen(
     object Route {
         const val INPUT = "input"
         const val LIST = "list"
+        const val DIALOG = "dialog"
     }
 }

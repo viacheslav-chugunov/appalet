@@ -19,8 +19,8 @@ import viacheslav.chugunov.materialtheme.ui.theme.LocalTheme
 
 @Composable
 fun ColoredButtonView(
-    text: String,
     modifier: Modifier = Modifier,
+    text: String? = null,
     leftIconId: Int? = null,
     rightIconId: Int? = null,
     enabled: Boolean = true,
@@ -50,11 +50,13 @@ fun ColoredButtonView(
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }
-            TextView(
-                text = text,
-                color = contentColor,
-                weight = FontWeight.SemiBold
-            )
+            text?.let {
+                TextView(
+                    text = text,
+                    color = contentColor,
+                    weight = FontWeight.SemiBold
+                )
+            }
             rightIconId?.let {
                 IconView(
                     id = rightIconId,
