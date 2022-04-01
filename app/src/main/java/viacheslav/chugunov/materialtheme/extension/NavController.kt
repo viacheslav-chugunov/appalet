@@ -4,5 +4,12 @@ import androidx.navigation.NavController
 import viacheslav.chugunov.core.util.Screen
 
 fun NavController.navigate(screen: Screen) {
-    navigate(screen.route)
+    val currentRoute = currentDestination?.route ?: ""
+    navigate(screen.route) {
+        if (screen.newTask) {
+            popUpTo(currentRoute) {
+                inclusive = true
+            }
+        }
+    }
 }

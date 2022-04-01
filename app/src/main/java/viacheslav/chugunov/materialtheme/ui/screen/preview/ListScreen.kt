@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
@@ -40,25 +41,33 @@ fun ListScreen() {
     val theme = LocalTheme.current
     var items by rememberSaveable { mutableStateOf(IntRange(0, 49).toList()) }
     var uiEnabled by rememberSaveable { mutableStateOf(true) }
-    val showRefresh = items.size < 50
+    var showRefresh by rememberSaveable { mutableStateOf(items.size < 50) }
 
     val coroutineScope = rememberCoroutineScope()
+    val lazyListState = rememberLazyListState()
 
     DrawScreen(
         theme = theme,
         items = items,
         showRefresh = showRefresh,
         uiEnabled = uiEnabled,
-        onRemoveItemIntent = { items = items - it },
+        lazyListState = lazyListState,
+        onRemoveItemIntent = {
+            items = items - it
+            showRefresh = true
+        },
         onRefreshIntent = {
             coroutineScope.launch {
-                items = listOf()
-                delay(200)
-                for (i in 49 downTo 0) {
-                    items = items.toMutableList().apply { add(0, i) }
-                    delay(50)
+                for (i in 0..49) {
+                    if (i !in items) {
+                        items = (items + i).sorted()
+                        lazyListState.animateScrollToItem(i)
+                    }
+                    delay(50L)
                 }
+                showRefresh = false
                 uiEnabled = true
+                lazyListState.animateScrollToItem(0)
             }
         },
         onUiEnabledChanged = { uiEnabled = it }
@@ -71,12 +80,13 @@ private fun DrawScreen(
     items: List<Int>,
     showRefresh: Boolean,
     uiEnabled: Boolean,
+    lazyListState: LazyListState,
     onRemoveItemIntent: (Int) -> Unit,
     onRefreshIntent: () -> Unit,
     onUiEnabledChanged: (Boolean) -> Unit,
 ) {
     Box {
-        LazyColumn {
+        LazyColumn(state  = lazyListState) {
             items(items) { item ->
                 val isEven = item % 2 == 0
                 val position = item + 1
@@ -98,6 +108,13 @@ private fun DrawScreen(
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                     )
                 }
+                if (item != items.last()) {
+                    Spacer(
+                        modifier = Modifier
+                            .height(1.dp)
+                            .background(theme.background)
+                    )
+                }
             }
         }
 
@@ -108,7 +125,7 @@ private fun DrawScreen(
         ) {
             Column(modifier = Modifier.padding(all = 12.dp)) {
                 AnimatedVisibility(
-                    visible = showRefresh && uiEnabled,
+                    visible = showRefresh,
                     enter = slideInHorizontally(
                         spring(
                             stiffness = Spring.StiffnessLow,
@@ -129,6 +146,7 @@ private fun DrawScreen(
                     FloatingActionButtonView(
                         iconId = R.drawable.ic_update,
                         visible = showRefresh,
+                        loading = !uiEnabled,
                         onPerform = {
                             onUiEnabledChanged(false)
                             onRefreshIntent()

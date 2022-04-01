@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextAlign
@@ -28,18 +29,15 @@ import viacheslav.chugunov.materialtheme.ui.theme.LocalWindow
 import viacheslav.chugunov.materialtheme.ui.view.BottomAppBarView
 import viacheslav.chugunov.materialtheme.ui.view.ClickableIconView
 import viacheslav.chugunov.materialtheme.ui.view.FloatingActionButtonView
+import viacheslav.chugunov.materialtheme.ui.view.TopAppBarView
 
+@ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable
 fun MainScreen() {
     val viewModel: MainViewModel = hiltViewModel()
     val model = viewModel.modelFlow.collectAsState().value
     val navController = rememberAnimatedNavController()
-
-    model.openScreen?.also { screen ->
-        viewModel.updateModel(openScreen = null)
-        navController.navigate(screen)
-    }
 
     DrawScreen(
         navHostController = navController,
@@ -48,11 +46,18 @@ fun MainScreen() {
         preview = model.preview,
         onChangeThemePerform = viewModel::changeTheme,
         onDayModePerform = viewModel::changeDayMode,
-        onPreviousPerform = viewModel::showPreviousPreview,
-        onNextPerform = viewModel::showNextPreview
+        onPreviousPerform = {
+            navController.navigate(model.preview.previous)
+            viewModel.updatePreviewToPrevious()
+        },
+        onNextPerform = {
+            navController.navigate(model.preview.next)
+            viewModel.updatePreviewToNext()
+        }
     )
 }
 
+@ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable
 private fun DrawScreen(
@@ -73,17 +78,7 @@ private fun DrawScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                backgroundColor = theme.primaryRegular,
-                contentColor = theme.primaryOnRegular,
-            ) {
-                Text(
-                    text = "${preview.number}/${Screen.Preview.COUNT}",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    fontSize = 16.sp
-                )
-            }
+            TopAppBarView(title = "${preview.number} / ${Screen.Preview.COUNT}")
         },
         bottomBar = {
             BottomAppBarView {
@@ -118,15 +113,23 @@ private fun DrawScreen(
         ) {
             composable(
                 route = Screen.Route.INPUT,
-                enterTransition = { fadeIn(spring(stiffness = Spring.StiffnessVeryLow)) },
-                exitTransition = { fadeOut(spring(stiffness = Spring.StiffnessVeryLow)) }
+                enterTransition = {
+                    slideInHorizontally { -it }
+                },
+                exitTransition = {
+                    slideOutHorizontally { -it }
+                }
             ) {
                 InputScreen()
             }
             composable(
                 route = Screen.Route.LIST,
-                enterTransition = { fadeIn(spring(stiffness = Spring.StiffnessVeryLow)) },
-                exitTransition = { fadeOut(spring(stiffness = Spring.StiffnessVeryLow)) }
+                enterTransition = {
+                    slideInHorizontally { it }
+                },
+                exitTransition = {
+                    slideOutHorizontally { it }
+                }
             ) {
                 ListScreen()
             }

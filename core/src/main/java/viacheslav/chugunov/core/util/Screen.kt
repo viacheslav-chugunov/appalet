@@ -15,7 +15,7 @@ sealed class Screen(
      * @property number an individual position in all previews
      * @property COUNT all previews count
      * */
-    abstract class Preview(route: String) : Screen(route, showButtonBar = true) {
+    abstract class Preview(route: String) : Screen(route, showButtonBar = true, newTask = true) {
         abstract val previous: Preview
         abstract val next: Preview
         abstract val number: Int

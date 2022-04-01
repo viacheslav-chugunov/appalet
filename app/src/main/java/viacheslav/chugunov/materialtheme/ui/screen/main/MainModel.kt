@@ -8,5 +8,4 @@ data class MainModel(
     override val theme: Theme,
     override val modeDay: Boolean,
     override val preview: Screen.Preview,
-    override val openScreen: Screen?
 ) : MainState

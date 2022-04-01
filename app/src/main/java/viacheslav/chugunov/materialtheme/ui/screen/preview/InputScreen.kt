@@ -1,14 +1,20 @@
 package viacheslav.chugunov.materialtheme.ui.screen.preview
 
+import android.util.MutableInt
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -19,11 +25,13 @@ import viacheslav.chugunov.materialtheme.extension.stringRes
 import viacheslav.chugunov.materialtheme.ui.view.ColoredButtonView
 import viacheslav.chugunov.materialtheme.ui.view.OutlinedTextFieldView
 
+@ExperimentalComposeUiApi
 @Composable
 fun InputScreen() {
     var input1 by rememberSaveable { mutableStateOf("") }
     var input2 by rememberSaveable { mutableStateOf("") }
     var uiEnabled by rememberSaveable { mutableStateOf(true) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val coroutineContext = rememberCoroutineScope()
 
@@ -31,11 +39,13 @@ fun InputScreen() {
         input1 = input1,
         input2 = input2,
         uiEnabled = uiEnabled,
+        keyboardController = keyboardController,
         onInput1Changed = { input1 = it },
         onInput2Changed = { input2 = it },
         onUiEnabledChanged = { uiEnabled = it },
         onButtonClicked = {
             coroutineContext.launch {
+                keyboardController?.hide()
                 while (input1.isNotBlank() || input2.isNotBlank()) {
                     if (input1.isNotBlank()) input1 = input1.substring(0, input1.length - 1)
                     if (input2.isNotBlank()) input2 = input2.substring(0, input2.length - 1)
@@ -47,11 +57,13 @@ fun InputScreen() {
     )
 }
 
+@ExperimentalComposeUiApi
 @Composable
 private fun DrawScreen(
     input1: String,
     input2: String,
     uiEnabled: Boolean,
+    keyboardController: SoftwareKeyboardController?,
     onInput1Changed: (String) -> Unit,
     onInput2Changed: (String) -> Unit,
     onUiEnabledChanged: (Boolean) -> Unit,
@@ -59,7 +71,13 @@ private fun DrawScreen(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = null,
+                onClick = { keyboardController?.hide() }
+            )
     ) {
         Column(modifier = Modifier.padding(horizontal = 32.dp)) {
             OutlinedTextFieldView(

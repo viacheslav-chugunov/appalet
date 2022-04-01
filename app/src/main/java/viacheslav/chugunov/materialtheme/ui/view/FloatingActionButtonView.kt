@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -21,6 +22,7 @@ import viacheslav.chugunov.materialtheme.ui.theme.LocalTheme
 fun FloatingActionButtonView(
     iconId: Int,
     visible: Boolean = true,
+    loading: Boolean = false,
     backgroundColor: Color = LocalTheme.current.secondaryRegular,
     contentColor: Color = LocalTheme.current.secondaryOnRegular,
     shape: Shape = CircleShape,
@@ -28,15 +30,21 @@ fun FloatingActionButtonView(
 ) {
     if (visible) {
         FloatingActionButton(
-            onClick = onPerform,
+            onClick = { if (!loading) onPerform() },
             backgroundColor = backgroundColor,
             shape = shape,
             contentColor = contentColor
         ) {
-            Icon(
-                painter = painterResource(iconId),
-                contentDescription = null
-            )
+            if (loading) {
+                CircularProgressIndicator(
+                    color = contentColor
+                )
+            } else {
+                Icon(
+                    painter = painterResource(iconId),
+                    contentDescription = null
+                )
+            }
         }
     }
 }

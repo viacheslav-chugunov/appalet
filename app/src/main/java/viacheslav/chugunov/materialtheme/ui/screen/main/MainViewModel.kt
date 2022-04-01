@@ -29,10 +29,9 @@ class MainViewModel(
     fun updateModel(
         theme: Theme = model.theme,
         modeDay: Boolean = model.modeDay,
-        preview: Screen.Preview = model.preview,
-        openScreen: Screen? = model.openScreen
+        preview: Screen.Preview = model.preview
     ) {
-        model = MainModel(theme, modeDay, preview, openScreen)
+        model = MainModel(theme, modeDay, preview)
         modelMutableFlow.value = model
     }
 
@@ -48,13 +47,13 @@ class MainViewModel(
         updateModel(theme = theme, modeDay = !isLight)
     }
 
-    fun showPreviousPreview() {
+    fun updatePreviewToPrevious() {
         val preview = model.preview.previous
-        updateModel(preview = preview, openScreen = preview)
+        updateModel(preview = preview)
     }
 
-    fun showNextPreview() {
+    fun updatePreviewToNext() {
         val preview = model.preview.next
-        updateModel(preview = preview, openScreen = preview)
+        updateModel(preview = preview)
     }
 }
