@@ -12,7 +12,7 @@ interface MainState {
     object Empty : MainState {
         override val theme: Theme = Theme.Empty
         override val modeDay: Boolean = true
-        override val preview: Screen.Preview = Screen.Login
+        override val preview: Screen.Preview = Screen.Input
         override val openScreen: Screen? = null
     }
 }

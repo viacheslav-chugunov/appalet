@@ -1,6 +1,10 @@
 package viacheslav.chugunov.materialtheme.ui.screen.preview
 
 import android.graphics.fonts.FontStyle
+import androidx.compose.animation.*
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,29 +23,45 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import viacheslav.chugunov.core.model.domain.Theme
 import viacheslav.chugunov.materialtheme.R
-import viacheslav.chugunov.materialtheme.extension.primaryLight
-import viacheslav.chugunov.materialtheme.extension.primaryOnLight
-import viacheslav.chugunov.materialtheme.extension.secondaryLight
-import viacheslav.chugunov.materialtheme.extension.secondaryOnLight
+import viacheslav.chugunov.materialtheme.extension.*
 import viacheslav.chugunov.materialtheme.ui.theme.LocalTheme
 import viacheslav.chugunov.materialtheme.ui.view.FloatingActionButtonView
+import viacheslav.chugunov.materialtheme.ui.view.TextView
 
 @Composable
 fun ListScreen() {
     val theme = LocalTheme.current
     var items by rememberSaveable { mutableStateOf(IntRange(0, 49).toList()) }
+    var uiEnabled by rememberSaveable { mutableStateOf(true) }
     val showRefresh = items.size < 50
+
+    val coroutineScope = rememberCoroutineScope()
 
     DrawScreen(
         theme = theme,
         items = items,
         showRefresh = showRefresh,
+        uiEnabled = uiEnabled,
         onRemoveItemIntent = { items = items - it },
-        onRefreshIntent = { items = IntRange(0, 49).toList() }
+        onRefreshIntent = {
+            coroutineScope.launch {
+                items = listOf()
+                delay(200)
+                for (i in 49 downTo 0) {
+                    items = items.toMutableList().apply { add(0, i) }
+                    delay(50)
+                }
+                uiEnabled = true
+            }
+        },
+        onUiEnabledChanged = { uiEnabled = it }
     )
 }
 
@@ -50,8 +70,10 @@ private fun DrawScreen(
     theme: Theme,
     items: List<Int>,
     showRefresh: Boolean,
+    uiEnabled: Boolean,
     onRemoveItemIntent: (Int) -> Unit,
     onRefreshIntent: () -> Unit,
+    onUiEnabledChanged: (Boolean) -> Unit,
 ) {
     Box {
         LazyColumn {
@@ -62,17 +84,16 @@ private fun DrawScreen(
                     modifier = Modifier
                         .background(if (isEven) theme.secondaryLight else theme.primaryLight)
                         .fillMaxWidth()
-                        .clickable { onRemoveItemIntent(item) },
+                        .clickable(enabled = uiEnabled) { onRemoveItemIntent(item) },
                 ) {
-                    Text(
-                        text = "Title $position",
-                        fontSize = 16.sp,
+                    TextView(
+                        text = "${R.string.title.stringRes} $position",
                         color = if (isEven) theme.secondaryOnLight else theme.primaryOnLight,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 4.dp, top = 16.dp)
                     )
-                    Text(
-                        text = "Subtitle $position",
-                        fontSize = 14.sp,
+                    TextView(
+                        text = "${R.string.subtitle.stringRes} $position",
+                        size = 14.sp,
                         color = if (isEven) theme.secondaryOnLight else theme.primaryOnLight,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                     )
@@ -82,16 +103,39 @@ private fun DrawScreen(
 
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(all = 12.dp),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.TopEnd
         ) {
-            FloatingActionButtonView(
-                iconId = R.drawable.ic_update,
-                visible = showRefresh,
-                onPerform = onRefreshIntent
-            )
+            Column(modifier = Modifier.padding(all = 12.dp)) {
+                AnimatedVisibility(
+                    visible = showRefresh && uiEnabled,
+                    enter = slideInHorizontally(
+                        spring(
+                            stiffness = Spring.StiffnessLow,
+                            visibilityThreshold = IntOffset.VisibilityThreshold
+                        )
+                    ) { it + 200 } + fadeIn(
+                        spring(stiffness = Spring.StiffnessLow)
+                    ),
+                    exit = slideOutHorizontally(
+                        spring(
+                            stiffness = Spring.StiffnessLow,
+                            visibilityThreshold = IntOffset.VisibilityThreshold
+                        )
+                    ) { it + 200 } + fadeOut(
+                        spring(stiffness = Spring.StiffnessLow)
+                    )
+                ) {
+                    FloatingActionButtonView(
+                        iconId = R.drawable.ic_update,
+                        visible = showRefresh,
+                        onPerform = {
+                            onUiEnabledChanged(false)
+                            onRefreshIntent()
+                        }
+                    )
+                }
+            }
         }
     }
 }

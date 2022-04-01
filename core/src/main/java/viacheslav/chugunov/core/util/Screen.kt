@@ -27,22 +27,22 @@ sealed class Screen(
 
 
 
-    object Login : Preview(Route.LOGIN) {
+    object Input : Preview(Route.INPUT) {
         override val previous: Preview = List
         override val next: Preview = List
         override val number: Int = 1
     }
 
     object List : Preview(Route.LIST) {
-        override val previous: Preview = Login
-        override val next: Preview = Login
+        override val previous: Preview = Input
+        override val next: Preview = Input
         override val number: Int = 2
     }
 
 
 
     object Route {
-        const val LOGIN = "login"
+        const val INPUT = "input"
         const val LIST = "list"
     }
 }

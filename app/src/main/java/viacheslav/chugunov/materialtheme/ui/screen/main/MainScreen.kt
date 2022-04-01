@@ -3,9 +3,7 @@ package viacheslav.chugunov.materialtheme.ui.screen.main
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -13,7 +11,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -26,7 +23,7 @@ import viacheslav.chugunov.materialtheme.R
 import viacheslav.chugunov.core.util.Screen
 import viacheslav.chugunov.materialtheme.extension.*
 import viacheslav.chugunov.materialtheme.ui.screen.preview.ListScreen
-import viacheslav.chugunov.materialtheme.ui.screen.preview.LoginScreen
+import viacheslav.chugunov.materialtheme.ui.screen.preview.InputScreen
 import viacheslav.chugunov.materialtheme.ui.theme.LocalWindow
 import viacheslav.chugunov.materialtheme.ui.view.BottomAppBarView
 import viacheslav.chugunov.materialtheme.ui.view.ClickableIconView
@@ -116,15 +113,15 @@ private fun DrawScreen(
     ) {
         AnimatedNavHost(
             navController = navHostController,
-            startDestination = Screen.Route.LOGIN,
+            startDestination = Screen.Route.INPUT,
             modifier = Modifier.padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding())
         ) {
             composable(
-                route = Screen.Route.LOGIN,
+                route = Screen.Route.INPUT,
                 enterTransition = { fadeIn(spring(stiffness = Spring.StiffnessVeryLow)) },
                 exitTransition = { fadeOut(spring(stiffness = Spring.StiffnessVeryLow)) }
             ) {
-                LoginScreen()
+                InputScreen()
             }
             composable(
                 route = Screen.Route.LIST,
