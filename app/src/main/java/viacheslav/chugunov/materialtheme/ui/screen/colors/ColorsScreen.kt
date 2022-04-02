@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import viacheslav.chugunov.core.model.domain.ColorDescription
-import viacheslav.chugunov.core.model.domain.Theme
+import viacheslav.chugunov.core.model.ColorDescription
+import viacheslav.chugunov.core.model.Theme
 import viacheslav.chugunov.materialtheme.extension.*
 import viacheslav.chugunov.materialtheme.ui.theme.LocalTheme
 import viacheslav.chugunov.materialtheme.ui.view.TextView

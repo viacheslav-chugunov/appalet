@@ -1,7 +1,7 @@
 package viacheslav.chugunov.materialtheme.extension
 
 import androidx.compose.ui.graphics.Color
-import viacheslav.chugunov.core.model.domain.Theme
+import viacheslav.chugunov.core.model.Theme
 
 val Theme.primaryRegular: Color get() = Color(colorsPrimary.regular.value)
 val Theme.primaryOnRegular: Color get() = Color(colorsPrimary.onRegular.value)

@@ -1,4 +1,4 @@
-package viacheslav.chugunov.core.model.domain
+package viacheslav.chugunov.core.model
 
 interface Theme : SelectedTheme {
     override val colorsPrimary: ColorSet

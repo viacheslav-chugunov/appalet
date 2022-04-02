@@ -1,6 +1,5 @@
-package viacheslav.chugunov.materialtheme.ui.screen.preview
+package viacheslav.chugunov.materialtheme.ui.screen.preview.input
 
-import android.util.MutableInt
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
@@ -15,44 +14,35 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import viacheslav.chugunov.materialtheme.R
 import viacheslav.chugunov.materialtheme.extension.stringRes
+import viacheslav.chugunov.materialtheme.ui.animation.slideInLeft
+import viacheslav.chugunov.materialtheme.ui.animation.slideInTop
+import viacheslav.chugunov.materialtheme.ui.animation.slideOutLeft
+import viacheslav.chugunov.materialtheme.ui.animation.slideOutTop
 import viacheslav.chugunov.materialtheme.ui.view.ColoredButtonView
 import viacheslav.chugunov.materialtheme.ui.view.OutlinedTextFieldView
 
 @ExperimentalComposeUiApi
 @Composable
-fun InputScreen() {
-    var input1 by rememberSaveable { mutableStateOf("") }
-    var input2 by rememberSaveable { mutableStateOf("") }
-    var uiEnabled by rememberSaveable { mutableStateOf(true) }
+fun InputPreviewScreen() {
+    val viewModel: InputPreviewViewModel = hiltViewModel()
+    val model = viewModel.modelFlow.collectAsState().value
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val coroutineContext = rememberCoroutineScope()
-
     DrawScreen(
-        input1 = input1,
-        input2 = input2,
-        uiEnabled = uiEnabled,
+        model = model,
         keyboardController = keyboardController,
-        onInput1Changed = { input1 = it },
-        onInput2Changed = { input2 = it },
-        onUiEnabledChanged = { uiEnabled = it },
+        onInput1Changed = { viewModel.updateModel(input1 = it) },
+        onInput2Changed = { viewModel.updateModel(input2 = it) },
         onButtonClicked = {
-            coroutineContext.launch {
-                keyboardController?.hide()
-                while (input1.isNotBlank() || input2.isNotBlank()) {
-                    if (input1.isNotBlank()) input1 = input1.substring(0, input1.length - 1)
-                    if (input2.isNotBlank()) input2 = input2.substring(0, input2.length - 1)
-                    delay(200)
-                }
-                uiEnabled = true
-            }
+            keyboardController?.hide()
+            viewModel.showCleanUpAnimation()
         }
     )
 }
@@ -60,14 +50,11 @@ fun InputScreen() {
 @ExperimentalComposeUiApi
 @Composable
 private fun DrawScreen(
-    input1: String,
-    input2: String,
-    uiEnabled: Boolean,
-    keyboardController: SoftwareKeyboardController?,
+    model: InputPreviewModel,
     onInput1Changed: (String) -> Unit,
     onInput2Changed: (String) -> Unit,
-    onUiEnabledChanged: (Boolean) -> Unit,
-    onButtonClicked: () -> Unit
+    onButtonClicked: () -> Unit,
+    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -81,43 +68,33 @@ private fun DrawScreen(
     ) {
         Column(modifier = Modifier.padding(horizontal = 32.dp)) {
             OutlinedTextFieldView(
-                value = input1,
+                value = model.input1,
                 labelText = "${R.string.input.stringRes} 1",
                 onValueChanged = onInput1Changed,
-                enabled = uiEnabled,
+                enabled = model.uiEnabled,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextFieldView(
-                value = input2,
+                value = model.input2,
                 labelText = "${R.string.input.stringRes} 2",
                 onValueChanged = onInput2Changed,
-                enabled = uiEnabled,
+                enabled = model.uiEnabled,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(24.dp))
             AnimatedVisibility(
-                visible = uiEnabled && (input1.isNotBlank() || input2.isNotBlank()),
-                enter = slideInVertically(
-                    spring(
-                        stiffness = Spring.StiffnessVeryLow,
-                        visibilityThreshold = IntOffset.VisibilityThreshold
-                    )) { it + 500 } + fadeIn(spring(stiffness = Spring.StiffnessVeryLow)),
-                exit = slideOutVertically(
-                    spring(
-                        stiffness = Spring.StiffnessVeryLow,
-                        visibilityThreshold = IntOffset.VisibilityThreshold
-                    )) { it + 500 } + fadeOut(spring(stiffness = Spring.StiffnessVeryLow))
+                visible = model.buttonVisible,
+                enter = slideInTop(),
+                exit = slideOutTop()
             ) {
                 ColoredButtonView(
                     text = R.string.button.stringRes,
                     rightIconId = R.drawable.ic_next,
-                    enabled = uiEnabled,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    onUiEnabledChanged(false)
-                    onButtonClicked()
-                }
+                    enabled = model.uiEnabled,
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onButtonClicked
+                )
             }
         }
     }

@@ -1,4 +1,4 @@
-package viacheslav.chugunov.core.model.domain
+package viacheslav.chugunov.core.model
 
 import android.content.Context
 import viacheslav.chugunov.core.R

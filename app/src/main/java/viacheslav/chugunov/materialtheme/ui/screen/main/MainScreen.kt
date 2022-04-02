@@ -15,16 +15,15 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import viacheslav.chugunov.core.model.domain.Theme
 import viacheslav.chugunov.materialtheme.ui.theme.MaterialThemeTheme
 import viacheslav.chugunov.materialtheme.R
 import viacheslav.chugunov.core.util.Screen
 import viacheslav.chugunov.materialtheme.extension.*
 import viacheslav.chugunov.materialtheme.ui.animation.*
 import viacheslav.chugunov.materialtheme.ui.screen.colors.ColorsScreen
-import viacheslav.chugunov.materialtheme.ui.screen.preview.ListScreen
-import viacheslav.chugunov.materialtheme.ui.screen.preview.InputScreen
-import viacheslav.chugunov.materialtheme.ui.screen.preview.DialogPreviewScreen
+import viacheslav.chugunov.materialtheme.ui.screen.preview.list.ListPreviewScreen
+import viacheslav.chugunov.materialtheme.ui.screen.preview.input.InputPreviewScreen
+import viacheslav.chugunov.materialtheme.ui.screen.preview.dialog.DialogPreviewScreen
 import viacheslav.chugunov.materialtheme.ui.theme.LocalWindow
 import viacheslav.chugunov.materialtheme.ui.view.BottomAppBarView
 import viacheslav.chugunov.materialtheme.ui.view.ClickableIconView
@@ -42,10 +41,7 @@ fun MainScreen() {
 
     DrawScreen(
         navHostController = navController,
-        theme = model.theme,
-        modeDay = model.modeDay,
-        preview = model.preview,
-        currentScreen = model.currentScreen,
+        model = model,
         onChangeThemePerform = viewModel::changeTheme,
         onModeDayPerform = viewModel::changeDayMode,
         onPreviousPerform = {
@@ -68,34 +64,31 @@ fun MainScreen() {
 @Composable
 private fun DrawScreen(
     navHostController: NavHostController,
-    theme: Theme,
-    modeDay: Boolean,
-    preview: Screen.Preview,
-    currentScreen: Screen,
+    model: MainModel,
     onChangeThemePerform: () -> Unit,
     onModeDayPerform: () -> Unit,
     onPreviousPerform: () -> Unit,
     onNextPerform: () -> Unit,
     onColorsPerform: () -> Unit,
     onCurrentScreenChanged: (Screen) -> Unit
-) = MaterialThemeTheme(theme) {
+) = MaterialThemeTheme(model.theme) {
 
     LocalWindow.current?.apply {
-        statusBarColor = theme.primaryDark.toArgb()
-        navigationBarColor = theme.primaryDark.toArgb()
+        statusBarColor = model.theme.primaryDark.toArgb()
+        navigationBarColor = model.theme.primaryDark.toArgb()
     }
 
     Scaffold(
         topBar = {
             TopAppBarView(
-                visible = currentScreen.hasTitle,
-                title = currentScreen.getTitle(LocalContext.current)
+                visible = model.currentScreen.hasTitle,
+                title = model.currentScreen.getTitle(LocalContext.current)
             )
         },
         bottomBar = {
-            BottomAppBarView(visible = currentScreen.showButtonBar) {
+            BottomAppBarView(visible = model.currentScreen.showButtonBar) {
                 ClickableIconView(
-                    iconId = if (modeDay) R.drawable.ic_day else R.drawable.ic_night,
+                    iconId = if (model.modeDay) R.drawable.ic_day else R.drawable.ic_night,
                     onPerform = onModeDayPerform
                 )
                 ClickableIconView(
@@ -115,14 +108,14 @@ private fun DrawScreen(
         },
         floatingActionButton = {
             FloatingActionButtonView(
-                visible = currentScreen.showButtonBar,
+                visible = model.currentScreen.showButtonBar,
                 iconId = R.drawable.ic_refresh,
                 onPerform = onChangeThemePerform
             )
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
-        backgroundColor = theme.background
+        backgroundColor = model.theme.background
     ) {
         AnimatedNavHost(
             navController = navHostController,
@@ -175,7 +168,7 @@ private fun DrawScreen(
                 }
             ) {
                 onCurrentScreenChanged(Screen.Input)
-                InputScreen()
+                InputPreviewScreen()
             }
             composable(
                 route = Screen.Route.LIST,
@@ -199,7 +192,7 @@ private fun DrawScreen(
                 }
             ) {
                 onCurrentScreenChanged(Screen.List)
-                ListScreen()
+                ListPreviewScreen()
             }
             composable(
                 route = Screen.Route.DIALOG,
@@ -224,11 +217,11 @@ private fun DrawScreen(
             ) {
                 onCurrentScreenChanged(Screen.Dialog)
                 DialogPreviewScreen(
-                    modeDay = modeDay,
+                    modeDay = model.modeDay,
                     onChangeThemePerform = onChangeThemePerform,
-                    onModeDayPerform = onModeDayPerform,
-                    onPreviousPerform = onPreviousPerform,
-                    onNextPerform = onNextPerform
+                    onChangeModeDayPerform = onModeDayPerform,
+                    onPreviousScreenPerform = onPreviousPerform,
+                    onNextScreenPerform = onNextPerform
                 )
             }
         }

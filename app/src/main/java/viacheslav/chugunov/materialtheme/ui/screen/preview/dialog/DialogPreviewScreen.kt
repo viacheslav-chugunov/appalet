@@ -1,14 +1,13 @@
-package viacheslav.chugunov.materialtheme.ui.screen.preview
+package viacheslav.chugunov.materialtheme.ui.screen.preview.dialog
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
-import viacheslav.chugunov.core.model.domain.Theme
+import androidx.hilt.navigation.compose.hiltViewModel
+import viacheslav.chugunov.core.model.Theme
 import viacheslav.chugunov.materialtheme.ui.view.DialogView
 import viacheslav.chugunov.materialtheme.R
 import viacheslav.chugunov.materialtheme.extension.*
@@ -20,39 +19,38 @@ import viacheslav.chugunov.materialtheme.ui.view.TextView
 fun DialogPreviewScreen(
     modeDay: Boolean,
     onChangeThemePerform: () -> Unit,
-    onModeDayPerform: () -> Unit,
-    onPreviousPerform: () -> Unit,
-    onNextPerform: () -> Unit
+    onChangeModeDayPerform: () -> Unit,
+    onPreviousScreenPerform: () -> Unit,
+    onNextScreenPerform: () -> Unit
 ) {
-    val theme = LocalTheme.current
-    var showDialog by rememberSaveable { mutableStateOf(true) }
+    val viewModel: DialogPreviewViewModel = hiltViewModel()
+    val model = viewModel.modelFlow.collectAsState().value
 
     DrawScreen(
-        theme = theme,
+        model = model,
         modeDay = modeDay,
-        showDialog = showDialog,
         onChangeThemePerform = onChangeThemePerform,
-        onModeDayPerform = onModeDayPerform,
-        onPreviousPerform = onPreviousPerform,
-        onNextPerform = onNextPerform,
-        onShowDialogChanged = { showDialog = it }
+        onChangeModeDayPerform = onChangeModeDayPerform,
+        onPreviousScreenPerform = onPreviousScreenPerform,
+        onNextScreenPerform = onNextScreenPerform,
+        onShowDialogChanged = { viewModel.updateModel(showDialog = it) }
     )
 }
 
 @Composable
 private fun DrawScreen(
-    theme: Theme,
+    model: DialogPreviewModel,
     modeDay: Boolean,
-    showDialog: Boolean,
     onChangeThemePerform: () -> Unit,
-    onModeDayPerform: () -> Unit,
-    onPreviousPerform: () -> Unit,
-    onNextPerform: () -> Unit,
-    onShowDialogChanged: (Boolean) -> Unit
+    onChangeModeDayPerform: () -> Unit,
+    onPreviousScreenPerform: () -> Unit,
+    onNextScreenPerform: () -> Unit,
+    onShowDialogChanged: (Boolean) -> Unit,
+    theme: Theme = LocalTheme.current,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         DialogView(
-            visible = showDialog,
+            visible = model.showDialog,
             maxHeight = 600.dp,
             title = R.string.title.stringRes,
             buttons = {
@@ -60,7 +58,7 @@ private fun DrawScreen(
                     leftIconId = if (modeDay) R.drawable.ic_day else R.drawable.ic_night,
                     backgroundColor = theme.secondaryRegular,
                     contentColor = theme.secondaryOnRegular,
-                    onClick = onModeDayPerform,
+                    onClick = onChangeModeDayPerform,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -70,7 +68,7 @@ private fun DrawScreen(
                     contentColor = theme.secondaryOnRegular,
                     onClick = {
                         onShowDialogChanged(false)
-                        onPreviousPerform()
+                        onPreviousScreenPerform()
                     },
                     modifier = Modifier.weight(1f)
                 )
@@ -81,7 +79,7 @@ private fun DrawScreen(
                     contentColor = theme.secondaryOnRegular,
                     onClick = {
                         onShowDialogChanged(false)
-                        onNextPerform()
+                        onNextScreenPerform()
                     },
                     modifier = Modifier.weight(1f)
                 )

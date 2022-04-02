@@ -1,28 +1,22 @@
 package viacheslav.chugunov.materialtheme.ui.screen.main
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import viacheslav.chugunov.core.model.domain.Theme
-import viacheslav.chugunov.core.model.ui.MainState
+import kotlinx.coroutines.Dispatchers
+import viacheslav.chugunov.core.model.Theme
 import viacheslav.chugunov.core.repository.ThemeRepository
+import viacheslav.chugunov.core.util.BaseViewModel
 import viacheslav.chugunov.core.util.Screen
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class MainViewModel(
     private val themeRepository: ThemeRepository,
-    state: MainState
-) : ViewModel() {
-    private var model = state
-    private val modelMutableFlow = MutableStateFlow(model)
-    val modelFlow = modelMutableFlow.asStateFlow()
+    model: MainModel,
+    coroutineContext: CoroutineContext = Dispatchers.IO
+) : BaseViewModel<MainModel>(model, coroutineContext) {
 
-    @Inject constructor(
-        themeRepository: ThemeRepository
-    ): this(themeRepository, MainState.Empty)
+    @Inject constructor(themeRepository: ThemeRepository): this(themeRepository, MainModel())
 
     init { changeTheme() }
 
