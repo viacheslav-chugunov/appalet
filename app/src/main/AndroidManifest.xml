@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="viacheslav.chugunov.materialtheme">
+    package="viacheslav.chugunov.appalet">
 
     <application
         android:allowBackup="true"
@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialTheme"
-        android:name=".Application">
+        android:name="viacheslav.chugunov.appalet.Application">
         <activity
-            android:name=".MainActivity"
+            android:name="viacheslav.chugunov.appalet.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialTheme"
             android:windowSoftInputMode="adjustResize" >
