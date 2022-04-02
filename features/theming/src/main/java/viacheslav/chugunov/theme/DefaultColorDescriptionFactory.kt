@@ -7,11 +7,13 @@ import viacheslav.chugunov.core.util.ColorDescriptionFactory
 class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     override val materialColors: List<ColorSet>
         get() = listOf(
-            redColors, pinkColors, purpleColors, deepPurpleColors, indigo, blue, lightBlue, cyan,
-            teal, green, lightGreen, lime, yellow, amber, orange, deepOrange, brown, gray, blueGray
+            red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen,
+            lime, yellow, amber, orange, deepOrange, brown, gray, blueGray, redA, pinkA, purpleA,
+            deepPurpleA, indigoA, blueA, lightBlueA, cyanA, tealA, greenA, lightGreenA, limeA, yellowA,
+            amberA, orangeA, deepOrangeA
         ).flatten()
 
-    val redColors: List<ColorSet> = createColorSet(
+    val red: List<ColorSet> = createColorSet(
         regularNameRes = R.string.red,
         lightNameRes = R.string.red_light,
         darkNameRes = R.string.red_dark,
@@ -29,7 +31,7 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
         whiteAfterDark = 2
     )
 
-    val pinkColors: List<ColorSet> = createColorSet(
+    val pink: List<ColorSet> = createColorSet(
         regularNameRes = R.string.pink,
         lightNameRes = R.string.pink_light,
         darkNameRes = R.string.pink_dark,
@@ -47,7 +49,7 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
         whiteAfterDark = 2
     )
 
-    val purpleColors: List<ColorSet> = createColorSet(
+    val purple: List<ColorSet> = createColorSet(
         regularNameRes = R.string.purple,
         lightNameRes = R.string.purple_light,
         darkNameRes = R.string.purple_dark,
@@ -65,7 +67,7 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
         whiteAfterDark = 2
     )
 
-    val deepPurpleColors: List<ColorSet> = createColorSet(
+    val deepPurple: List<ColorSet> = createColorSet(
         regularNameRes = R.string.deep_purple,
         lightNameRes = R.string.deep_purple_light,
         darkNameRes = R.string.deep_purple_dark,
@@ -354,9 +356,202 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
         whiteAfterDark = 2
     )
 
+    val redA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.red,
+        lightNameRes = R.string.red_light,
+        darkNameRes = R.string.red_dark,
+        regularColors = listOf(0xffff8a80, 0xffff5252, 0xffff1744, 0xffd50000),
+        lightColors = listOf(0xffffbcaf, 0xffff867f, 0xffff616f, 0xffff5131),
+        darkColors = listOf(0xffc85a54, 0xffc50e29, 0xffc4001d, 0xff9b0000),
+        whiteAfterRegular = 2,
+        whiteAfterLight = 3,
+        whiteAfterDark = 0
+    )
 
+    val pinkA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.pink,
+        lightNameRes = R.string.pink_light,
+        darkNameRes = R.string.pink_dark,
+        regularColors = listOf(0xffff80ab, 0xffff4081, 0xfff50057, 0xffc51162),
+        lightColors = listOf(0xffffb2dd, 0xffff79b0, 0xffff5983, 0xfffd558f),
+        darkColors = listOf(0xffc94f7c, 0xffc60055, 0xffbb002f, 0xff8e0038),
+        whiteAfterRegular = 2,
+        whiteAfterLight = 3,
+        whiteAfterDark = 0
+    )
+
+    val purpleA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.purple,
+        lightNameRes = R.string.purple_light,
+        darkNameRes = R.string.purple_dark,
+        regularColors = listOf(0xffea80fc, 0xffe040fb, 0xffd500f9, 0xffaa00ff),
+        lightColors = listOf(0xffffb2ff, 0xffff79ff, 0xffff5bff, 0xffe254ff),
+        darkColors = listOf(0xffb64fc8, 0xffaa00c7, 0xff9e00c5, 0xff7200ca),
+        whiteAfterRegular = 2,
+        whiteAfterLight = 3,
+        whiteAfterDark = 0
+    )
+
+    val deepPurpleA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.deep_purple,
+        lightNameRes = R.string.deep_purple_light,
+        darkNameRes = R.string.deep_purple_dark,
+        regularColors = listOf(0xffb388ff, 0xff7c4dff, 0xff651fff, 0xff6200ea),
+        lightColors = listOf(0xffe7b9ff, 0xffb47cff, 0xffa255ff, 0xff9d46ff),
+        darkColors = listOf(0xff805acb, 0xff3f1dcb, 0xff0100ca, 0xff0a00b6),
+        whiteAfterRegular = 0,
+        whiteAfterLight = 3,
+        whiteAfterDark = -1
+    )
+
+    val indigoA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.indigo,
+        lightNameRes = R.string.indigo_light,
+        darkNameRes = R.string.indigo_dark,
+        regularColors = listOf(0xff8c9eff, 0xff536dfe, 0xff3d5afe, 0xff304ffe),
+        lightColors = listOf(0xffc0cfff, 0xff8f9bff, 0xff8187ff, 0xff7a7cff),
+        darkColors = listOf(0xff5870cb, 0xff0043ca, 0xff0031ca, 0xff0026ca),
+        whiteAfterRegular = 1,
+        whiteAfterLight = 3,
+        whiteAfterDark = -1
+    )
+
+    val blueA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.blue,
+        lightNameRes = R.string.blue_light,
+        darkNameRes = R.string.blue_dark,
+        regularColors = listOf(0xff82b1ff, 0xff448aff, 0xff2979ff, 0xff2962ff),
+        lightColors = listOf(0xffb6e3ff, 0xff83b9ff, 0xff75a7ff, 0xff768fff),
+        darkColors = listOf(0xff4d82cb, 0xff005ecb, 0xff004ecb, 0xff0039cb),
+        whiteAfterRegular = 2,
+        whiteAfterLight = 3,
+        whiteAfterDark = 0
+    )
+
+    val lightBlueA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.light_blue,
+        lightNameRes = R.string.light_blue_light,
+        darkNameRes = R.string.light_blue_dark,
+        regularColors = listOf(0xff80d8ff, 0xff40c4ff, 0xff00b0ff, 0xff0091ea),
+        lightColors = listOf(0xffb5ffff, 0xff82f7ff, 0xff69e2ff, 0xff64c1ff),
+        darkColors = listOf(0xff49a7cc, 0xff0094cc, 0xff0081cb, 0xff0064b7),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 2
+    )
+
+    val cyanA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.cyan,
+        lightNameRes = R.string.cyan_light,
+        darkNameRes = R.string.cyan_dark,
+        regularColors = listOf(0xff84ffff, 0xff18ffff, 0xff00e5ff, 0xff00b8d4),
+        lightColors = listOf(0xffbaffff, 0xff76ffff, 0xff6effff, 0xff62ebff),
+        darkColors = listOf(0xff4bcbcc, 0xff00cbcc, 0xff00b2cc, 0xff0088a3),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 3
+    )
+
+    val tealA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.teal,
+        lightNameRes = R.string.teal_light,
+        darkNameRes = R.string.teal_dark,
+        regularColors = listOf(0xffa7ffeb, 0xff64ffda, 0xff1de9b6, 0xff00bfa5),
+        lightColors = listOf(0xffdbffff, 0xff9effff, 0xff6effe8, 0xff5df2d6),
+        darkColors = listOf(0xff75ccb9, 0xff14cba8, 0xff00b686, 0xff008e76),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 3
+    )
+
+    val greenA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.green,
+        lightNameRes = R.string.green_light,
+        darkNameRes = R.string.green_dark,
+        regularColors = listOf(0xffb9f6ca, 0xff69f0ae, 0xff00e676, 0xff00c853),
+        lightColors = listOf(0xffecfffd, 0xff9fffe0, 0xff66ffa6, 0xff5efc82),
+        darkColors = listOf(0xff88c399, 0xff2bbd7e, 0xff00b248, 0xff009624),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 3
+    )
+
+    val lightGreenA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.light_green,
+        lightNameRes = R.string.light_green_light,
+        darkNameRes = R.string.light_green_dark,
+        regularColors = listOf(0xffccff90, 0xffb2ff59, 0xff76ff03, 0xff64dd17),
+        lightColors = listOf(0xffffffc2, 0xffe7ff8c, 0xffb0ff57, 0xff9cff57),
+        darkColors = listOf(0xff99cc60, 0xff7ecb20, 0xff32cb00, 0xff1faa00),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 3
+    )
+
+    val limeA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.lime,
+        lightNameRes = R.string.lime_light,
+        darkNameRes = R.string.lime_dark,
+        regularColors = listOf(0xfff4ff81, 0xffeeff41, 0xffc6ff00, 0xffaeea00),
+        lightColors = listOf(0xffffffb3, 0xffffff78, 0xfffdff58, 0xffe4ff54),
+        darkColors = listOf(0xffbfcc50, 0xffb8cc00, 0xff90cc00, 0xff79b700),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 3
+    )
+
+    val yellowA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.yellow,
+        lightNameRes = R.string.yellow_light,
+        darkNameRes = R.string.yellow_dark,
+        regularColors = listOf(0xffffff8d, 0xffffff00, 0xffffea00, 0xffffd600),
+        lightColors = listOf(0xffffffbf, 0xffffff5a, 0xffffff56, 0xffffff52),
+        darkColors = listOf(0xffcacc5d, 0xffc7cc00, 0xffc7b800, 0xffc7a500),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 3
+    )
+
+    val amberA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.amber,
+        lightNameRes = R.string.amber_light,
+        darkNameRes = R.string.amber_dark,
+        regularColors = listOf(0xffffe57f, 0xffffd740, 0xffffc400, 0xffffab00),
+        lightColors = listOf(0xffffffb0, 0xffffff74, 0xfffff64f, 0xffffdd4b),
+        darkColors = listOf(0xffcab350, 0xffc8a600, 0xffc79400, 0xffc67c00),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 3
+    )
+
+    val orangeA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.orange,
+        lightNameRes = R.string.orange_light,
+        darkNameRes = R.string.orange_dark,
+        regularColors = listOf(0xffffd180, 0xffffab40, 0xffff9100, 0xffff6d00),
+        lightColors = listOf(0xffffffb1, 0xffffdd71, 0xffffc246, 0xffff9e40),
+        darkColors = listOf(0xffcaa052, 0xffc77c02, 0xffc56200, 0xffc43c00),
+        whiteAfterRegular = 3,
+        whiteAfterLight = 3,
+        whiteAfterDark = 2
+    )
+
+    val deepOrangeA: List<ColorSet> = createAlternativeColorSet(
+        regularNameRes = R.string.deep_orange,
+        lightNameRes = R.string.deep_orange_light,
+        darkNameRes = R.string.deep_orange_dark,
+        regularColors = listOf(0xffff9e80, 0xffff6e40, 0xffff3d00, 0xffdd2c00),
+        lightColors = listOf(0xffffd0b0, 0xffffa06d, 0xffff7539, 0xffff6434),
+        darkColors = listOf(0xffc96f53, 0xffc53d13, 0xffc30000, 0xffa30000),
+        whiteAfterRegular = 2,
+        whiteAfterLight = 3,
+        whiteAfterDark = 0
+    )
 
     companion object {
+        /**
+         * Creates color set with 10 material colors
+         * */
         private fun createColorSet(
             regularNameRes: Int,
             lightNameRes: Int,
@@ -373,7 +568,7 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
             assert(darkColors.size == 10) { "Dark colors size must be equal 10, but provided ${regularColors.size}" }
 
             val colorSets = mutableListOf<ColorSet>()
-            val alphas = listOf(50, 100, 200, 300, 400, 500, 600, 700, 800, 900)
+            val alphas = listOf("50", "100", "200", "300", "400", "500", "600", "700", "800", "900")
 
             for (i in 0..9) {
                 colorSets += ColorSet.Default(
@@ -386,6 +581,40 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
                 )
             }
 
+            return colorSets.toList()
+        }
+
+        /**
+         * Creates color set with 4 material alternative colors
+         * */
+        private fun createAlternativeColorSet(
+            regularNameRes: Int,
+            lightNameRes: Int,
+            darkNameRes: Int,
+            regularColors: List<Long>,
+            lightColors: List<Long>,
+            darkColors: List<Long>,
+            whiteAfterRegular: Int,
+            whiteAfterLight: Int,
+            whiteAfterDark: Int
+        ) : List<ColorSet> {
+            assert(regularColors.size == 4) { "Regular colors size must be equal 4, but provided ${regularColors.size}" }
+            assert(lightColors.size == 4) { "Light colors size must be equal 4, but provided ${regularColors.size}" }
+            assert(darkColors.size == 4) { "Dark colors size must be equal 4, but provided ${regularColors.size}" }
+
+            val colorSets = mutableListOf<ColorSet>()
+            val alphas = listOf("100A", "200A", "400A", "700A")
+
+            for (i in 0..3) {
+                colorSets += ColorSet.Default(
+                    regular = ColorDescription.Default(regularNameRes, alphas[i], regularColors[i]),
+                    onRegular = if (i > whiteAfterRegular) ColorDescription.White else ColorDescription.Black,
+                    light = ColorDescription.Default(lightNameRes, alphas[i], lightColors[i]),
+                    onLight = if (i > whiteAfterLight) ColorDescription.White else ColorDescription.Black,
+                    dark = ColorDescription.Default(darkNameRes, alphas[i], darkColors[i]),
+                    onDark = if (i > whiteAfterDark) ColorDescription.White else ColorDescription.Black
+                )
+            }
             return colorSets.toList()
         }
     }

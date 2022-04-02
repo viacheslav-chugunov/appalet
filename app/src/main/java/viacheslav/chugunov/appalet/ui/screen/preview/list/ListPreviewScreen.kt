@@ -30,33 +30,23 @@ import viacheslav.chugunov.appalet.ui.view.TextView
 fun ListPreviewScreen() {
     val viewModel: ListPreviewViewModel = hiltViewModel()
     val model = viewModel.modelFlow.collectAsState().value
-    val lazyListState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
 
     DrawScreen(
         model = model,
-        lazyListState = lazyListState,
         onRemoveItemIntent = viewModel::removeItem,
-        onRefreshIntent = {
-            viewModel.showRefreshItemsAnimation { item ->
-                coroutineScope.launch {
-                    lazyListState.animateScrollToItem(item)
-                }
-            }
-        },
+        onRefreshIntent = viewModel::showRefreshItemsAnimation,
     )
 }
 
 @Composable
 private fun DrawScreen(
     model: ListPreviewModel,
-    lazyListState: LazyListState,
     onRemoveItemIntent: (Int) -> Unit,
     onRefreshIntent: () -> Unit,
     theme: Theme = LocalTheme.current,
 ) {
     Box {
-        LazyColumn(state  = lazyListState) {
+        LazyColumn {
             items(model.items) { item ->
                 val isEven = item % 2 == 0
                 val position = item + 1

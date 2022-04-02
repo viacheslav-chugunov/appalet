@@ -5,7 +5,7 @@ import viacheslav.chugunov.core.R
 
 interface ColorDescription {
     val nameRes: Int
-    val alpha: Int
+    val alpha: String
     val value: Long
     val hex: String
 
@@ -20,7 +20,7 @@ interface ColorDescription {
 
     open class Default(
         override val nameRes: Int,
-        override val alpha: Int,
+        override val alpha: String,
         override val value: Long
     ) : ColorDescription {
         override val hex: String get() = Integer.toHexString(value.toInt())
@@ -28,7 +28,7 @@ interface ColorDescription {
 
 
 
-    object White : Default(R.string.white, 1000, 0xffffffff)
-    object Black : Default(R.string.black, 1000, 0xff000000)
-    object Gray900 : Default(R.string.gray, 900, 0xff212121)
+    object White : Default(R.string.white, "1000", 0xffffffff)
+    object Black : Default(R.string.black, "1000", 0xff000000)
+    object Gray900 : Default(R.string.gray, "900", 0xff212121)
 }

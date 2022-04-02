@@ -30,21 +30,16 @@ class ListPreviewViewModel(
         updateModel(items = newItems)
     }
 
-    fun showRefreshItemsAnimation(
-        delay: Long = 50L,
-        onItemRefreshed: suspend (Int) -> Unit
-    ) {
+    fun showRefreshItemsAnimation(delay: Long = 75L) {
         viewModelScope.launch(coroutineContext) {
             updateModel(uiEnabled = false)
-            for (i in 0 until ListPreviewModel.ITEMS_LIMIT) {
-                if (i !in model.items) {
-                    val newItems = (model.items + i).sorted()
-                    updateModel(items = newItems)
-                    onItemRefreshed(i)
-                }
+            updateModel(items = emptyList())
+            delay(delay)
+            for (item in ListPreviewModel.ITEMS_LIMIT -1 downTo 0) {
+                val newItems = model.items.toMutableList().apply { add(0, item) }
+                updateModel(items = newItems)
                 delay(delay)
             }
-            onItemRefreshed(0)
             updateModel(uiEnabled = true)
         }
     }
