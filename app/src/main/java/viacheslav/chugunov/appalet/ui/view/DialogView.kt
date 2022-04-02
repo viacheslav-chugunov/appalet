@@ -11,9 +11,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import viacheslav.chugunov.appalet.extension.background
-import viacheslav.chugunov.appalet.extension.secondaryOnRegular
-import viacheslav.chugunov.appalet.extension.secondaryRegular
+import viacheslav.chugunov.appalet.extension.*
 import viacheslav.chugunov.appalet.ui.theme.LocalTheme
 
 @Composable
@@ -21,8 +19,8 @@ fun DialogView(
     title: String,
     visible: Boolean = true,
     maxHeight: Dp = Dp.Unspecified,
-    surfaceColor: Color = LocalTheme.current.secondaryRegular,
-    onSurfaceColor: Color = LocalTheme.current.secondaryOnRegular,
+    surfaceColor: Color = LocalTheme.current.primaryRegular,
+    onSurfaceColor: Color = LocalTheme.current.primaryOnRegular,
     backgroundColor: Color = LocalTheme.current.background,
     onDismiss: () -> Unit = {},
     buttons: @Composable RowScope.() -> Unit,

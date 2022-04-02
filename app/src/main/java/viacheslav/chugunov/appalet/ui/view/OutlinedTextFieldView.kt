@@ -18,12 +18,12 @@ fun OutlinedTextFieldView(
     labelText: String? = null,
     enabled: Boolean = true,
     singleLine: Boolean = true,
-    textSelectionHandleColor: Color = LocalTheme.current.primaryRegular,
-    textSelectionBackgroundColor: Color = LocalTheme.current.primaryLight,
+    textSelectionHandleColor: Color = LocalTheme.current.primaryDark,
+    textSelectionBackgroundColor: Color = LocalTheme.current.primaryRegular,
     textColor: Color = LocalTheme.current.onBackground,
-    focusedBorderColor: Color = LocalTheme.current.secondaryRegular,
-    unfocusedBorderColor: Color = LocalTheme.current.secondaryLight,
-    cursorColor: Color = LocalTheme.current.secondaryRegular,
+    focusedBorderColor: Color = LocalTheme.current.secondaryDark,
+    unfocusedBorderColor: Color = LocalTheme.current.secondaryRegular,
+    cursorColor: Color = LocalTheme.current.secondaryDark,
     onValueChanged: (String) -> Unit
 ) {
     CompositionLocalProvider(

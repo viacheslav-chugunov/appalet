@@ -44,8 +44,8 @@ class ListPreviewViewModel(
                 }
                 delay(delay)
             }
-            updateModel(uiEnabled = true)
             onItemRefreshed(0)
+            updateModel(uiEnabled = true)
         }
     }
 
