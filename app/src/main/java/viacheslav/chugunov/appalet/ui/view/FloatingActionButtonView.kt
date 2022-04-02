@@ -1,13 +1,16 @@
 package viacheslav.chugunov.appalet.ui.view
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import viacheslav.chugunov.appalet.extension.secondaryOnRegular
 import viacheslav.chugunov.appalet.extension.secondaryRegular
 import viacheslav.chugunov.appalet.ui.theme.LocalTheme
@@ -36,7 +39,8 @@ fun FloatingActionButtonView(
             } else {
                 Icon(
                     painter = painterResource(iconId),
-                    contentDescription = null
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp)
                 )
             }
         }
