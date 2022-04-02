@@ -5,6 +5,13 @@
     <string name="input">Input</string>
     <string name="title">Title</string>
     <string name="subtitle">Subtitle</string>
+    <string name="primary_light">Primary light</string>
+    <string name="primary_regular">Primary regular</string>
+    <string name="primary_dark">Primary dark</string>
+    <string name="secondary_light">Secondary light</string>
+    <string name="secondary_regular">Secondary regular</string>
+    <string name="secondary_dark">Secondary dark</string>
+    <string name="background">Background</string>
     <string name="multiline_text">
         \t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis metus at diam pharetra fermentum
         et et magna. Morbi id urna at ipsum sollicitudin mollis. Pellentesque vehicula erat libero, ac

@@ -29,9 +29,10 @@ class MainViewModel(
     fun updateModel(
         theme: Theme = model.theme,
         modeDay: Boolean = model.modeDay,
-        preview: Screen.Preview = model.preview
+        preview: Screen.Preview = model.preview,
+        currentScreen: Screen = model.currentScreen
     ) {
-        model = MainModel(theme, modeDay, preview)
+        model = MainModel(theme, modeDay, preview, currentScreen)
         modelMutableFlow.value = model
     }
 

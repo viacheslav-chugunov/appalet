@@ -17,7 +17,7 @@ import viacheslav.chugunov.materialtheme.ui.view.ColoredButtonView
 import viacheslav.chugunov.materialtheme.ui.view.TextView
 
 @Composable
-fun DialogScreen(
+fun DialogPreviewScreen(
     modeDay: Boolean,
     onChangeThemePerform: () -> Unit,
     onModeDayPerform: () -> Unit,

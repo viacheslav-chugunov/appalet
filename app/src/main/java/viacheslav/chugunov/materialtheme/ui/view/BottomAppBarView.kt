@@ -12,13 +12,16 @@ import viacheslav.chugunov.materialtheme.ui.theme.LocalTheme
 
 @Composable
 fun BottomAppBarView(
+    visible: Boolean = true,
     backgroundColor: Color = LocalTheme.current.primaryRegular,
     contentColor: Color = LocalTheme.current.primaryOnRegular,
     content: @Composable RowScope.() -> Unit
 ) {
-    BottomAppBar(
-        backgroundColor = backgroundColor,
-        contentColor = contentColor,
-        content = content
-    )
+    if (visible) {
+        BottomAppBar(
+            backgroundColor = backgroundColor,
+            contentColor = contentColor,
+            content = content
+        )
+    }
 }

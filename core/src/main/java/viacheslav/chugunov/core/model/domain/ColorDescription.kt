@@ -9,6 +9,10 @@ interface ColorDescription {
     val value: Long
     val hex: String
 
+    val red: Int get() = (value and 0xFF0000 shr 16).toInt()
+    val green: Int get() = (value and 0xFF00 shr 8).toInt()
+    val blue: Int get() = (value and 0xFF).toInt()
+
     fun getName(context: Context): String =
         "${context.getString(nameRes)} $alpha"
 

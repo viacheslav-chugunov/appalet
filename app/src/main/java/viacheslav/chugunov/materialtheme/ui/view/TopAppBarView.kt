@@ -16,18 +16,21 @@ import viacheslav.chugunov.materialtheme.ui.theme.LocalTheme
 @Composable
 fun TopAppBarView(
     title: String,
+    visible: Boolean = true,
     backgroundColor: Color = LocalTheme.current.primaryRegular,
     contentColor: Color = LocalTheme.current.primaryOnRegular,
 ) {
-    TopAppBar(
-        backgroundColor = backgroundColor,
-        contentColor = contentColor,
-    ) {
-        TextView(
-            text = title,
-            modifier = Modifier.fillMaxWidth(),
-            color = contentColor,
-            align = TextAlign.Center
-        )
+    if (visible) {
+        TopAppBar(
+            backgroundColor = backgroundColor,
+            contentColor = contentColor,
+        ) {
+            TextView(
+                text = title,
+                modifier = Modifier.fillMaxWidth(),
+                color = contentColor,
+                align = TextAlign.Center
+            )
+        }
     }
 }
