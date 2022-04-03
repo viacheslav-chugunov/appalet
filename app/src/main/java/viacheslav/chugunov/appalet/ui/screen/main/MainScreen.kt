@@ -29,6 +29,7 @@ import viacheslav.chugunov.appalet.ui.view.ClickableIconView
 import viacheslav.chugunov.appalet.ui.view.FloatingActionButtonView
 import viacheslav.chugunov.appalet.ui.view.TopAppBarView
 import viacheslav.chugunov.appalet.R
+import viacheslav.chugunov.appalet.ui.screen.settings.SettingsScreen
 import java.lang.IllegalStateException
 
 @ExperimentalComposeUiApi
@@ -52,9 +53,8 @@ fun MainScreen() {
             navController.navigate(model.preview.next)
             viewModel.updatePreviewToNext()
         },
-        onColorsPerform = {
-            navController.navigate(Screen.Colors)
-        },
+        onColorsPerform = { navController.navigate(Screen.Colors) },
+        onSettingsPerform = { navController.navigate(Screen.Settings) },
         onCurrentScreenChanged = { viewModel.updateModel(currentScreen = it) }
     )
 }
@@ -70,6 +70,7 @@ private fun DrawScreen(
     onPreviousPerform: () -> Unit,
     onNextPerform: () -> Unit,
     onColorsPerform: () -> Unit,
+    onSettingsPerform: () -> Unit,
     onCurrentScreenChanged: (Screen) -> Unit
 ) = MaterialThemeTheme(model.theme) {
 
@@ -77,6 +78,8 @@ private fun DrawScreen(
         statusBarColor = model.theme.primaryDark.toArgb()
         navigationBarColor = model.theme.primaryDark.toArgb()
     }
+
+    LocalContext.current.setLanguage(model.language)
 
     Scaffold(
         topBar = {
@@ -101,17 +104,27 @@ private fun DrawScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 ClickableIconView(
+                    iconId = R.drawable.ic_settings,
+                    onPerform = onSettingsPerform
+                )
+                ClickableIconView(
                     iconId = R.drawable.ic_colors,
                     onPerform = onColorsPerform
                 )
             }
         },
         floatingActionButton = {
-            FloatingActionButtonView(
+            AnimatedVisibility(
                 visible = model.currentScreen.showButtonBar,
-                iconId = R.drawable.ic_refresh,
-                onPerform = onChangeThemePerform
-            )
+                enter = slideInTop(),
+                exit = slideOutBottom()
+            ) {
+                FloatingActionButtonView(
+                    visible = model.currentScreen.showButtonBar,
+                    iconId = R.drawable.ic_refresh,
+                    onPerform = onChangeThemePerform
+                )
+            }
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
@@ -122,6 +135,30 @@ private fun DrawScreen(
             startDestination = Screen.Route.INPUT,
             modifier = Modifier.padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding())
         ) {
+            composable(
+                route = Screen.Route.SETTINGS,
+                enterTransition = {
+                    when (val route = initialState.destination.route) {
+                        Screen.Route.SETTINGS -> fadeIn()
+                        Screen.Route.INPUT,
+                        Screen.Route.LIST,
+                        Screen.Route.DIALOG -> slideInTop()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
+                },
+                popExitTransition = {
+                    when (val route = targetState.destination.route) {
+                        Screen.Route.SETTINGS -> fadeOut()
+                        Screen.Route.INPUT,
+                        Screen.Route.LIST,
+                        Screen.Route.DIALOG -> slideOutBottom()
+                        else -> throw IllegalStateException("Navigated from $route")
+                    }
+                }
+            ) {
+                onCurrentScreenChanged(Screen.Settings)
+                SettingsScreen(language = model.language)
+            }
             composable(
                 route = Screen.Route.COLORS,
                 enterTransition = {
@@ -138,7 +175,7 @@ private fun DrawScreen(
                         Screen.Route.COLORS -> fadeOut()
                         Screen.Route.INPUT,
                         Screen.Route.LIST,
-                        Screen.Route.DIALOG -> slideOutTop()
+                        Screen.Route.DIALOG -> slideOutBottom()
                         else -> throw IllegalStateException("Navigated from $route")
                     }
                 }
@@ -153,6 +190,7 @@ private fun DrawScreen(
                         Screen.Route.INPUT -> fadeIn()
                         Screen.Route.DIALOG -> slideInLeft()
                         Screen.Route.LIST -> slideInRight()
+                        Screen.Route.SETTINGS,
                         Screen.Route.COLORS -> slideInBottom()
                         else -> throw IllegalStateException("Navigated from $route")
                     }
@@ -162,7 +200,8 @@ private fun DrawScreen(
                         Screen.Route.INPUT -> fadeOut()
                         Screen.Route.DIALOG -> slideOutLeft()
                         Screen.Route.LIST -> slideOutRight()
-                        Screen.Route.COLORS -> slideOutBottom()
+                        Screen.Route.SETTINGS,
+                        Screen.Route.COLORS -> slideOutTop()
                         else -> throw IllegalStateException("Navigated from $route")
                     }
                 }
@@ -177,6 +216,7 @@ private fun DrawScreen(
                         Screen.Route.LIST -> fadeIn()
                         Screen.Route.INPUT -> slideInLeft()
                         Screen.Route.DIALOG -> slideInRight()
+                        Screen.Route.SETTINGS,
                         Screen.Route.COLORS -> slideInBottom()
                         else -> throw IllegalStateException("Navigated from $route")
                     }
@@ -186,7 +226,8 @@ private fun DrawScreen(
                         Screen.Route.LIST -> fadeOut()
                         Screen.Route.INPUT -> slideOutLeft()
                         Screen.Route.DIALOG -> slideOutRight()
-                        Screen.Route.COLORS -> slideOutBottom()
+                        Screen.Route.SETTINGS,
+                        Screen.Route.COLORS -> slideOutTop()
                         else -> throw IllegalStateException("Navigated from $route")
                     }
                 }
@@ -201,6 +242,7 @@ private fun DrawScreen(
                         Screen.Route.DIALOG -> fadeIn()
                         Screen.Route.LIST -> slideInLeft()
                         Screen.Route.INPUT -> slideInRight()
+                        Screen.Route.SETTINGS,
                         Screen.Route.COLORS -> slideInBottom()
                         else -> throw IllegalStateException("Navigated from $route")
                     }
@@ -210,7 +252,8 @@ private fun DrawScreen(
                         Screen.Route.DIALOG -> fadeOut()
                         Screen.Route.LIST -> slideOutLeft()
                         Screen.Route.INPUT -> slideOutRight()
-                        Screen.Route.COLORS -> slideOutBottom()
+                        Screen.Route.SETTINGS,
+                        Screen.Route.COLORS -> slideOutTop()
                         else -> throw IllegalStateException("Navigated from $route")
                     }
                 }

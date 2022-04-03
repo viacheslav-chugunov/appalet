@@ -5,7 +5,9 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import viacheslav.chugunov.appalet.extension.primaryOnRegular
 import viacheslav.chugunov.appalet.extension.primaryRegular
 import viacheslav.chugunov.appalet.ui.theme.LocalTheme
@@ -24,6 +26,8 @@ fun TopAppBarView(
         ) {
             TextView(
                 text = title,
+                size = 20.sp,
+                weight = FontWeight.SemiBold,
                 modifier = Modifier.fillMaxWidth(),
                 color = contentColor,
                 align = TextAlign.Center

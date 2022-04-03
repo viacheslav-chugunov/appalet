@@ -1,8 +1,12 @@
 package viacheslav.chugunov.appalet.ui.screen.main
 
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.Theme
+import viacheslav.chugunov.core.repository.LanguageRepository
 import viacheslav.chugunov.core.repository.ThemeRepository
 import viacheslav.chugunov.core.util.BaseViewModel
 import viacheslav.chugunov.core.util.Screen
@@ -12,21 +16,33 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class MainViewModel(
     private val themeRepository: ThemeRepository,
+    languageRepository: LanguageRepository,
     model: MainModel,
     coroutineContext: CoroutineContext = Dispatchers.IO
 ) : BaseViewModel<MainModel>(model, coroutineContext) {
 
-    @Inject constructor(themeRepository: ThemeRepository): this(themeRepository, MainModel())
+    @Inject constructor(
+        themeRepository: ThemeRepository,
+        languageRepository: LanguageRepository,
+    ): this(themeRepository, languageRepository, MainModel())
 
-    init { changeTheme() }
+    init {
+        changeTheme()
+        viewModelScope.launch(coroutineContext) {
+            languageRepository.getLanguageFlow().collect { language ->
+                updateModel(language = language)
+            }
+        }
+    }
 
     fun updateModel(
         theme: Theme = model.theme,
+        language: Language = model.language,
         modeDay: Boolean = model.modeDay,
         preview: Screen.Preview = model.preview,
         currentScreen: Screen = model.currentScreen
     ) {
-        model = MainModel(theme, modeDay, preview, currentScreen)
+        model = MainModel(theme, language, modeDay, preview, currentScreen)
         modelMutableFlow.value = model
     }
 

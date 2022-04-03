@@ -16,3 +16,4 @@ rootProject.name = "Appalet"
 include ':app'
 include ':core'
 include ':features:theming'
+include ':features:storage'

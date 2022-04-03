@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="white">Білий</string>
+    <string name="black">Чорній</string>
+    <string name="gray">Сірий</string>
+    <string name="purple">Фіолетовий</string>
+    <string name="teal">Тіл</string>
+    <string name="colors">Кольори</string>
+    <string name="settings">Налаштування</string>
+    <string name="english">Англійскька</string>
+    <string name="russian">Російська</string>
+    <string name="ukrainian">Українська</string>
+</resources>

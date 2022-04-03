@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="white">Белый</string>
+    <string name="black">Черный</string>
+    <string name="gray">Серый</string>
+    <string name="purple">Фиолетовый</string>
+    <string name="teal">Тил</string>
+    <string name="colors">Цвета</string>
+    <string name="settings">Настройки</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
+    <string name="ukrainian">Украинский</string>
+</resources>

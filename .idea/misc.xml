@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/GitHub/Appalet/core/src/main/res/drawable-v24/flag_ua.xml" value="0.1505" />
+        <entry key="..\:/GitHub/Appalet/core/src/main/res/drawable-v24/ic_flag_ru.xml" value="0.1505" />
+        <entry key="..\:/GitHub/Appalet/core/src/main/res/drawable/flag_us.xml" value="0.1445" />
+      </map>
+    </option>
+  </component>
   <component name="EntryPointsManager">
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="androidx.compose.runtime.Composable" />

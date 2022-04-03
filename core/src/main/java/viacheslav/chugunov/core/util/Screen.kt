@@ -20,6 +20,13 @@ sealed class Screen(
         else -> throw IllegalStateException("titleId and title were null")
     }
 
+    object Settings : Screen(
+        route = Route.SETTINGS,
+        showButtonBar = false,
+        titleId = R.string.settings,
+        newTask = false
+    )
+
     object Colors : Screen(
         route = Route.COLORS,
         showButtonBar = false,
@@ -64,6 +71,7 @@ sealed class Screen(
 
 
     object Route {
+        const val SETTINGS = "settings"
         const val COLORS = "colors"
         const val INPUT = "input"
         const val LIST = "list"

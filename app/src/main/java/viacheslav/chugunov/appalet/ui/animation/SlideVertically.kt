@@ -25,7 +25,7 @@ fun slideOutTop(): ExitTransition =
             stiffness = Spring.StiffnessLow,
             visibilityThreshold = IntOffset.VisibilityThreshold
         )
-    ) { it } + fadeOut(
+    ) { -it } + fadeOut(
         spring(stiffness = Spring.StiffnessVeryLow)
     )
 
@@ -36,7 +36,7 @@ fun slideInBottom(): EnterTransition =
             stiffness = Spring.StiffnessLow,
             visibilityThreshold = IntOffset.VisibilityThreshold
         )
-    ) { 0 } + fadeIn(
+    ) { -it } + fadeIn(
         spring(stiffness = Spring.StiffnessVeryLow)
     )
 
@@ -47,6 +47,6 @@ fun slideOutBottom(): ExitTransition =
             stiffness = Spring.StiffnessLow,
             visibilityThreshold = IntOffset.VisibilityThreshold
         )
-    ) { 0 } + fadeOut(
+    ) { it } + fadeOut(
         spring(stiffness = Spring.StiffnessVeryLow)
     )
