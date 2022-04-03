@@ -49,7 +49,8 @@ fun ColoredButtonView(
                     id = leftIconId,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
-                        .size(24.dp)
+                        .size(24.dp),
+                    tint = contentColor
                 )
             }
             text?.let {
@@ -66,7 +67,8 @@ fun ColoredButtonView(
                     id = rightIconId,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
-                        .size(24.dp)
+                        .size(24.dp),
+                    tint = contentColor
                 )
             }
         }
