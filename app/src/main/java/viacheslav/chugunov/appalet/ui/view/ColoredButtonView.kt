@@ -27,6 +27,7 @@ fun ColoredButtonView(
     contentPadding: PaddingValues = PaddingValues(12.dp),
     backgroundColor: Color = LocalTheme.current.primaryRegular,
     contentColor: Color = LocalTheme.current.primaryOnRegular,
+    iconsColor: Color = contentColor,
     disabledBackgroundColor: Color = LocalTheme.current.primaryLight,
     disabledContentColor: Color = LocalTheme.current.primaryOnLight,
     onClick: () -> Unit,
@@ -50,7 +51,7 @@ fun ColoredButtonView(
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .size(24.dp),
-                    tint = contentColor
+                    tint = iconsColor
                 )
             }
             text?.let {
@@ -68,7 +69,7 @@ fun ColoredButtonView(
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .size(24.dp),
-                    tint = contentColor
+                    tint = iconsColor
                 )
             }
         }
