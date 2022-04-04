@@ -41,7 +41,11 @@ private fun DrawScreen(
     theme: Theme,
     model: ColorsModel
 ) {
-    Column(modifier = Modifier.verticalScroll(ScrollState(0))) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(ScrollState(0))
+    ) {
         DrawColor(
             background = theme.primaryLight,
             content = theme.primaryOnLight,
