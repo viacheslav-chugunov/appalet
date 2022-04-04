@@ -10,4 +10,5 @@ data class MainModel(
     val modeDay: Boolean = true,
     val preview: Screen.Preview = Screen.Input,
     val currentScreen: Screen = Screen.Input,
+    val closeAppOnBackPress: Boolean = false
 )

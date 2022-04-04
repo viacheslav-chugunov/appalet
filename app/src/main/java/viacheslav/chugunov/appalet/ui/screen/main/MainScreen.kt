@@ -1,20 +1,24 @@
 package viacheslav.chugunov.appalet.ui.screen.main
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import kotlinx.coroutines.launch
 import viacheslav.chugunov.appalet.ui.theme.MaterialThemeTheme
 import viacheslav.chugunov.core.util.Screen
 import viacheslav.chugunov.appalet.extension.*
@@ -24,12 +28,9 @@ import viacheslav.chugunov.appalet.ui.screen.preview.list.ListPreviewScreen
 import viacheslav.chugunov.appalet.ui.screen.preview.input.InputPreviewScreen
 import viacheslav.chugunov.appalet.ui.screen.preview.dialog.DialogPreviewScreen
 import viacheslav.chugunov.appalet.ui.theme.LocalWindow
-import viacheslav.chugunov.appalet.ui.view.BottomAppBarView
-import viacheslav.chugunov.appalet.ui.view.ClickableIconView
-import viacheslav.chugunov.appalet.ui.view.FloatingActionButtonView
-import viacheslav.chugunov.appalet.ui.view.TopAppBarView
 import viacheslav.chugunov.appalet.R
 import viacheslav.chugunov.appalet.ui.screen.settings.SettingsScreen
+import viacheslav.chugunov.appalet.ui.view.*
 import java.lang.IllegalStateException
 
 @ExperimentalComposeUiApi
@@ -39,9 +40,27 @@ fun MainScreen() {
     val viewModel: MainViewModel = hiltViewModel()
     val model = viewModel.modelFlow.collectAsState().value
     val navController = rememberAnimatedNavController()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    
+    LaunchedEffect(Unit) {
+        viewModel.updateModel(closeAppOnBackPress = false)
+    }
+    
+    BackHandler(enabled = !model.closeAppOnBackPress) {
+        coroutineScope.launch {
+            viewModel.updateModel(closeAppOnBackPress = true)
+            snackbarHostState.showSnackbar("")
+            viewModel.updateModel(closeAppOnBackPress = false)
+            snackbarHostState.currentSnackbarData?.also { snackbarData ->
+                snackbarData.dismiss()
+            }
+        }
+    }
 
     DrawScreen(
         navHostController = navController,
+        snackbarHostState = snackbarHostState,
         model = model,
         onChangeThemePerform = viewModel::changeTheme,
         onModeDayPerform = viewModel::changeDayMode,
@@ -64,6 +83,7 @@ fun MainScreen() {
 @Composable
 private fun DrawScreen(
     navHostController: NavHostController,
+    snackbarHostState: SnackbarHostState,
     model: MainModel,
     onChangeThemePerform: () -> Unit,
     onModeDayPerform: () -> Unit,
@@ -112,6 +132,33 @@ private fun DrawScreen(
                     onPerform = onColorsPerform
                 )
             }
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                snackbar = {
+                    Snackbar(
+                        modifier = Modifier.padding(all = 8.dp),
+                        backgroundColor = model.theme.secondaryDark,
+                        contentColor = model.theme.secondaryOnDark,
+                        shape = RoundedCornerShape(48.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconView(
+                                id = R.drawable.ic_launcher,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            TextView(
+                                text = R.string.warning_before_closing_app.stringRes,
+                                color = model.theme.secondaryOnDark,
+                                weight = FontWeight.SemiBold,
+                                singleLine = false
+                            )
+                        }
+                    }
+                }
+            )
         },
         floatingActionButton = {
             AnimatedVisibility(

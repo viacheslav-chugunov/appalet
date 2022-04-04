@@ -121,17 +121,17 @@ private fun DrawColor(
                     .fillMaxWidth()
             ) {
                 TextView(
-                    text = "r: ${description.red}",
+                    text = "r:${description.red}",
                     color = content
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 TextView(
-                    text = "g: ${description.green}",
+                    text = "g:${description.green}",
                     color = content
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(8.dp))
                 TextView(
-                    text = "b: ${description.blue}",
+                    text = "b:${description.blue}",
                     color = content
                 )
                 Spacer(modifier = Modifier.weight(1f))

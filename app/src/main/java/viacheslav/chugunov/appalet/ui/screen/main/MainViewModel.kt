@@ -40,9 +40,10 @@ class MainViewModel(
         language: Language = model.language,
         modeDay: Boolean = model.modeDay,
         preview: Screen.Preview = model.preview,
-        currentScreen: Screen = model.currentScreen
+        currentScreen: Screen = model.currentScreen,
+        closeAppOnBackPress: Boolean = model.closeAppOnBackPress
     ) {
-        model = MainModel(theme, language, modeDay, preview, currentScreen)
+        model = MainModel(theme, language, modeDay, preview, currentScreen, closeAppOnBackPress)
         modelMutableFlow.value = model
     }
 

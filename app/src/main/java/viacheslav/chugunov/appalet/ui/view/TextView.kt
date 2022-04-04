@@ -18,6 +18,7 @@ fun TextView(
     color: Color = LocalTheme.current.onBackground,
     size: TextUnit = 16.sp,
     weight: FontWeight = FontWeight.Normal,
+    spacing: TextUnit = 1.5.sp,
     singleLine: Boolean = true,
     align: TextAlign? = null
 ) {
@@ -28,6 +29,7 @@ fun TextView(
         fontWeight = weight,
         maxLines = if (singleLine) 1 else Int.MAX_VALUE,
         modifier = modifier,
-        textAlign = align
+        textAlign = align,
+        letterSpacing = spacing
     )
 }
