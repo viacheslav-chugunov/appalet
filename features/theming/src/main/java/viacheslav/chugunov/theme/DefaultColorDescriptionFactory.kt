@@ -2,16 +2,29 @@ package viacheslav.chugunov.theme
 
 import viacheslav.chugunov.core.model.ColorDescription
 import viacheslav.chugunov.core.model.ColorSet
+import viacheslav.chugunov.core.model.Coloring
 import viacheslav.chugunov.core.util.ColorDescriptionFactory
 
 class DefaultColorDescriptionFactory : ColorDescriptionFactory {
-    override val materialColors: List<ColorSet>
+
+    override val materialColorSets: List<ColorSet>
         get() = listOf(
             red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen,
             lime, yellow, amber, orange, deepOrange, brown, gray, blueGray, redA, pinkA, purpleA,
             deepPurpleA, indigoA, blueA, lightBlueA, cyanA, tealA, greenA, lightGreenA, limeA, yellowA,
             amberA, orangeA, deepOrangeA
         ).flatten()
+
+    override val materialColors: List<Coloring>
+        get() = materialColorSets
+            .map {
+                listOf(
+                    Coloring.Default(it.regular, it.onRegular),
+                    Coloring.Default(it.light, it.onLight),
+                    Coloring.Default(it.dark, it.onDark)
+                )
+            }
+            .flatten()
 
     val red: List<ColorSet> = createColorSet(
         regularNameRes = R.string.red,

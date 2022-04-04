@@ -5,5 +5,8 @@
     <string name="title">Заголовок</string>
     <string name="subtitle">Підзаголовок</string>
     <string name="language">Мова</string>
+    <string name="background_colors">Фонові колькори</string>
     <string name="warning_before_closing_app">Натисніть \"Назад\", щоб закрити Appalet</string>
+    <string name="light_theme">Світла тема</string>
+    <string name="dark_theme">Темна тема</string>
 </resources>

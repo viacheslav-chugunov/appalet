@@ -7,7 +7,7 @@ import viacheslav.chugunov.core.repository.LanguageRepository
 
 
 class DefaultLanguageRepository(
-    private val preferences: PreferenceDataSource.Language
+    private val preferences: PreferenceDataSource<Language>
 ) : LanguageRepository {
 
     override suspend fun getLanguage(): Language =

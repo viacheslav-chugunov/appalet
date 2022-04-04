@@ -2,6 +2,7 @@ package viacheslav.chugunov.appalet.ui.screen.main
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -33,6 +34,7 @@ import viacheslav.chugunov.appalet.ui.screen.settings.SettingsScreen
 import viacheslav.chugunov.appalet.ui.view.*
 import java.lang.IllegalStateException
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable
@@ -78,6 +80,7 @@ fun MainScreen() {
     )
 }
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable

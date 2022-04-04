@@ -12,10 +12,10 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class ListPreviewViewModel(
     model: ListPreviewModel,
-    coroutineContext: CoroutineContext = Dispatchers.IO
+    coroutineContext: CoroutineContext
 ) : BaseViewModel<ListPreviewModel>(model, coroutineContext) {
 
-    @Inject constructor(): this(ListPreviewModel())
+    @Inject constructor(coroutineContext: CoroutineContext): this(ListPreviewModel(), coroutineContext)
 
     fun updateModel(
         items: List<Int> = model.items,

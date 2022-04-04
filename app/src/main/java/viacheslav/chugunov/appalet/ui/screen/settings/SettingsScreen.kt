@@ -1,7 +1,9 @@
 package viacheslav.chugunov.appalet.ui.screen.settings
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -15,55 +17,92 @@ import viacheslav.chugunov.appalet.extension.*
 import viacheslav.chugunov.appalet.ui.theme.LocalTheme
 import viacheslav.chugunov.appalet.ui.view.ColoredButtonView
 import viacheslav.chugunov.appalet.ui.view.TextView
+import viacheslav.chugunov.core.model.ColorDescription
+import viacheslav.chugunov.core.model.Coloring
 import viacheslav.chugunov.core.model.Language
+import viacheslav.chugunov.core.model.PreferredColors
 
 @Composable
-fun SettingsScreen(language: Language) {
+fun SettingsScreen(
+    language: Language
+) {
     val viewModel: SettingsViewModel = hiltViewModel()
+    val model = viewModel.modelFlow.collectAsState().value
 
     DrawScreen(
+        model = model,
         language = language,
-        onLanguageChanged = viewModel::changeLanguage
+        onLanguageChangeIntent = viewModel::changeLanguage,
+        onLightBackgroundColorChangeIntent = viewModel::changeLightBackgroundColor,
+        onLightBackgroundColorResetIntent = viewModel::resetLightBackgroundColor,
+        onDarkBackgroundColorChangeIntent = viewModel::changeDarkBackgroundColor,
+        onDarkBackgroundColorResetIntent = viewModel::resetDarkBackgroundColor
     )
 }
 
 @Composable
 private fun DrawScreen(
+    model: SettingsModel,
     language: Language,
-    onLanguageChanged: (Language) -> Unit
+    onLanguageChangeIntent: (Language) -> Unit,
+    onLightBackgroundColorChangeIntent: () -> Unit,
+    onDarkBackgroundColorChangeIntent: () -> Unit,
+    onLightBackgroundColorResetIntent: () -> Unit,
+    onDarkBackgroundColorResetIntent: () -> Unit
 ) {
-
     LocalContext.current.setLanguage(language)
 
     Column(modifier = Modifier.fillMaxSize()) {
-        TextView(
-            text = R.string.language.stringRes,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 16.dp),
-            align = TextAlign.Center,
-            size = 18.sp,
-            weight = FontWeight.SemiBold
-        )
+        DrawTitle(titleId = R.string.language)
         DrawLanguageButton(
             language = Language.English,
             selected = language.isEnglish,
-            onPerform = { onLanguageChanged(Language.English) }
+            onPerform = { onLanguageChangeIntent(Language.English) }
         )
         Spacer(modifier = Modifier.height(8.dp))
         DrawLanguageButton(
             language = Language.Russian,
             selected = language.isRussian,
-            onPerform = { onLanguageChanged(Language.Russian) }
+            onPerform = { onLanguageChangeIntent(Language.Russian) }
         )
         Spacer(modifier = Modifier.height(8.dp))
         DrawLanguageButton(
             language = Language.Ukrainian,
             selected = language.isUkrainian,
-            onPerform = { onLanguageChanged(Language.Ukrainian) }
+            onPerform = { onLanguageChangeIntent(Language.Ukrainian) }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        DrawTitle(titleId = R.string.background_colors)
+        DrawBackgroundColorButton(
+            labelId = R.string.light_theme,
+            coloring = model.preferredColors.lightBackground,
+            onChangeColorIntent = onLightBackgroundColorChangeIntent,
+            onResetColorIntent = onLightBackgroundColorResetIntent
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        DrawBackgroundColorButton(
+            labelId = R.string.dark_theme,
+            coloring = model.preferredColors.darkBackground,
+            onChangeColorIntent = onDarkBackgroundColorChangeIntent,
+            onResetColorIntent = onDarkBackgroundColorResetIntent
         )
         Spacer(modifier = Modifier.height(8.dp))
     }
+}
+
+@Composable
+private fun DrawTitle(
+    titleId: Int
+) {
+    TextView(
+        text = titleId.stringRes,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(all = 16.dp),
+        align = TextAlign.Center,
+        size = 18.sp,
+        weight = FontWeight.SemiBold
+    )
 }
 
 @Composable
@@ -86,4 +125,34 @@ private fun DrawLanguageButton(
         contentColor = if (selected) theme.secondaryOnRegular else theme.primaryOnRegular,
         iconsColor = Color.Unspecified
     )
+}
+
+@Composable
+private fun DrawBackgroundColorButton(
+    labelId: Int,
+    coloring: Coloring,
+    onChangeColorIntent: () -> Unit,
+    onResetColorIntent: () -> Unit
+) {
+    val theme = LocalTheme.current
+
+    Row(modifier = Modifier.padding(horizontal = 16.dp)) {
+        ColoredButtonView(
+            text =  labelId.stringRes,
+            leftIconId = R.drawable.ic_painter,
+            iconsOnEdge = true,
+            onClick = onChangeColorIntent,
+            modifier = Modifier.weight(1f),
+            backgroundColor = theme.primaryRegular,
+            contentColor = theme.primaryOnRegular,
+            iconsColor = Color(coloring.color.value)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        ColoredButtonView(
+            leftIconId = R.drawable.ic_reset,
+            onClick = onResetColorIntent,
+            backgroundColor = theme.primaryRegular,
+            contentColor = theme.primaryOnRegular
+        )
+    }
 }

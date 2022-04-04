@@ -9,10 +9,10 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class DialogPreviewViewModel(
     model: DialogPreviewModel,
-    coroutineContext: CoroutineContext = Dispatchers.IO
+    coroutineContext: CoroutineContext
 ) : BaseViewModel<DialogPreviewModel>(model, coroutineContext) {
 
-    @Inject constructor(): this(DialogPreviewModel())
+    @Inject constructor(coroutineContext: CoroutineContext): this(DialogPreviewModel(), coroutineContext)
 
     fun updateModel(
         showDialog: Boolean = model.showDialog

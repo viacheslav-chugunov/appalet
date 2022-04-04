@@ -12,10 +12,10 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class ColorsViewModel(
     model: ColorsModel,
-    coroutineContext: CoroutineContext = Dispatchers.IO
+    coroutineContext: CoroutineContext
 ) : BaseViewModel<ColorsModel>(model, coroutineContext) {
 
-    @Inject constructor(): this(ColorsModel())
+    @Inject constructor(coroutineContext: CoroutineContext): this(ColorsModel(), coroutineContext)
 
     init { showInitialAnimation() }
 

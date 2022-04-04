@@ -18,6 +18,7 @@ import viacheslav.chugunov.appalet.ui.theme.LocalTheme
 @Composable
 fun FloatingActionButtonView(
     iconId: Int,
+    modifier: Modifier = Modifier,
     visible: Boolean = true,
     loading: Boolean = false,
     backgroundColor: Color = LocalTheme.current.secondaryRegular,
@@ -30,7 +31,8 @@ fun FloatingActionButtonView(
             onClick = { if (!loading) onPerform() },
             backgroundColor = backgroundColor,
             shape = shape,
-            contentColor = contentColor
+            contentColor = contentColor,
+            modifier = modifier
         ) {
             if (loading) {
                 CircularProgressIndicator(

@@ -5,7 +5,10 @@
     <string name="title">Title</string>
     <string name="subtitle">Subtitle</string>
     <string name="language">Language</string>
+    <string name="background_colors">Background colors</string>
     <string name="warning_before_closing_app">Click \"Back\" to close the Appalet</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
     <string name="multiline_text" translatable="false">
         \t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis metus at diam pharetra fermentum
         et et magna. Morbi id urna at ipsum sollicitudin mollis. Pellentesque vehicula erat libero, ac

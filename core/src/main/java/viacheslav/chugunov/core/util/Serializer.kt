@@ -5,7 +5,7 @@ import com.google.gson.Gson
 interface Serializer {
     fun <T> toString(model: T): String
     fun <T> fromString(string: String, modelClass: Class<T>): T
-    fun <T> fromStringOrDefault(string: String?, modelClass: Class<T>, default: T): T
+    fun <T> fromStringOrDefault(string: String?, modelClass: Class<out T>, default: T): T
 
 
 
@@ -18,7 +18,7 @@ interface Serializer {
         override fun <T> fromString(string: String, modelClass: Class<T>): T =
             gson.fromJson(string, modelClass)
 
-        override fun <T> fromStringOrDefault(string: String?, modelClass: Class<T>, default: T): T =
+        override fun <T> fromStringOrDefault(string: String?, modelClass: Class<out T>, default: T): T =
             gson.fromJson(string, modelClass) ?: default
     }
 }

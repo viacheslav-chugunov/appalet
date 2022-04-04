@@ -14,31 +14,16 @@ import viacheslav.chugunov.core.util.Serializer
 
 class LanguagePreferenceDataSource(
     context: Context,
-    private val serializer: Serializer
-) : PreferenceDataSource.Language {
-    private val preference = context.preference
-
-    override fun getFlow(): Flow<Language> {
-        return preference.data.map {
-            val language = it[KEY]
-            serializer.fromStringOrDefault(
-                language,
-                Language.Default::class.java,
-                Language.English
-            )
-        }
-    }
-
-    override suspend fun set(data: Language) {
-        preference.edit { it[KEY] = serializer.toString(data) }
-    }
-
-    override suspend fun clear() {
-        preference.edit { it.clear() }
-    }
+    serializer: Serializer
+) : DefaultPreferenceDataSource<Language>(
+    preference = context.preference,
+    serializer = serializer,
+    keyName = "language"
+) {
+    override val defaultData: Language = Language.English
+    override val dataClass: Class<Language.Default> = Language.Default::class.java
 
     companion object {
         val Context.preference: DataStore<Preferences> by preferencesDataStore(name = "language")
-        val KEY = stringPreferencesKey("language")
     }
 }

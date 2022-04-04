@@ -42,23 +42,45 @@ interface Theme : SelectedTheme {
 
     class Light(
         override val colorsPrimary: ColorSet,
-        override val colorsSecondary: ColorSet
+        override val colorsSecondary: ColorSet,
+        override val colorBackground: ColorDescription,
+        override val colorOnBackground: ColorDescription
     ) : Default() {
-        override val colorBackground: ColorDescription = ColorDescription.White
-        override val colorOnBackground: ColorDescription = ColorDescription.Black
 
-        constructor(theme: SelectedTheme): this(theme.colorsPrimary, theme.colorsSecondary)
+        constructor(colorsPrimary: ColorSet, colorsSecondary: ColorSet, preferredColors: PreferredColors): this(
+            colorsPrimary = colorsPrimary,
+            colorsSecondary = colorsSecondary,
+            colorBackground = preferredColors.lightBackground.color,
+            colorOnBackground = preferredColors.lightBackground.onColor
+        )
+
+        constructor(theme: SelectedTheme, preferredColors: PreferredColors): this(
+            colorsPrimary = theme.colorsPrimary,
+            colorsSecondary = theme.colorsSecondary,
+            preferredColors = preferredColors
+        )
     }
 
 
 
     class Dark(
         override val colorsPrimary: ColorSet,
-        override val colorsSecondary: ColorSet
+        override val colorsSecondary: ColorSet,
+        override val colorBackground: ColorDescription,
+        override val colorOnBackground: ColorDescription
     ) : Default() {
-        override val colorBackground: ColorDescription = ColorDescription.Gray900
-        override val colorOnBackground: ColorDescription = ColorDescription.White
 
-        constructor(theme: SelectedTheme): this(theme.colorsPrimary, theme.colorsSecondary)
+        constructor(colorsPrimary: ColorSet, colorsSecondary: ColorSet, preferredColors: PreferredColors): this(
+            colorsPrimary = colorsPrimary,
+            colorsSecondary = colorsSecondary,
+            colorBackground = preferredColors.darkBackground.color,
+            colorOnBackground = preferredColors.darkBackground.onColor
+        )
+
+        constructor(theme: SelectedTheme, preferredColors: PreferredColors): this(
+            colorsPrimary = theme.colorsPrimary,
+            colorsSecondary = theme.colorsSecondary,
+            preferredColors = preferredColors
+        )
     }
 }

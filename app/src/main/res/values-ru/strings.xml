@@ -5,5 +5,8 @@
     <string name="title">Заголовок</string>
     <string name="subtitle">Подзаголовок</string>
     <string name="language">Язык</string>
+    <string name="background_colors">Фоновые цвета</string>
     <string name="warning_before_closing_app">Нажмите \"Назад\", чтобы закрыть Appalet</string>
+    <string name="light_theme">Светлая тема</string>
+    <string name="dark_theme">Темная тема</string>
 </resources>
