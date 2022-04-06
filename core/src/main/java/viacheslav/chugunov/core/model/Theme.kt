@@ -27,6 +27,21 @@ interface Theme : SelectedTheme {
               |    onBackground = ${colorOnBackground.hex}
               |}
             """.trimMargin()
+
+        override fun equals(other: Any?): Boolean =
+            other is Theme &&
+                    colorsPrimary == other.colorsPrimary &&
+                    colorsSecondary == other.colorsSecondary &&
+                    colorBackground == other.colorBackground &&
+                    colorOnBackground == other.colorOnBackground
+
+        override fun hashCode(): Int {
+            var result = colorsPrimary.hashCode()
+            result = 31 * result + colorsSecondary.hashCode()
+            result = 31 * result + colorBackground.hashCode()
+            result = 31 * result + colorOnBackground.hashCode()
+            return result
+        }
     }
 
 

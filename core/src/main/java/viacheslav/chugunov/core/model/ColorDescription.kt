@@ -24,6 +24,20 @@ interface ColorDescription {
         override val value: Long
     ) : ColorDescription {
         override val hex: String get() = Integer.toHexString(value.toInt())
+
+        override fun equals(other: Any?): Boolean =
+            other is ColorDescription &&
+                    nameRes == other.nameRes &&
+                    alpha == other.alpha &&
+                    value == other.value &&
+                    hex == other.hex
+
+        override fun hashCode(): Int {
+            var result = nameRes
+            result = 31 * result + alpha.hashCode()
+            result = 31 * result + value.hashCode()
+            return result
+        }
     }
 
 

@@ -6,17 +6,18 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import viacheslav.chugunov.core.datasource.PreferenceDataSource
-import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.repository.LanguageRepository
 import viacheslav.chugunov.core.repository.PreferredColorsRepository
+import viacheslav.chugunov.core.repository.PreferredThemesRepository
 import viacheslav.chugunov.core.repository.ThemeRepository
 import viacheslav.chugunov.core.util.Serializer
-import viacheslav.chugunov.storage.datastore.DefaultPreferenceDataSource
 import viacheslav.chugunov.storage.datastore.LanguagePreferenceDataSource
-import viacheslav.chugunov.storage.datastore.PreferredColorsDataSource
+import viacheslav.chugunov.storage.datastore.PreferredColorsPreferenceDataSource
 import viacheslav.chugunov.storage.reposiotry.DefaultLanguageRepository
 import viacheslav.chugunov.storage.reposiotry.DefaultPreferredColorsRepository
+import viacheslav.chugunov.storage.reposiotry.DefaultPreferredThemesRepository
+import viacheslav.chugunov.storage.room.AppRoomDatabase
+import viacheslav.chugunov.storage.room.ThemeDatabaseDataSource
 import viacheslav.chugunov.theme.DefaultColorDescriptionFactory
 import viacheslav.chugunov.theme.DefaultRandomThemeDataSource
 import viacheslav.chugunov.theme.DefaultThemeRepository
@@ -46,8 +47,18 @@ class RepositoryModule {
         @ApplicationContext context: Context,
         serializer: Serializer
     ): PreferredColorsRepository {
-        val preference = PreferredColorsDataSource(context, serializer)
+        val preference = PreferredColorsPreferenceDataSource(context, serializer)
         return DefaultPreferredColorsRepository(preference)
+    }
+
+    @Provides
+    fun preferredThemesRepository(
+        @ApplicationContext context: Context
+    ): PreferredThemesRepository {
+        val database = AppRoomDatabase.getInstance(context)
+        val dao = database.themeDao
+        val dataSource = ThemeDatabaseDataSource(dao)
+        return DefaultPreferredThemesRepository(dataSource)
     }
 
 }
