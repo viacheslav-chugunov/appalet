@@ -207,7 +207,7 @@ private fun DrawScreen(
                 }
             ) {
                 onCurrentScreenChanged(Screen.Settings)
-                SettingsScreen(language = model.language)
+                SettingsScreen()
             }
             composable(
                 route = Screen.Route.COLORS,
