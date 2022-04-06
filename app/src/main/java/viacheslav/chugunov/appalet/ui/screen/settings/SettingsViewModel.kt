@@ -3,6 +3,7 @@ package viacheslav.chugunov.appalet.ui.screen.settings
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.PreferredColors
@@ -30,16 +31,21 @@ class SettingsViewModel(
     ): this(languageRepository, preferredColorsRepository, themeRepository, SettingsModel(), coroutineContext)
 
     fun updateModel(
-        preferredColors: PreferredColors = model.preferredColors
+        preferredColors: PreferredColors = model.preferredColors,
+        language: Language = model.language
     ) {
-        model = SettingsModel(preferredColors)
+        model = SettingsModel(preferredColors, language)
         modelMutableFlow.value = model
     }
 
     init {
         viewModelScope.launch {
-            preferredColorsRepository.getColorsFlow().collect { colors ->
-                updateModel(preferredColors = colors)
+            val colorsFlow = preferredColorsRepository.getColorsFlow()
+            val languageFlow = languageRepository.getLanguageFlow()
+            colorsFlow.combine(languageFlow) { colors, language ->
+                Pair(colors, language)
+            }.collect { (colors, language) ->
+                updateModel(preferredColors = colors, language = language)
             }
         }
     }
