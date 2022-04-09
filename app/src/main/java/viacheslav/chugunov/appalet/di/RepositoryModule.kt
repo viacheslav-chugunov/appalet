@@ -35,19 +35,17 @@ class RepositoryModule {
 
     @Provides
     fun languageRepository(
-        @ApplicationContext context: Context,
-        serializer: Serializer
+        @ApplicationContext context: Context
     ): LanguageRepository {
-        val preference = LanguagePreferenceDataSource(context, serializer)
+        val preference = LanguagePreferenceDataSource(context, Serializer.Default())
         return DefaultLanguageRepository(preference)
     }
 
     @Provides
     fun preferredColorsRepository(
-        @ApplicationContext context: Context,
-        serializer: Serializer
+        @ApplicationContext context: Context
     ): PreferredColorsRepository {
-        val preference = PreferredColorsPreferenceDataSource(context, serializer)
+        val preference = PreferredColorsPreferenceDataSource(context, Serializer.Default())
         return DefaultPreferredColorsRepository(preference)
     }
 

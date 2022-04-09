@@ -1,5 +1,7 @@
 package viacheslav.chugunov.core.model
 
+import android.util.Log
+
 interface Theme : SelectedTheme {
     override val colorsPrimary: ColorSet
     override val colorsSecondary: ColorSet

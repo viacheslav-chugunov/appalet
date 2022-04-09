@@ -1,5 +1,7 @@
 package viacheslav.chugunov.core.model
 
+import android.util.Log
+
 interface ColorSet {
     val regular: ColorDescription
     val onRegular: ColorDescription

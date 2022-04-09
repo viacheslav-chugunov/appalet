@@ -4,6 +4,6 @@ import viacheslav.chugunov.core.model.Coloring
 import viacheslav.chugunov.core.model.PreferredColors
 
 class DataStorePreferredColors(
-    lightBackground: DataStoreColoring,
-    darkBackground: DataStoreColoring
-) : PreferredColors.Default(lightBackground, darkBackground)
+    override val lightBackground: DataStoreColoring,
+    override val darkBackground: DataStoreColoring
+) : PreferredColors

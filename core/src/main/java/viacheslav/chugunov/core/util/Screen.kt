@@ -34,6 +34,13 @@ sealed class Screen(
         newTask = false
     )
 
+    object Collection : Screen(
+        route = Route.COLLECTION,
+        showButtonBar = false,
+        titleId = R.string.collection,
+        newTask = false
+    )
+
     /**
      * Screens associated as previewers of material theme must be inherited from Preview class. User
      * can moving between previews on UI.
@@ -73,6 +80,7 @@ sealed class Screen(
     object Route {
         const val SETTINGS = "settings"
         const val COLORS = "colors"
+        const val COLLECTION = "collection"
         const val INPUT = "input"
         const val LIST = "list"
         const val DIALOG = "dialog"

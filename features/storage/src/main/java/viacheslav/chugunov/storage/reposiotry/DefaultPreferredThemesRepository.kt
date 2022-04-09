@@ -1,32 +1,28 @@
 package viacheslav.chugunov.storage.reposiotry
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.sync.Mutex
+import viacheslav.chugunov.core.datasource.DatabaseDataSource
 import viacheslav.chugunov.core.model.Theme
 import viacheslav.chugunov.core.repository.PreferredThemesRepository
-import viacheslav.chugunov.storage.room.ThemeDao
-import viacheslav.chugunov.storage.room.ThemeDatabaseDataSource
 import viacheslav.chugunov.storage.room.ThemeEntity
 
 class DefaultPreferredThemesRepository(
-    private val themeDatabase: ThemeDatabaseDataSource
+    private val database: DatabaseDataSource<ThemeEntity>
 ) : PreferredThemesRepository {
-    override suspend fun getThemesFlow(): Flow<List<Theme>> = themeDatabase.getFlow()
+
+    override fun getThemesFlow(): Flow<List<Theme>> =
+        database.getFlow()
 
     override suspend fun addTheme(theme: Theme) {
-        val entity = ThemeEntity(theme)
-        themeDatabase.add(entity)
+        database.add(ThemeEntity(theme))
     }
 
     override suspend fun removeTheme(theme: Theme) {
-        if (theme is ThemeEntity) {
-            themeDatabase.remove(theme)
-        } else {
-            themeDatabase.get().forEach { stored ->
-                if (stored == theme) {
-                    themeDatabase.remove(stored)
-                    return@removeTheme
-                }
-            }
-        }
+        database.get().find { it == theme }?.let { database.remove(it) }
     }
+
+    override suspend fun isThemeAdded(theme: Theme): Boolean =
+        database.get().find { theme == it } != null
 }
