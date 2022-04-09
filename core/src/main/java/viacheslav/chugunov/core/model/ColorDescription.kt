@@ -31,6 +31,15 @@ interface ColorDescription {
             value = value
         )
 
+        override fun toString(): String =
+            """ColorDescription {
+                |   nameRes = $nameRes
+                |   alpha = $alpha
+                |   value = $value
+                |   hex = $hex
+                |}
+            """.trimMargin()
+
         override fun equals(other: Any?): Boolean =
             other is ColorDescription &&
                     ResourceSerializer.ColorNameSerializer()
