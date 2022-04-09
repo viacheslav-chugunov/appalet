@@ -8,7 +8,7 @@ import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.util.Serializer
 import viacheslav.chugunov.storage.datastore.model.DataStorePreferredColors
 
-class PreferredColorsDataSource(
+class PreferredColorsPreferenceDataSource(
     context: Context,
     serializer: Serializer
 ) : DefaultPreferenceDataSource<PreferredColors>(

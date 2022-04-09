@@ -6,7 +6,7 @@ interface PreferredColors {
 
 
 
-    class Default(
+    open class Default(
         override val lightBackground: Coloring = Coloring.White,
         override val darkBackground: Coloring = Coloring.Gray900
     ) : PreferredColors

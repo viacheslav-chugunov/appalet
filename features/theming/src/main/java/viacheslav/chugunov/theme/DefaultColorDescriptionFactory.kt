@@ -4,6 +4,7 @@ import viacheslav.chugunov.core.model.ColorDescription
 import viacheslav.chugunov.core.model.ColorSet
 import viacheslav.chugunov.core.model.Coloring
 import viacheslav.chugunov.core.util.ColorDescriptionFactory
+import viacheslav.chugunov.core.R
 
 class DefaultColorDescriptionFactory : ColorDescriptionFactory {
 

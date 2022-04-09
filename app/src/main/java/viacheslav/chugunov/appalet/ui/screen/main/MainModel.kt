@@ -13,4 +13,6 @@ data class MainModel(
     val preview: Screen.Preview = Screen.Input,
     val currentScreen: Screen = Screen.Input,
     val closeAppOnBackPress: Boolean = false,
+    val inFavourites: Boolean = false,
+    val loading: Boolean = false,
 )

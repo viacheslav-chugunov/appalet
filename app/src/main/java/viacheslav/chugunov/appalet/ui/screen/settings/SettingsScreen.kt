@@ -34,7 +34,7 @@ fun SettingsScreen() {
         onLightBackgroundColorChangeIntent = viewModel::changeLightBackgroundColor,
         onLightBackgroundColorResetIntent = viewModel::resetLightBackgroundColor,
         onDarkBackgroundColorChangeIntent = viewModel::changeDarkBackgroundColor,
-        onDarkBackgroundColorResetIntent = viewModel::resetDarkBackgroundColor
+        onDarkBackgroundColorResetIntent = viewModel::resetDarkBackgroundColor,
     )
 }
 

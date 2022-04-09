@@ -9,6 +9,7 @@ import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.model.Theme
 import viacheslav.chugunov.core.repository.LanguageRepository
 import viacheslav.chugunov.core.repository.PreferredColorsRepository
+import viacheslav.chugunov.core.repository.PreferredThemesRepository
 import viacheslav.chugunov.core.repository.ThemeRepository
 import viacheslav.chugunov.core.util.BaseViewModel
 import viacheslav.chugunov.core.util.Screen
@@ -20,6 +21,7 @@ class MainViewModel(
     private val themeRepository: ThemeRepository,
     private val languageRepository: LanguageRepository,
     private val preferredColorsRepository: PreferredColorsRepository,
+    private val preferredThemesRepository: PreferredThemesRepository,
     model: MainModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<MainModel>(model, coroutineContext) {
@@ -28,8 +30,10 @@ class MainViewModel(
         themeRepository: ThemeRepository,
         languageRepository: LanguageRepository,
         preferredColorsRepository: PreferredColorsRepository,
+        preferredThemesRepository: PreferredThemesRepository,
         coroutineContext: CoroutineContext
-    ): this(themeRepository, languageRepository, preferredColorsRepository, MainModel(), coroutineContext)
+    ): this(themeRepository, languageRepository, preferredColorsRepository, preferredThemesRepository,
+        MainModel(), coroutineContext)
 
     init {
         changeTheme()
@@ -44,8 +48,11 @@ class MainViewModel(
         preview: Screen.Preview = model.preview,
         currentScreen: Screen = model.currentScreen,
         closeAppOnBackPress: Boolean = model.closeAppOnBackPress,
+        inFavourites: Boolean = model.inFavourites,
+        loading: Boolean = model.loading
     ) {
-        model = MainModel(theme, language, preferredColors, modeDay, preview, currentScreen, closeAppOnBackPress)
+        model = MainModel(theme, language, preferredColors, modeDay, preview, currentScreen,
+            closeAppOnBackPress, inFavourites, loading)
         modelMutableFlow.value = model
     }
 
@@ -60,24 +67,46 @@ class MainViewModel(
                     Theme.Light(model.theme, preferredColors)
                 else
                     Theme.Dark(model.theme, preferredColors)
-                updateModel(language = language, preferredColors = preferredColors, theme = theme)
+                val inFavourites = preferredThemesRepository.isThemeAdded(theme)
+                updateModel(language = language, preferredColors = preferredColors, theme = theme,
+                    inFavourites = inFavourites)
             }
         }
     }
 
     fun changeTheme() {
-        val isLight = model.modeDay
-        val preferredColors = model.preferredColors
-        val theme = themeRepository.getRandomTheme(isLight, preferredColors)
-        updateModel(theme = theme)
+        if (model.loading) return
+        updateModel(loading = true)
+        viewModelScope.launch(coroutineContext) {
+            val isLight = model.modeDay
+            val preferredColors = model.preferredColors
+            val theme = themeRepository.getRandomTheme(isLight, preferredColors)
+            val inFavourites = preferredThemesRepository.isThemeAdded(theme)
+            updateModel(theme = theme, inFavourites = inFavourites, loading = false)
+        }
     }
 
     fun changeDayMode() {
-        val isLight = model.modeDay
-        val theme = model.theme
-        val preferredColors = model.preferredColors
-        val newTheme = if (isLight) Theme.Dark(theme, preferredColors) else Theme.Light(theme, preferredColors)
-        updateModel(theme = newTheme, modeDay = !isLight)
+        if (model.loading) return
+        updateModel(loading = true)
+        viewModelScope.launch(coroutineContext) {
+            val isLight = model.modeDay
+            val theme = model.theme
+            val preferredColors = model.preferredColors
+            val newTheme = if (isLight) Theme.Dark(theme, preferredColors) else Theme.Light(theme, preferredColors)
+            val inFavourites = preferredThemesRepository.isThemeAdded(newTheme)
+            updateModel(theme = newTheme, modeDay = !isLight, inFavourites = inFavourites, loading = false)
+        }
+    }
+
+    fun updateFavourites(addCurrentTheme: Boolean) {
+        if (model.loading) return
+        updateModel(loading = true)
+        viewModelScope.launch(coroutineContext) {
+            if (addCurrentTheme) preferredThemesRepository.addTheme(model.theme)
+            val inFavourites = preferredThemesRepository.isThemeAdded(model.theme)
+            updateModel(inFavourites = inFavourites, loading = false)
+        }
     }
 
     fun updatePreviewToPrevious() {
