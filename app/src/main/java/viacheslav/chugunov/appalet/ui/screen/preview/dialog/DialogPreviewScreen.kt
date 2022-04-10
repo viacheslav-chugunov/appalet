@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import viacheslav.chugunov.core.model.Theme
@@ -99,7 +100,8 @@ private fun DrawScreen(
                 ) {
                     TextView(
                         text = R.string.multiline_text.stringRes,
-                        singleLine = false
+                        singleLine = false,
+                        align = TextAlign.Justify
                     )
                 }
             }

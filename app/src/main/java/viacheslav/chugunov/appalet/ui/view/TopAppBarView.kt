@@ -38,6 +38,9 @@ fun TopAppBarView(
             backgroundColor = backgroundColor,
             contentColor = contentColor,
         ) {
+            actionIconId?.let {
+                Spacer(modifier = Modifier.width(40.dp))
+            }
             TextView(
                 text = title,
                 size = 20.sp,
