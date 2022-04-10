@@ -18,7 +18,10 @@ interface Serializer {
         override fun <T> fromString(string: String, modelClass: Class<T>): T =
             gson.fromJson(string, modelClass)
 
-        override fun <T> fromStringOrDefault(string: String?, modelClass: Class<out T>, default: T): T =
-            gson.fromJson(string, modelClass) ?: default
+        override fun <T> fromStringOrDefault(string: String?, modelClass: Class<out T>, default: T): T {
+            if (string.isNullOrBlank() && string == "{}")
+                return default
+            return gson.fromJson(string, modelClass)
+        }
     }
 }

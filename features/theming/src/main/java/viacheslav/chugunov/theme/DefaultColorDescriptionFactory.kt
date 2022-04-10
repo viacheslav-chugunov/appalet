@@ -28,9 +28,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
             .flatten()
 
     val red: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.red,
-        lightNameRes = R.string.red_light,
-        darkNameRes = R.string.red_dark,
+        regularName = ColorDescription.Name.RED,
+        lightName = ColorDescription.Name.RED_LIGHT,
+        darkName = ColorDescription.Name.RED_DARK,
         regularColors = listOf(
             0xffffebee, 0xffffcdd2, 0xffef9a9a, 0xffe57373, 0xffef5350,
             0xfff44336, 0xffe53935, 0xffd32f2f, 0xffc62828, 0xffb71c1c),
@@ -46,9 +46,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val pink: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.pink,
-        lightNameRes = R.string.pink_light,
-        darkNameRes = R.string.pink_dark,
+        regularName = ColorDescription.Name.PINK,
+        lightName = ColorDescription.Name.PINK_LIGHT,
+        darkName = ColorDescription.Name.PINK_DARK,
         regularColors = listOf(
             0xfffce4ec, 0xfff8bbd0, 0xfff48fb1, 0xfff06292, 0xffec407a,
             0xffe91e63, 0xffd81b60, 0xffc2185b, 0xffad1457, 0xff880e4f),
@@ -64,9 +64,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val purple: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.purple,
-        lightNameRes = R.string.purple_light,
-        darkNameRes = R.string.purple_dark,
+        regularName = ColorDescription.Name.PURPLE,
+        lightName = ColorDescription.Name.PURPLE_LIGHT,
+        darkName = ColorDescription.Name.PURPLE_DARK,
         regularColors = listOf(
             0xfff3e5f5, 0xffe1bee7, 0xffce93d8, 0xffba68c8, 0xffab47bc,
             0xff9c27b0, 0xff8e24aa, 0xff7b1fa2, 0xff6a1b9a, 0xff4a148c),
@@ -82,9 +82,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val deepPurple: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.deep_purple,
-        lightNameRes = R.string.deep_purple_light,
-        darkNameRes = R.string.deep_purple_dark,
+        regularName = ColorDescription.Name.DEEP_PURPLE,
+        lightName = ColorDescription.Name.DEEP_PURPLE_LIGHT,
+        darkName = ColorDescription.Name.DEEP_PURPLE_DARK,
         regularColors = listOf(
             0xffede7f6, 0xffd1c4e9, 0xffb39ddb, 0xff9575cd, 0xff7e57c2,
             0xff673ab7, 0xff5e35b1, 0xff512da8, 0xff4527a0, 0xff311b92),
@@ -100,9 +100,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val indigo: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.indigo,
-        lightNameRes = R.string.indigo_light,
-        darkNameRes = R.string.indigo_dark,
+        regularName = ColorDescription.Name.INDIGO,
+        lightName = ColorDescription.Name.INDIGO_LIGHT,
+        darkName = ColorDescription.Name.INDIGO_DARK,
         regularColors = listOf(
             0xffe8eaf6, 0xffc5cae9, 0xff9fa8da, 0xff7986cb, 0xff5c6bc0,
             0xff3f51b5, 0xff3949ab, 0xff303f9f, 0xff283593, 0xff1a237e),
@@ -118,9 +118,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
         )
 
     val blue: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.blue,
-        lightNameRes = R.string.blue_light,
-        darkNameRes = R.string.blue_dark,
+        regularName = ColorDescription.Name.BLUE,
+        lightName = ColorDescription.Name.BLUE_LIGHT,
+        darkName = ColorDescription.Name.BLUE_DARK,
         regularColors = listOf(
             0xffe3f2fd, 0xffbbdefb, 0xff90caf9, 0xff64b5f6, 0xff42a5f5,
             0xff2196f3, 0xff1e88e5, 0xff1976d2, 0xff1565c0, 0xff0d47a1),
@@ -137,9 +137,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val lightBlue: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.light_blue,
-        lightNameRes = R.string.light_blue_light,
-        darkNameRes = R.string.light_blue_dark,
+        regularName = ColorDescription.Name.LIGHT_BLUE,
+        lightName = ColorDescription.Name.LIGHT_BLUE_LIGHT,
+        darkName = ColorDescription.Name.LIGHT_BLUE_DARK,
         regularColors = listOf(
             0xffe1f5fe, 0xffb3e5fc, 0xff81d4fa, 0xff4fc3f7, 0xff29b6f6,
             0xff03a9f4, 0xff039be5, 0xff0288d1, 0xff0277bd, 0xff01579b),
@@ -155,9 +155,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val cyan: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.cyan,
-        lightNameRes = R.string.cyan_light,
-        darkNameRes = R.string.cyan_dark,
+        regularName = ColorDescription.Name.CYAN,
+        lightName = ColorDescription.Name.CYAN_LIGHT,
+        darkName = ColorDescription.Name.CYAN_DARK,
         regularColors = listOf(
             0xffe0f7fa, 0xffb2ebf2, 0xff80deea, 0xff4dd0e1, 0xff26c6da,
             0xff00bcd4, 0xff00acc1, 0xff0097a7, 0xff00838f, 0xff006064),
@@ -173,9 +173,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val teal: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.teal,
-        lightNameRes = R.string.teal_light,
-        darkNameRes = R.string.teal_dark,
+        regularName = ColorDescription.Name.TEAL,
+        lightName = ColorDescription.Name.TEAL_LIGHT,
+        darkName = ColorDescription.Name.TEAL_DARK,
         regularColors = listOf(
             0xffe0f2f1, 0xffb2dfdb, 0xff80cbc4, 0xff4db6ac, 0xff26a69a,
             0xff009688, 0xff00897b, 0xff00796b, 0xff00695c, 0xff004d40),
@@ -191,9 +191,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val green: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.green,
-        lightNameRes = R.string.green_light,
-        darkNameRes = R.string.green_dark,
+        regularName = ColorDescription.Name.GREEN,
+        lightName = ColorDescription.Name.GREEN_LIGHT,
+        darkName = ColorDescription.Name.GREEN_DARK,
         regularColors = listOf(
             0xffe8f5e9, 0xffc8e6c9, 0xffa5d6a7, 0xff81c784, 0xff66bb6a,
             0xff4caf50, 0xff43a047, 0xff388e3c, 0xff2e7d32, 0xff1b5e20),
@@ -209,9 +209,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val lightGreen: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.light_green,
-        lightNameRes = R.string.light_green_light,
-        darkNameRes = R.string.light_green_dark,
+        regularName = ColorDescription.Name.LIGHT_GREEN,
+        lightName = ColorDescription.Name.LIGHT_GREEN_LIGHT,
+        darkName = ColorDescription.Name.LIGHT_GREEN_DARK,
         regularColors = listOf(
             0xfff1f8e9, 0xffdcedc8, 0xffc5e1a5, 0xffaed581, 0xff9ccc65,
             0xff8bc34a, 0xff7cb342, 0xff689f38, 0xff558b2f, 0xff33691e),
@@ -227,9 +227,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val lime: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.lime,
-        lightNameRes = R.string.lime_light,
-        darkNameRes = R.string.lime_dark,
+        regularName = ColorDescription.Name.LIME,
+        lightName = ColorDescription.Name.LIME_LIGHT,
+        darkName = ColorDescription.Name.LIME_DARK,
         regularColors = listOf(
             0xfff9fbe7, 0xfff0f4c3, 0xffe6ee9c, 0xffdce775, 0xffd4e157,
             0xffcddc39, 0xffc0ca33, 0xffafb42b, 0xff9e9d24, 0xff827717),
@@ -245,9 +245,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val yellow: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.yellow,
-        lightNameRes = R.string.yellow_light,
-        darkNameRes = R.string.yellow_dark,
+        regularName = ColorDescription.Name.YELLOW,
+        lightName = ColorDescription.Name.YELLOW_LIGHT,
+        darkName = ColorDescription.Name.YELLOW_DARK,
         regularColors = listOf(
             0xfffffde7, 0xfffff9c4, 0xfffff59d, 0xfffff176, 0xffffee58,
             0xffffeb3b, 0xfffdd835, 0xfffbc02d, 0xfff9a825, 0xfff57f17),
@@ -263,9 +263,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val amber: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.amber,
-        lightNameRes = R.string.amber_light,
-        darkNameRes = R.string.amber_dark,
+        regularName = ColorDescription.Name.AMBER,
+        lightName = ColorDescription.Name.AMBER_LIGHT,
+        darkName = ColorDescription.Name.AMBER_DARK,
         regularColors = listOf(
             0xfffff8e1, 0xffffecb3, 0xffffe082, 0xffffd54f, 0xffffca28,
             0xffffc107, 0xffffb300, 0xffffa000, 0xffff8f00, 0xffff6f00),
@@ -281,9 +281,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val orange: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.orange,
-        lightNameRes = R.string.orange_light,
-        darkNameRes = R.string.orange_dark,
+        regularName = ColorDescription.Name.ORANGE,
+        lightName = ColorDescription.Name.ORANGE_LIGHT,
+        darkName = ColorDescription.Name.ORANGE_DARK,
         regularColors = listOf(
             0xfffff3e0, 0xffffe0b2, 0xffffcc80, 0xffffb74d, 0xffffa726,
             0xffff9800, 0xfffb8c00, 0xfff57c00, 0xffef6c00, 0xffe65100),
@@ -299,9 +299,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val deepOrange: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.deep_orange,
-        lightNameRes = R.string.deep_orange_light,
-        darkNameRes = R.string.deep_orange_dark,
+        regularName = ColorDescription.Name.DEEP_ORANGE,
+        lightName = ColorDescription.Name.DEEP_ORANGE_LIGHT,
+        darkName = ColorDescription.Name.DEEP_ORANGE_DARK,
         regularColors = listOf(
             0xfffbe9e7, 0xffffccbc, 0xffffab91, 0xffff8a65, 0xffff7043,
             0xffff5722, 0xfff4511e, 0xffe64a19, 0xffd84315, 0xffbf360c),
@@ -317,9 +317,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val brown: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.brown,
-        lightNameRes = R.string.brown_light,
-        darkNameRes = R.string.brown_dark,
+        regularName = ColorDescription.Name.BROWN,
+        lightName = ColorDescription.Name.BROWN_LIGHT,
+        darkName = ColorDescription.Name.BROWN_DARK,
         regularColors = listOf(
             0xffefebe9, 0xffd7ccc8, 0xffbcaaa4, 0xffa1887f, 0xff8d6e63,
             0xff795548, 0xff6d4c41, 0xff5d4037, 0xff4e342e, 0xff3e2723),
@@ -335,9 +335,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val gray: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.gray,
-        lightNameRes = R.string.gray_light,
-        darkNameRes = R.string.gray_dark,
+        regularName = ColorDescription.Name.GRAY,
+        lightName = ColorDescription.Name.GRAY_LIGHT,
+        darkName = ColorDescription.Name.GRAY_DARK,
         regularColors = listOf(
             0xfffafafa, 0xfff5f5f5, 0xffeeeeee, 0xffe0e0e0, 0xffbdbdbd,
             0xff9e9e9e, 0xff757575, 0xff616161, 0xff424242, 0xff212121),
@@ -353,9 +353,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val blueGray: List<ColorSet> = createColorSet(
-        regularNameRes = R.string.blue_gray,
-        lightNameRes = R.string.blue_gray_light,
-        darkNameRes = R.string.blue_gray_dark,
+        regularName = ColorDescription.Name.BLUE_GRAY,
+        lightName = ColorDescription.Name.BLUE_GRAY_LIGHT,
+        darkName = ColorDescription.Name.BLUE_GRAY_DARK,
         regularColors = listOf(
             0xffeceff1, 0xffcfd8dc, 0xffb0bec5, 0xff90a4ae, 0xff78909c,
             0xff607d8b, 0xff546e7a, 0xff455a64, 0xff37474f, 0xff263238),
@@ -371,9 +371,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val redA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.red,
-        lightNameRes = R.string.red_light,
-        darkNameRes = R.string.red_dark,
+        regularName = ColorDescription.Name.RED,
+        lightName = ColorDescription.Name.RED_LIGHT,
+        darkName = ColorDescription.Name.RED_DARK,
         regularColors = listOf(0xffff8a80, 0xffff5252, 0xffff1744, 0xffd50000),
         lightColors = listOf(0xffffbcaf, 0xffff867f, 0xffff616f, 0xffff5131),
         darkColors = listOf(0xffc85a54, 0xffc50e29, 0xffc4001d, 0xff9b0000),
@@ -383,9 +383,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val pinkA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.pink,
-        lightNameRes = R.string.pink_light,
-        darkNameRes = R.string.pink_dark,
+        regularName = ColorDescription.Name.PINK,
+        lightName = ColorDescription.Name.PINK_LIGHT,
+        darkName = ColorDescription.Name.PINK_DARK,
         regularColors = listOf(0xffff80ab, 0xffff4081, 0xfff50057, 0xffc51162),
         lightColors = listOf(0xffffb2dd, 0xffff79b0, 0xffff5983, 0xfffd558f),
         darkColors = listOf(0xffc94f7c, 0xffc60055, 0xffbb002f, 0xff8e0038),
@@ -395,9 +395,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val purpleA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.purple,
-        lightNameRes = R.string.purple_light,
-        darkNameRes = R.string.purple_dark,
+        regularName = ColorDescription.Name.PURPLE,
+        lightName = ColorDescription.Name.PURPLE_LIGHT,
+        darkName = ColorDescription.Name.PURPLE_DARK,
         regularColors = listOf(0xffea80fc, 0xffe040fb, 0xffd500f9, 0xffaa00ff),
         lightColors = listOf(0xffffb2ff, 0xffff79ff, 0xffff5bff, 0xffe254ff),
         darkColors = listOf(0xffb64fc8, 0xffaa00c7, 0xff9e00c5, 0xff7200ca),
@@ -407,9 +407,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val deepPurpleA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.deep_purple,
-        lightNameRes = R.string.deep_purple_light,
-        darkNameRes = R.string.deep_purple_dark,
+        regularName = ColorDescription.Name.DEEP_PURPLE,
+        lightName = ColorDescription.Name.DEEP_PURPLE_LIGHT,
+        darkName = ColorDescription.Name.DEEP_PURPLE_DARK,
         regularColors = listOf(0xffb388ff, 0xff7c4dff, 0xff651fff, 0xff6200ea),
         lightColors = listOf(0xffe7b9ff, 0xffb47cff, 0xffa255ff, 0xff9d46ff),
         darkColors = listOf(0xff805acb, 0xff3f1dcb, 0xff0100ca, 0xff0a00b6),
@@ -419,9 +419,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val indigoA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.indigo,
-        lightNameRes = R.string.indigo_light,
-        darkNameRes = R.string.indigo_dark,
+        regularName = ColorDescription.Name.INDIGO,
+        lightName = ColorDescription.Name.INDIGO_LIGHT,
+        darkName = ColorDescription.Name.INDIGO_DARK,
         regularColors = listOf(0xff8c9eff, 0xff536dfe, 0xff3d5afe, 0xff304ffe),
         lightColors = listOf(0xffc0cfff, 0xff8f9bff, 0xff8187ff, 0xff7a7cff),
         darkColors = listOf(0xff5870cb, 0xff0043ca, 0xff0031ca, 0xff0026ca),
@@ -431,9 +431,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val blueA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.blue,
-        lightNameRes = R.string.blue_light,
-        darkNameRes = R.string.blue_dark,
+        regularName = ColorDescription.Name.BLUE,
+        lightName = ColorDescription.Name.BLUE_LIGHT,
+        darkName = ColorDescription.Name.BLUE_DARK,
         regularColors = listOf(0xff82b1ff, 0xff448aff, 0xff2979ff, 0xff2962ff),
         lightColors = listOf(0xffb6e3ff, 0xff83b9ff, 0xff75a7ff, 0xff768fff),
         darkColors = listOf(0xff4d82cb, 0xff005ecb, 0xff004ecb, 0xff0039cb),
@@ -443,9 +443,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val lightBlueA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.light_blue,
-        lightNameRes = R.string.light_blue_light,
-        darkNameRes = R.string.light_blue_dark,
+        regularName = ColorDescription.Name.LIGHT_BLUE,
+        lightName = ColorDescription.Name.LIGHT_BLUE_LIGHT,
+        darkName = ColorDescription.Name.LIGHT_BLUE_DARK,
         regularColors = listOf(0xff80d8ff, 0xff40c4ff, 0xff00b0ff, 0xff0091ea),
         lightColors = listOf(0xffb5ffff, 0xff82f7ff, 0xff69e2ff, 0xff64c1ff),
         darkColors = listOf(0xff49a7cc, 0xff0094cc, 0xff0081cb, 0xff0064b7),
@@ -455,9 +455,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val cyanA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.cyan,
-        lightNameRes = R.string.cyan_light,
-        darkNameRes = R.string.cyan_dark,
+        regularName = ColorDescription.Name.CYAN,
+        lightName = ColorDescription.Name.CYAN_LIGHT,
+        darkName = ColorDescription.Name.CYAN_DARK,
         regularColors = listOf(0xff84ffff, 0xff18ffff, 0xff00e5ff, 0xff00b8d4),
         lightColors = listOf(0xffbaffff, 0xff76ffff, 0xff6effff, 0xff62ebff),
         darkColors = listOf(0xff4bcbcc, 0xff00cbcc, 0xff00b2cc, 0xff0088a3),
@@ -467,9 +467,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val tealA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.teal,
-        lightNameRes = R.string.teal_light,
-        darkNameRes = R.string.teal_dark,
+        regularName = ColorDescription.Name.TEAL,
+        lightName = ColorDescription.Name.TEAL_LIGHT,
+        darkName = ColorDescription.Name.TEAL_DARK,
         regularColors = listOf(0xffa7ffeb, 0xff64ffda, 0xff1de9b6, 0xff00bfa5),
         lightColors = listOf(0xffdbffff, 0xff9effff, 0xff6effe8, 0xff5df2d6),
         darkColors = listOf(0xff75ccb9, 0xff14cba8, 0xff00b686, 0xff008e76),
@@ -479,9 +479,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val greenA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.green,
-        lightNameRes = R.string.green_light,
-        darkNameRes = R.string.green_dark,
+        regularName = ColorDescription.Name.GREEN,
+        lightName = ColorDescription.Name.GREEN_LIGHT,
+        darkName = ColorDescription.Name.GRAY_DARK,
         regularColors = listOf(0xffb9f6ca, 0xff69f0ae, 0xff00e676, 0xff00c853),
         lightColors = listOf(0xffecfffd, 0xff9fffe0, 0xff66ffa6, 0xff5efc82),
         darkColors = listOf(0xff88c399, 0xff2bbd7e, 0xff00b248, 0xff009624),
@@ -491,9 +491,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val lightGreenA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.light_green,
-        lightNameRes = R.string.light_green_light,
-        darkNameRes = R.string.light_green_dark,
+        regularName = ColorDescription.Name.LIGHT_GREEN,
+        lightName = ColorDescription.Name.LIGHT_GREEN_LIGHT,
+        darkName = ColorDescription.Name.LIGHT_GREEN_DARK,
         regularColors = listOf(0xffccff90, 0xffb2ff59, 0xff76ff03, 0xff64dd17),
         lightColors = listOf(0xffffffc2, 0xffe7ff8c, 0xffb0ff57, 0xff9cff57),
         darkColors = listOf(0xff99cc60, 0xff7ecb20, 0xff32cb00, 0xff1faa00),
@@ -503,9 +503,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val limeA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.lime,
-        lightNameRes = R.string.lime_light,
-        darkNameRes = R.string.lime_dark,
+        regularName = ColorDescription.Name.LIME,
+        lightName = ColorDescription.Name.LIME_LIGHT,
+        darkName = ColorDescription.Name.LIME_DARK,
         regularColors = listOf(0xfff4ff81, 0xffeeff41, 0xffc6ff00, 0xffaeea00),
         lightColors = listOf(0xffffffb3, 0xffffff78, 0xfffdff58, 0xffe4ff54),
         darkColors = listOf(0xffbfcc50, 0xffb8cc00, 0xff90cc00, 0xff79b700),
@@ -515,9 +515,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val yellowA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.yellow,
-        lightNameRes = R.string.yellow_light,
-        darkNameRes = R.string.yellow_dark,
+        regularName = ColorDescription.Name.YELLOW,
+        lightName = ColorDescription.Name.YELLOW_LIGHT,
+        darkName = ColorDescription.Name.YELLOW_DARK,
         regularColors = listOf(0xffffff8d, 0xffffff00, 0xffffea00, 0xffffd600),
         lightColors = listOf(0xffffffbf, 0xffffff5a, 0xffffff56, 0xffffff52),
         darkColors = listOf(0xffcacc5d, 0xffc7cc00, 0xffc7b800, 0xffc7a500),
@@ -527,9 +527,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val amberA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.amber,
-        lightNameRes = R.string.amber_light,
-        darkNameRes = R.string.amber_dark,
+        regularName = ColorDescription.Name.AMBER,
+        lightName = ColorDescription.Name.AMBER_LIGHT,
+        darkName = ColorDescription.Name.AMBER_DARK,
         regularColors = listOf(0xffffe57f, 0xffffd740, 0xffffc400, 0xffffab00),
         lightColors = listOf(0xffffffb0, 0xffffff74, 0xfffff64f, 0xffffdd4b),
         darkColors = listOf(0xffcab350, 0xffc8a600, 0xffc79400, 0xffc67c00),
@@ -539,9 +539,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val orangeA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.orange,
-        lightNameRes = R.string.orange_light,
-        darkNameRes = R.string.orange_dark,
+        regularName = ColorDescription.Name.ORANGE,
+        lightName = ColorDescription.Name.ORANGE_LIGHT,
+        darkName = ColorDescription.Name.ORANGE_DARK,
         regularColors = listOf(0xffffd180, 0xffffab40, 0xffff9100, 0xffff6d00),
         lightColors = listOf(0xffffffb1, 0xffffdd71, 0xffffc246, 0xffff9e40),
         darkColors = listOf(0xffcaa052, 0xffc77c02, 0xffc56200, 0xffc43c00),
@@ -551,9 +551,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
     )
 
     val deepOrangeA: List<ColorSet> = createAlternativeColorSet(
-        regularNameRes = R.string.deep_orange,
-        lightNameRes = R.string.deep_orange_light,
-        darkNameRes = R.string.deep_orange_dark,
+        regularName = ColorDescription.Name.DEEP_ORANGE,
+        lightName = ColorDescription.Name.DEEP_ORANGE_LIGHT,
+        darkName = ColorDescription.Name.DEEP_ORANGE_LIGHT,
         regularColors = listOf(0xffff9e80, 0xffff6e40, 0xffff3d00, 0xffdd2c00),
         lightColors = listOf(0xffffd0b0, 0xffffa06d, 0xffff7539, 0xffff6434),
         darkColors = listOf(0xffc96f53, 0xffc53d13, 0xffc30000, 0xffa30000),
@@ -567,9 +567,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
          * Creates color set with 10 material colors
          * */
         private fun createColorSet(
-            regularNameRes: Int,
-            lightNameRes: Int,
-            darkNameRes: Int,
+            regularName: ColorDescription.Name,
+            lightName: ColorDescription.Name,
+            darkName: ColorDescription.Name,
             regularColors: List<Long>,
             lightColors: List<Long>,
             darkColors: List<Long>,
@@ -586,11 +586,11 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
 
             for (i in 0..9) {
                 colorSets += ColorSet.Default(
-                    regular = ColorDescription.Default(regularNameRes, alphas[i], regularColors[i]),
+                    regular = ColorDescription.Default(regularName, alphas[i], regularColors[i]),
                     onRegular = if (i > whiteAfterRegular) ColorDescription.White else ColorDescription.Black,
-                    light = ColorDescription.Default(lightNameRes, alphas[i], lightColors[i]),
+                    light = ColorDescription.Default(lightName, alphas[i], lightColors[i]),
                     onLight = if (i > whiteAfterLight) ColorDescription.White else ColorDescription.Black,
-                    dark = ColorDescription.Default(darkNameRes, alphas[i], darkColors[i]),
+                    dark = ColorDescription.Default(darkName, alphas[i], darkColors[i]),
                     onDark = if (i > whiteAfterDark) ColorDescription.White else ColorDescription.Black
                 )
             }
@@ -602,9 +602,9 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
          * Creates color set with 4 material alternative colors
          * */
         private fun createAlternativeColorSet(
-            regularNameRes: Int,
-            lightNameRes: Int,
-            darkNameRes: Int,
+            regularName: ColorDescription.Name,
+            lightName: ColorDescription.Name,
+            darkName: ColorDescription.Name,
             regularColors: List<Long>,
             lightColors: List<Long>,
             darkColors: List<Long>,
@@ -621,11 +621,11 @@ class DefaultColorDescriptionFactory : ColorDescriptionFactory {
 
             for (i in 0..3) {
                 colorSets += ColorSet.Default(
-                    regular = ColorDescription.Default(regularNameRes, alphas[i], regularColors[i]),
+                    regular = ColorDescription.Default(regularName, alphas[i], regularColors[i]),
                     onRegular = if (i > whiteAfterRegular) ColorDescription.White else ColorDescription.Black,
-                    light = ColorDescription.Default(lightNameRes, alphas[i], lightColors[i]),
+                    light = ColorDescription.Default(lightName, alphas[i], lightColors[i]),
                     onLight = if (i > whiteAfterLight) ColorDescription.White else ColorDescription.Black,
-                    dark = ColorDescription.Default(darkNameRes, alphas[i], darkColors[i]),
+                    dark = ColorDescription.Default(darkName, alphas[i], darkColors[i]),
                     onDark = if (i > whiteAfterDark) ColorDescription.White else ColorDescription.Black
                 )
             }

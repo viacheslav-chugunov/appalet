@@ -12,17 +12,14 @@ class RoomColorDescription(
     var colorAlpha: String = "",
     @ColumnInfo(name = "COLOR_VALUE")
     var colorValue: Long = -1L,
-    @Ignore
-    val serializer: ResourceSerializer = ResourceSerializer.ColorNameSerializer()
 ) : ColorDescription {
 
     private val original: ColorDescription
         @Ignore
-        get() =  ColorDescription.Default(colorAlpha, colorValue, nameOrdinal, serializer)
+        get() =  ColorDescription.Default(nameOrdinal, colorAlpha, colorValue)
 
-    override val nameRes: Int
-        @Ignore
-        get() = original.nameRes
+    override val name: ColorDescription.Name
+        get() = original.name
 
     override val alpha: String
         @Ignore
@@ -32,11 +29,8 @@ class RoomColorDescription(
         @Ignore
         get() = original.value
 
-    constructor(
-        color: ColorDescription,
-        serializer: ResourceSerializer = ResourceSerializer.ColorNameSerializer()
-    ): this(
-        nameOrdinal = serializer.toOrdinal(color.nameRes),
+    constructor(color: ColorDescription): this(
+        nameOrdinal = color.name.ordinal,
         colorAlpha = color.alpha,
         colorValue = color.value
     )

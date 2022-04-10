@@ -45,19 +45,17 @@ class RoomColorSet(
     var onDarkAlpha: String = "",
     @ColumnInfo(name = "ON_DARK_VALUE")
     var onDarkValue: Long = -1L,
-    @Ignore
-    val serializer: ResourceSerializer = ResourceSerializer.ColorNameSerializer(),
 ) : ColorSet {
 
     private val original: ColorSet
         @Ignore
         get() = ColorSet.Default(
-            regular = ColorDescription.Default(regularAlpha, regularValue, regularNameOrdinal, serializer),
-            onRegular = ColorDescription.Default(onRegularAlpha, onRegularValue, onRegularNameOrdinal, serializer),
-            light = ColorDescription.Default(lightAlpha, lightValue, lightNameOrdinal, serializer),
-            onLight = ColorDescription.Default(onLightAlpha, onLightValue, onLightNameOrdinal, serializer),
-            dark = ColorDescription.Default(darkAlpha, darkValue, darkNameOrdinal, serializer),
-            onDark = ColorDescription.Default(onDarkAlpha, onDarkValue, onDarkNameOrdinal, serializer)
+            regular = ColorDescription.Default(regularNameOrdinal, regularAlpha, regularValue),
+            onRegular = ColorDescription.Default(onRegularNameOrdinal, onRegularAlpha, onRegularValue),
+            light = ColorDescription.Default(lightNameOrdinal, lightAlpha, lightValue),
+            onLight = ColorDescription.Default(onLightNameOrdinal, onLightAlpha, onLightValue),
+            dark = ColorDescription.Default(darkNameOrdinal, darkAlpha, darkValue),
+            onDark = ColorDescription.Default(onDarkNameOrdinal, onDarkAlpha, onDarkValue)
         )
 
     override val regular: ColorDescription
@@ -84,26 +82,23 @@ class RoomColorSet(
         @Ignore
         get() = original.onDark
 
-    constructor(
-        set: ColorSet,
-        serializer: ResourceSerializer = ResourceSerializer.ColorNameSerializer()
-    ): this(
-        regularNameOrdinal = serializer.toOrdinal(set.regular.nameRes),
+    constructor(set: ColorSet): this(
+        regularNameOrdinal = set.regular.name.ordinal,
         regularAlpha = set.regular.alpha,
         regularValue = set.regular.value,
-        onRegularNameOrdinal = serializer.toOrdinal(set.onRegular.nameRes),
+        onRegularNameOrdinal = set.onRegular.name.ordinal,
         onRegularAlpha = set.onRegular.alpha,
         onRegularValue = set.onRegular.value,
-        lightNameOrdinal = serializer.toOrdinal(set.light.nameRes),
+        lightNameOrdinal = set.light.name.ordinal,
         lightAlpha = set.light.alpha,
         lightValue = set.light.value,
-        onLightNameOrdinal = serializer.toOrdinal(set.onLight.nameRes),
+        onLightNameOrdinal = set.onLight.name.ordinal,
         onLightAlpha = set.onLight.alpha,
         onLightValue = set.onLight.value,
-        darkNameOrdinal = serializer.toOrdinal(set.dark.nameRes),
+        darkNameOrdinal = set.dark.name.ordinal,
         darkAlpha = set.dark.alpha,
         darkValue = set.dark.value,
-        onDarkNameOrdinal = serializer.toOrdinal(set.onDark.nameRes),
+        onDarkNameOrdinal = set.onDark.name.ordinal,
         onDarkAlpha = set.onDark.alpha,
         onDarkValue = set.onDark.value,
     )
