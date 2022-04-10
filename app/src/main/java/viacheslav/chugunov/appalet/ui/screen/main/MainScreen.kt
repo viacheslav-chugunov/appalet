@@ -33,6 +33,7 @@ import viacheslav.chugunov.appalet.R
 import viacheslav.chugunov.appalet.ui.screen.collection.CollectionScreen
 import viacheslav.chugunov.appalet.ui.screen.settings.SettingsScreen
 import viacheslav.chugunov.appalet.ui.view.*
+import viacheslav.chugunov.core.model.Theme
 import java.lang.IllegalStateException
 
 @ExperimentalFoundationApi
@@ -66,6 +67,7 @@ fun MainScreen() {
         snackbarHostState = snackbarHostState,
         model = model,
         onChangeThemePerform = viewModel::changeTheme,
+        onApplyThemeIntent = viewModel::changeTheme,
         onModeDayPerform = viewModel::changeDayMode,
         onPreviousPerform = {
             navController.navigate(model.preview.previous)
@@ -92,6 +94,7 @@ private fun DrawScreen(
     snackbarHostState: SnackbarHostState,
     model: MainModel,
     onChangeThemePerform: () -> Unit,
+    onApplyThemeIntent: (Theme) -> Unit,
     onModeDayPerform: () -> Unit,
     onPreviousPerform: () -> Unit,
     onNextPerform: () -> Unit,
@@ -267,7 +270,10 @@ private fun DrawScreen(
                 }
             ) {
                 onCurrentScreenChanged(Screen.Collection)
-                CollectionScreen { onFavouritesChanged(false) }
+                CollectionScreen(
+                    onThemeApplied = onApplyThemeIntent,
+                    onThemeRemoved = { onFavouritesChanged(false) }
+                )
             }
             composable(
                 route = Screen.Route.INPUT,

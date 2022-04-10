@@ -2,6 +2,7 @@ package viacheslav.chugunov.appalet.ui.screen.collection
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,6 +25,7 @@ import viacheslav.chugunov.core.model.Theme
 
 @Composable
 fun CollectionScreen(
+    onThemeApplied: (Theme) -> Unit,
     onThemeRemoved: () -> Unit
 ) {
     val viewModel: CollectionViewModel = hiltViewModel()
@@ -32,6 +34,7 @@ fun CollectionScreen(
 
     DrawScreen(
         model = model,
+        onApplyThemeIntent = onThemeApplied,
         onRemoveThemeIntent = {
             coroutineScope.launch {
                 viewModel.removeTheme(it)
@@ -44,11 +47,12 @@ fun CollectionScreen(
 @Composable
 private fun DrawScreen(
     model: CollectionModel,
+    onApplyThemeIntent: (Theme) -> Unit,
     onRemoveThemeIntent: (Theme) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(model.themes) { theme ->
-            Row {
+            Row(modifier = Modifier.clickable { onApplyThemeIntent(theme) }) {
                 DrawColor(theme.primaryLight)
                 DrawColor(theme.primaryRegular)
                 DrawColor(theme.primaryDark)

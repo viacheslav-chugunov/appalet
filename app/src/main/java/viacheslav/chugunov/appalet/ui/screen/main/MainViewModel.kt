@@ -86,6 +86,15 @@ class MainViewModel(
         }
     }
 
+    fun changeTheme(theme: Theme) {
+        if (model.loading) return
+        updateModel(loading = true)
+        viewModelScope.launch(coroutineContext) {
+            val inFavourites = preferredThemesRepository.isThemeAdded(theme)
+            updateModel(theme = theme, inFavourites = inFavourites, loading = false)
+        }
+    }
+
     fun changeDayMode() {
         if (model.loading) return
         updateModel(loading = true)
