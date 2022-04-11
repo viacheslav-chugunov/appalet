@@ -10,7 +10,7 @@ interface Language {
 
     val isEnglish get() = locale.language == "en"
     val isRussian get() = locale.language == "ru"
-    val isUkrainian get() = locale.language == "ua"
+    val isUkrainian get() = locale.language == "uk"
 
 
 
@@ -24,5 +24,5 @@ interface Language {
 
     object English : Default(Locale("en"), R.drawable.flag_us, R.string.english)
     object Russian : Default(Locale("ru"), R.drawable.flag_ru, R.string.russian)
-    object Ukrainian : Default(Locale("ua"), R.drawable.flag_ua, R.string.ukrainian)
+    object Ukrainian : Default(Locale("uk"), R.drawable.flag_ua, R.string.ukrainian)
 }
