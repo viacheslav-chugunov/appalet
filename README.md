@@ -18,6 +18,9 @@ Appalet picks random material color combinations that will later be used to crea
 4. Support for `HEX` and `RGB` color formats.
 5. Saving preferred colors to local storage.
 
+## Download
+[Google Play](https://play.google.com/store/apps/details?id=viacheslav.chugunov.appalet)
+
 ## Licence
 ```
 MIT License
