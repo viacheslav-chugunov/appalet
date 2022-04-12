@@ -9,7 +9,16 @@ interface Coloring {
     open class Default(
         override val color: ColorDescription = ColorDescription.White,
         override val onColor: ColorDescription = ColorDescription.Black
-    ) : Coloring
+    ) : Coloring {
+
+        override fun toString(): String =
+            """Coloring {
+                |    color = $color
+                |    onColor = $color
+                |}
+            """.trimMargin()
+
+    }
 
 
 

@@ -9,5 +9,14 @@ interface PreferredColors {
     open class Default(
         override val lightBackground: Coloring = Coloring.White,
         override val darkBackground: Coloring = Coloring.Gray900
-    ) : PreferredColors
+    ) : PreferredColors {
+
+        override fun toString(): String =
+            """PreferredColors {
+                |    lightBackground = $lightBackground
+                |    darkBackground = $darkBackground
+                |}
+            """.trimMargin()
+
+    }
 }

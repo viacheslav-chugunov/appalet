@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import viacheslav.chugunov.core.datasource.PreferenceDataSource
 import viacheslav.chugunov.core.util.Serializer
+import viacheslav.chugunov.storage.datastore.model.DataStorePreferredColors
 
 abstract class DefaultPreferenceDataSource<T>(
     private val preference: DataStore<Preferences>,

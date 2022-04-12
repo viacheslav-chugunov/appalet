@@ -26,14 +26,17 @@ class MainViewModel(
     coroutineContext: CoroutineContext
 ) : BaseViewModel<MainModel>(model, coroutineContext) {
 
-    @Inject constructor(
+    @Inject
+    constructor(
         themeRepository: ThemeRepository,
         languageRepository: LanguageRepository,
         preferredColorsRepository: PreferredColorsRepository,
         preferredThemesRepository: PreferredThemesRepository,
         coroutineContext: CoroutineContext
-    ): this(themeRepository, languageRepository, preferredColorsRepository, preferredThemesRepository,
-        MainModel(), coroutineContext)
+    ) : this(
+        themeRepository, languageRepository, preferredColorsRepository, preferredThemesRepository,
+        MainModel(), coroutineContext
+    )
 
     init {
         changeTheme()
@@ -51,8 +54,10 @@ class MainViewModel(
         inFavourites: Boolean = model.inFavourites,
         loading: Boolean = model.loading
     ) {
-        model = MainModel(theme, language, preferredColors, modeDay, preview, currentScreen,
-            closeAppOnBackPress, inFavourites, loading)
+        model = MainModel(
+            theme, language, preferredColors, modeDay, preview, currentScreen,
+            closeAppOnBackPress, inFavourites, loading
+        )
         modelMutableFlow.value = model
     }
 
@@ -63,13 +68,17 @@ class MainViewModel(
             languageFlow.combine(preferredColorsFlow) { language, preferredColors ->
                 Pair(language, preferredColors)
             }.collect { (language, preferredColors) ->
-                val theme = if (model.modeDay)
-                    Theme.Light(model.theme, preferredColors)
-                else
-                    Theme.Dark(model.theme, preferredColors)
-                val inFavourites = preferredThemesRepository.isThemeAdded(theme)
-                updateModel(language = language, preferredColors = preferredColors, theme = theme,
-                    inFavourites = inFavourites)
+                if (language != null && preferredColors != null) {
+                    val theme = if (model.modeDay)
+                        Theme.Light(model.theme, preferredColors)
+                    else
+                        Theme.Dark(model.theme, preferredColors)
+                    val inFavourites = preferredThemesRepository.isThemeAdded(theme)
+                    updateModel(
+                        language = language, preferredColors = preferredColors, theme = theme,
+                        inFavourites = inFavourites
+                    )
+                }
             }
         }
     }
@@ -102,9 +111,17 @@ class MainViewModel(
             val isLight = model.modeDay
             val theme = model.theme
             val preferredColors = model.preferredColors
-            val newTheme = if (isLight) Theme.Dark(theme, preferredColors) else Theme.Light(theme, preferredColors)
+            val newTheme = if (isLight) Theme.Dark(theme, preferredColors) else Theme.Light(
+                theme,
+                preferredColors
+            )
             val inFavourites = preferredThemesRepository.isThemeAdded(newTheme)
-            updateModel(theme = newTheme, modeDay = !isLight, inFavourites = inFavourites, loading = false)
+            updateModel(
+                theme = newTheme,
+                modeDay = !isLight,
+                inFavourites = inFavourites,
+                loading = false
+            )
         }
     }
 
