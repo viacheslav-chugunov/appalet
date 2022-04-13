@@ -17,10 +17,7 @@ class DefaultRandomThemeDataSource(
         val shuffledColors = colors.shuffled()
         val primarySet = shuffledColors[0]
         val secondarySet = shuffledColors[1]
-        return if (isLight)
-            Theme.Light(primarySet, secondarySet, preferredColors)
-        else
-            Theme.Dark(primarySet, secondarySet, preferredColors)
+        return Theme.Adaptive(isLight, primarySet, secondarySet, preferredColors)
     }
 
     override fun createColor(): Coloring {

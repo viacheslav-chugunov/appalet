@@ -1,35 +1,44 @@
 package viacheslav.chugunov.appalet.ui.screen.settings
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.PreferredColors
-import viacheslav.chugunov.core.repository.LanguageRepository
-import viacheslav.chugunov.core.repository.PreferredColorsRepository
-import viacheslav.chugunov.core.repository.ThemeRepository
+import viacheslav.chugunov.core.usecase.ChangeBackgroundColorAsRandomUseCase
+import viacheslav.chugunov.core.usecase.ChangeLanguageUseCase
+import viacheslav.chugunov.core.usecase.GetSettingsUseCase
+import viacheslav.chugunov.core.usecase.ResetBackgroundColorUseCase
 import viacheslav.chugunov.core.util.BaseViewModel
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class SettingsViewModel(
-    private val languageRepository: LanguageRepository,
-    private val preferredColorsRepository: PreferredColorsRepository,
-    private val themeRepository: ThemeRepository,
+    private val getSettingsUseCase: GetSettingsUseCase,
+    private val changeLanguageUseCase: ChangeLanguageUseCase,
+    private val changeBackgroundColorAsRandomUseCase: ChangeBackgroundColorAsRandomUseCase,
+    private val resetBackgroundColorUseCase: ResetBackgroundColorUseCase,
     model: SettingsModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<SettingsModel>(model, coroutineContext) {
 
-    @Inject constructor(
-        languageRepository: LanguageRepository,
-        preferredColorsRepository: PreferredColorsRepository,
-        themeRepository: ThemeRepository,
+    @Inject
+    constructor(
+        getSettingsUseCase: GetSettingsUseCase,
+        changeLanguageUseCase: ChangeLanguageUseCase,
+        changeBackgroundColorAsRandomUseCase: ChangeBackgroundColorAsRandomUseCase,
+        resetBackgroundColorUseCase: ResetBackgroundColorUseCase,
         coroutineContext: CoroutineContext
-    ): this(languageRepository, preferredColorsRepository, themeRepository, SettingsModel(), coroutineContext)
+    ) : this(
+        getSettingsUseCase,
+        changeLanguageUseCase,
+        changeBackgroundColorAsRandomUseCase,
+        resetBackgroundColorUseCase,
+        SettingsModel(),
+        coroutineContext
+    )
 
     fun updateModel(
         preferredColors: PreferredColors = model.preferredColors,
@@ -40,46 +49,40 @@ class SettingsViewModel(
     }
 
     init {
+        subscribeOnObservable()
+    }
+
+    fun subscribeOnObservable(): Job =
         viewModelScope.launch {
-            val colorsFlow = preferredColorsRepository.getColorsFlow()
-            val languageFlow = languageRepository.getLanguageFlow()
-            colorsFlow.combine(languageFlow) { colors, language ->
-                Pair(colors, language)
-            }.collect { (colors, language) ->
-                updateModel(preferredColors = colors, language = language)
+            getSettingsUseCase.invoke().collect { settingsConfig ->
+                val language = settingsConfig.language
+                val preferredColors = settingsConfig.preferredColors
+                updateModel(preferredColors = preferredColors, language = language)
             }
         }
-    }
 
-    fun changeLanguage(language: Language) {
+    fun changeLanguage(language: Language): Job =
         viewModelScope.launch(coroutineContext) {
-            languageRepository.setLanguage(language)
+            changeLanguageUseCase.invoke(language)
         }
-    }
 
-    fun changeLightBackgroundColor() {
+    fun changeLightBackgroundColor(): Job =
         viewModelScope.launch(coroutineContext) {
-            val color = themeRepository.getRandomColor()
-            preferredColorsRepository.setLightBackground(color)
+            changeBackgroundColorAsRandomUseCase.invoke(isLight = true)
         }
-    }
 
-    fun resetLightBackgroundColor() {
+    fun resetLightBackgroundColor(): Job =
         viewModelScope.launch(coroutineContext) {
-            preferredColorsRepository.resetLightBackground()
+            resetBackgroundColorUseCase.invoke(isLight = true)
         }
-    }
 
-    fun changeDarkBackgroundColor() {
+    fun changeDarkBackgroundColor(): Job =
         viewModelScope.launch(coroutineContext) {
-            val color = themeRepository.getRandomColor()
-            preferredColorsRepository.setDarkBackground(color)
+            changeBackgroundColorAsRandomUseCase.invoke(isLight = false)
         }
-    }
 
-    fun resetDarkBackgroundColor() {
+    fun resetDarkBackgroundColor(): Job =
         viewModelScope.launch(coroutineContext) {
-            preferredColorsRepository.resetDarkBackground()
+            resetBackgroundColorUseCase.invoke(isLight = false)
         }
-    }
 }

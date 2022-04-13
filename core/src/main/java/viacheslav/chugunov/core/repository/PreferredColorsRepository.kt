@@ -11,6 +11,10 @@ interface PreferredColorsRepository {
     suspend fun getColors(): PreferredColors = getColorsFlow().first()
     suspend fun setLightBackground(color: Coloring)
     suspend fun setDarkBackground(color: Coloring)
+    suspend fun setBackground(isLight: Boolean, color: Coloring) =
+        if (isLight) setLightBackground(color) else setDarkBackground(color)
     suspend fun resetLightBackground()
     suspend fun resetDarkBackground()
+    suspend fun resetBackground(isLight: Boolean) =
+        if (isLight) resetLightBackground() else resetDarkBackground()
 }

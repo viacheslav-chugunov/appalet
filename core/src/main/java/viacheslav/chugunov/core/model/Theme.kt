@@ -1,13 +1,10 @@
 package viacheslav.chugunov.core.model
 
-import android.util.Log
-
 interface Theme : SelectedTheme {
     override val colorsPrimary: ColorSet
     override val colorsSecondary: ColorSet
     val colorBackground: ColorDescription
     val colorOnBackground: ColorDescription
-
 
 
     abstract class Default : Theme {
@@ -47,7 +44,6 @@ interface Theme : SelectedTheme {
     }
 
 
-
     object Empty : Default() {
         override val colorsPrimary: ColorSet = ColorSet.Empty
         override val colorsSecondary: ColorSet = ColorSet.Empty
@@ -56,22 +52,15 @@ interface Theme : SelectedTheme {
     }
 
 
-
-    class Light(
+    class Light private constructor(
         override val colorsPrimary: ColorSet,
         override val colorsSecondary: ColorSet,
-        override val colorBackground: ColorDescription,
-        override val colorOnBackground: ColorDescription
+        preferredColors: PreferredColors
     ) : Default() {
+        override val colorBackground: ColorDescription = preferredColors.lightBackground.color
+        override val colorOnBackground: ColorDescription = preferredColors.lightBackground.onColor
 
-        constructor(colorsPrimary: ColorSet, colorsSecondary: ColorSet, preferredColors: PreferredColors): this(
-            colorsPrimary = colorsPrimary,
-            colorsSecondary = colorsSecondary,
-            colorBackground = preferredColors.lightBackground.color,
-            colorOnBackground = preferredColors.lightBackground.onColor
-        )
-
-        constructor(theme: SelectedTheme, preferredColors: PreferredColors): this(
+        constructor(theme: SelectedTheme, preferredColors: PreferredColors) : this(
             colorsPrimary = theme.colorsPrimary,
             colorsSecondary = theme.colorsSecondary,
             preferredColors = preferredColors
@@ -79,22 +68,39 @@ interface Theme : SelectedTheme {
     }
 
 
-
     class Dark(
         override val colorsPrimary: ColorSet,
         override val colorsSecondary: ColorSet,
-        override val colorBackground: ColorDescription,
-        override val colorOnBackground: ColorDescription
+        preferredColors: PreferredColors
     ) : Default() {
+        override val colorBackground: ColorDescription = preferredColors.darkBackground.color
+        override val colorOnBackground: ColorDescription = preferredColors.darkBackground.onColor
 
-        constructor(colorsPrimary: ColorSet, colorsSecondary: ColorSet, preferredColors: PreferredColors): this(
-            colorsPrimary = colorsPrimary,
-            colorsSecondary = colorsSecondary,
-            colorBackground = preferredColors.darkBackground.color,
-            colorOnBackground = preferredColors.darkBackground.onColor
+        constructor(theme: SelectedTheme, preferredColors: PreferredColors) : this(
+            colorsPrimary = theme.colorsPrimary,
+            colorsSecondary = theme.colorsSecondary,
+            preferredColors = preferredColors
         )
+    }
 
-        constructor(theme: SelectedTheme, preferredColors: PreferredColors): this(
+
+    class Adaptive(
+        modeLight: Boolean,
+        override val colorsPrimary: ColorSet,
+        override val colorsSecondary: ColorSet,
+        preferredColors: PreferredColors
+    ) : Default() {
+        override val colorBackground: ColorDescription =
+            preferredColors.run { if (modeLight) lightBackground else darkBackground }.color
+        override val colorOnBackground: ColorDescription =
+            preferredColors.run { if (modeLight) lightBackground else darkBackground }.onColor
+
+        constructor(
+            modeLight: Boolean,
+            theme: SelectedTheme,
+            preferredColors: PreferredColors
+        ) : this(
+            modeLight = modeLight,
             colorsPrimary = theme.colorsPrimary,
             colorsSecondary = theme.colorsSecondary,
             preferredColors = preferredColors

@@ -1,7 +1,5 @@
 package viacheslav.chugunov.core.model
 
-import android.util.Log
-
 interface ColorSet {
     val regular: ColorDescription
     val onRegular: ColorDescription
@@ -9,7 +7,6 @@ interface ColorSet {
     val onLight: ColorDescription
     val dark: ColorDescription
     val onDark: ColorDescription
-
 
 
     open class Default(
@@ -40,7 +37,6 @@ interface ColorSet {
             return result
         }
     }
-
 
 
     object Empty : Default(

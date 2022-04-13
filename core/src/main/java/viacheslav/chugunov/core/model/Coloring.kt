@@ -5,7 +5,6 @@ interface Coloring {
     val onColor: ColorDescription
 
 
-
     open class Default(
         override val color: ColorDescription = ColorDescription.White,
         override val onColor: ColorDescription = ColorDescription.Black
@@ -19,7 +18,6 @@ interface Coloring {
             """.trimMargin()
 
     }
-
 
 
     object White : Default(ColorDescription.White, ColorDescription.Black)

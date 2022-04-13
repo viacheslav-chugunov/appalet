@@ -66,7 +66,7 @@ fun MainScreen() {
         navHostController = navController,
         snackbarHostState = snackbarHostState,
         model = model,
-        onChangeThemePerform = viewModel::changeTheme,
+        onChangeThemePerform = viewModel::changeThemeAsRandom,
         onApplyThemeIntent = viewModel::changeTheme,
         onModeDayPerform = viewModel::changeDayMode,
         onPreviousPerform = {
@@ -81,7 +81,8 @@ fun MainScreen() {
         onSettingsPerform = { navController.navigate(Screen.Settings) },
         onCollectionPerform = { navController.navigate(Screen.Collection) },
         onCurrentScreenChanged = { viewModel.updateModel(currentScreen = it) },
-        onFavouritesChanged = { viewModel.updateFavourites(it) }
+        onFavouritesChanged = viewModel::updateFavourites,
+        addThemeToFavourites = viewModel::addThemeToCollection
     )
 }
 
@@ -102,7 +103,8 @@ private fun DrawScreen(
     onSettingsPerform: () -> Unit,
     onCollectionPerform: () -> Unit,
     onCurrentScreenChanged: (Screen) -> Unit,
-    onFavouritesChanged: (Boolean) -> Unit,
+    onFavouritesChanged: () -> Unit,
+    addThemeToFavourites: () -> Unit,
 ) = MaterialThemeTheme(model.theme) {
 
     LocalWindow.current?.apply {
@@ -118,7 +120,7 @@ private fun DrawScreen(
                 visible = model.currentScreen.hasTitle,
                 title = model.currentScreen.getTitle(LocalContext.current),
                 actionIconId = if (model.inFavourites) R.drawable.ic_favourite else R.drawable.ic_not_favourite,
-                onActionPerform = { onFavouritesChanged(true) },
+                onActionPerform = addThemeToFavourites,
                 actionClickable = !model.inFavourites
             )
         },
@@ -272,7 +274,7 @@ private fun DrawScreen(
                 onCurrentScreenChanged(Screen.Collection)
                 CollectionScreen(
                     onThemeApplied = onApplyThemeIntent,
-                    onThemeRemoved = { onFavouritesChanged(false) }
+                    onThemeRemoved = onFavouritesChanged
                 )
             }
             composable(

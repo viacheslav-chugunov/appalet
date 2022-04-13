@@ -2,15 +2,15 @@ package viacheslav.chugunov.appalet.ui.screen.main
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.model.Theme
-import viacheslav.chugunov.core.repository.LanguageRepository
-import viacheslav.chugunov.core.repository.PreferredColorsRepository
-import viacheslav.chugunov.core.repository.PreferredThemesRepository
-import viacheslav.chugunov.core.repository.ThemeRepository
+import viacheslav.chugunov.core.usecase.AddThemeToCollectionUseCase
+import viacheslav.chugunov.core.usecase.GetRandomThemeUseCase
+import viacheslav.chugunov.core.usecase.GetSettingsUseCase
+import viacheslav.chugunov.core.usecase.IsThemeInCollectionUseCase
 import viacheslav.chugunov.core.util.BaseViewModel
 import viacheslav.chugunov.core.util.Screen
 import javax.inject.Inject
@@ -18,28 +18,31 @@ import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class MainViewModel(
-    private val themeRepository: ThemeRepository,
-    private val languageRepository: LanguageRepository,
-    private val preferredColorsRepository: PreferredColorsRepository,
-    private val preferredThemesRepository: PreferredThemesRepository,
+    private val getRandomThemeUseCase: GetRandomThemeUseCase,
+    private val getSettingsUseCase: GetSettingsUseCase,
+    private val isThemeInCollectionUseCase: IsThemeInCollectionUseCase,
+    private val addThemeToCollectionUseCase: AddThemeToCollectionUseCase,
     model: MainModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<MainModel>(model, coroutineContext) {
 
     @Inject
     constructor(
-        themeRepository: ThemeRepository,
-        languageRepository: LanguageRepository,
-        preferredColorsRepository: PreferredColorsRepository,
-        preferredThemesRepository: PreferredThemesRepository,
+        getRandomThemeUseCase: GetRandomThemeUseCase,
+        getSettingsUseCase: GetSettingsUseCase,
+        isThemeInCollectionUseCase: IsThemeInCollectionUseCase,
+        addThemeToCollectionUseCase: AddThemeToCollectionUseCase,
         coroutineContext: CoroutineContext
     ) : this(
-        themeRepository, languageRepository, preferredColorsRepository, preferredThemesRepository,
-        MainModel(), coroutineContext
+        getRandomThemeUseCase,
+        getSettingsUseCase,
+        isThemeInCollectionUseCase,
+        addThemeToCollectionUseCase,
+        MainModel(),
+        coroutineContext
     )
 
     init {
-        changeTheme()
         subscribeOnObservable()
     }
 
@@ -55,85 +58,83 @@ class MainViewModel(
         loading: Boolean = model.loading
     ) {
         model = MainModel(
-            theme, language, preferredColors, modeDay, preview, currentScreen,
-            closeAppOnBackPress, inFavourites, loading
+            theme,
+            language,
+            preferredColors,
+            modeDay,
+            preview,
+            currentScreen,
+            closeAppOnBackPress,
+            inFavourites,
+            loading
         )
         modelMutableFlow.value = model
     }
 
-    fun subscribeOnObservable() {
+    fun subscribeOnObservable(): Job =
         viewModelScope.launch(coroutineContext) {
-            val languageFlow = languageRepository.getLanguageFlow()
-            val preferredColorsFlow = preferredColorsRepository.getColorsFlow()
-            languageFlow.combine(preferredColorsFlow) { language, preferredColors ->
-                Pair(language, preferredColors)
-            }.collect { (language, preferredColors) ->
-                if (language != null && preferredColors != null) {
-                    val theme = if (model.modeDay)
-                        Theme.Light(model.theme, preferredColors)
-                    else
-                        Theme.Dark(model.theme, preferredColors)
-                    val inFavourites = preferredThemesRepository.isThemeAdded(theme)
-                    updateModel(
-                        language = language, preferredColors = preferredColors, theme = theme,
-                        inFavourites = inFavourites
-                    )
-                }
+            getSettingsUseCase.invoke().collect { settingsConfig ->
+                val language = settingsConfig.language
+                val preferredColors = settingsConfig.preferredColors
+                val modeLight = model.modeDay
+                val currentTheme = model.theme
+                val newTheme = Theme.Adaptive(modeLight, currentTheme, preferredColors)
+                val inFavourites = isThemeInCollectionUseCase.invoke(newTheme)
+                val isLoading = model.loading
+                if (isLoading) changeThemeAsRandom()
+                updateModel(
+                    language = language,
+                    preferredColors = preferredColors,
+                    theme = newTheme,
+                    inFavourites = inFavourites,
+                    loading = false
+                )
             }
         }
-    }
 
-    fun changeTheme() {
-        if (model.loading) return
-        updateModel(loading = true)
+    fun changeThemeAsRandom(): Job =
         viewModelScope.launch(coroutineContext) {
             val isLight = model.modeDay
             val preferredColors = model.preferredColors
-            val theme = themeRepository.getRandomTheme(isLight, preferredColors)
-            val inFavourites = preferredThemesRepository.isThemeAdded(theme)
-            updateModel(theme = theme, inFavourites = inFavourites, loading = false)
+            val theme = getRandomThemeUseCase.invoke(isLight, preferredColors)
+            val inFavourites = isThemeInCollectionUseCase.invoke(theme)
+            updateModel(theme = theme, inFavourites = inFavourites)
         }
-    }
 
-    fun changeTheme(theme: Theme) {
-        if (model.loading) return
-        updateModel(loading = true)
+    fun changeTheme(theme: Theme): Job =
         viewModelScope.launch(coroutineContext) {
-            val inFavourites = preferredThemesRepository.isThemeAdded(theme)
-            updateModel(theme = theme, inFavourites = inFavourites, loading = false)
+            val inFavourites = isThemeInCollectionUseCase.invoke(theme)
+            updateModel(theme = theme, inFavourites = inFavourites)
         }
-    }
 
-    fun changeDayMode() {
-        if (model.loading) return
-        updateModel(loading = true)
+    fun changeDayMode(): Job =
         viewModelScope.launch(coroutineContext) {
             val isLight = model.modeDay
             val theme = model.theme
             val preferredColors = model.preferredColors
-            val newTheme = if (isLight) Theme.Dark(theme, preferredColors) else Theme.Light(
-                theme,
-                preferredColors
-            )
-            val inFavourites = preferredThemesRepository.isThemeAdded(newTheme)
+            val newTheme = Theme.Adaptive(!isLight, theme, preferredColors)
+            val inFavourites = isThemeInCollectionUseCase.invoke(newTheme)
             updateModel(
                 theme = newTheme,
                 modeDay = !isLight,
-                inFavourites = inFavourites,
-                loading = false
+                inFavourites = inFavourites
             )
         }
-    }
 
-    fun updateFavourites(addCurrentTheme: Boolean) {
-        if (model.loading) return
-        updateModel(loading = true)
+    fun updateFavourites(): Job =
         viewModelScope.launch(coroutineContext) {
-            if (addCurrentTheme) preferredThemesRepository.addTheme(model.theme)
-            val inFavourites = preferredThemesRepository.isThemeAdded(model.theme)
-            updateModel(inFavourites = inFavourites, loading = false)
+            val theme = model.theme
+            val inFavourites = isThemeInCollectionUseCase.invoke(theme)
+            updateModel(inFavourites = inFavourites)
         }
-    }
+
+    fun addThemeToCollection(): Job =
+        viewModelScope.launch(coroutineContext) {
+            val theme = model.theme
+            addThemeToCollectionUseCase.invoke(theme)
+            val inFavourites = isThemeInCollectionUseCase.invoke(theme)
+            updateModel(inFavourites = inFavourites)
+        }
 
     fun updatePreviewToPrevious() {
         val preview = model.preview.previous

@@ -14,5 +14,5 @@ data class MainModel(
     val currentScreen: Screen = Screen.Input,
     val closeAppOnBackPress: Boolean = false,
     val inFavourites: Boolean = false,
-    val loading: Boolean = false,
+    val loading: Boolean = true
 )

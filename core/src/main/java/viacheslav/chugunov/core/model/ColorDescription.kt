@@ -1,8 +1,6 @@
 package viacheslav.chugunov.core.model
 
 import viacheslav.chugunov.core.R
-import viacheslav.chugunov.core.util.ResourceSerializer
-import java.lang.IllegalStateException
 
 interface ColorDescription {
     val name: Name
@@ -14,7 +12,6 @@ interface ColorDescription {
     val red: Int get() = (value and 0xFF0000 shr 16).toInt()
     val green: Int get() = (value and 0xFF00 shr 8).toInt()
     val blue: Int get() = (value and 0xFF).toInt()
-
 
 
     enum class Name(val res: Int) {
@@ -40,20 +37,70 @@ interface ColorDescription {
         WHITE(R.string.white), BLACK(R.string.black);
 
         companion object {
-            val all: Set<Name> get() = setOf(
-                RED, RED_LIGHT, RED_DARK, PINK, PINK_LIGHT, PINK_DARK, PURPLE, PURPLE_LIGHT,
-                PURPLE_DARK, DEEP_PURPLE, DEEP_PURPLE_LIGHT, DEEP_PURPLE_DARK, INDIGO, INDIGO_LIGHT,
-                INDIGO_DARK, BLUE, BLUE_LIGHT, BLUE_DARK, LIGHT_BLUE, LIGHT_BLUE_LIGHT, LIGHT_BLUE_DARK,
-                CYAN, CYAN_LIGHT, CYAN_DARK, TEAL, TEAL_LIGHT, TEAL_DARK, GREEN, GREEN_LIGHT, GREEN_DARK,
-                LIGHT_GREEN, LIGHT_GREEN_LIGHT, LIGHT_GREEN_DARK, LIME, LIME_LIGHT, LIME_DARK, YELLOW,
-                YELLOW_LIGHT, YELLOW_DARK, AMBER, AMBER_LIGHT, AMBER_DARK, ORANGE, ORANGE_LIGHT,
-                ORANGE_DARK, DEEP_ORANGE, DEEP_ORANGE_LIGHT, DEEP_ORANGE_DARK, BROWN, BROWN_LIGHT,
-                BROWN_DARK, GRAY, GRAY_LIGHT, GRAY_DARK, BLUE_GRAY, BLUE_GRAY_LIGHT, BLUE_GRAY_DARK,
-                WHITE, BLACK
-            )
+            val all: Set<Name>
+                get() = setOf(
+                    RED,
+                    RED_LIGHT,
+                    RED_DARK,
+                    PINK,
+                    PINK_LIGHT,
+                    PINK_DARK,
+                    PURPLE,
+                    PURPLE_LIGHT,
+                    PURPLE_DARK,
+                    DEEP_PURPLE,
+                    DEEP_PURPLE_LIGHT,
+                    DEEP_PURPLE_DARK,
+                    INDIGO,
+                    INDIGO_LIGHT,
+                    INDIGO_DARK,
+                    BLUE,
+                    BLUE_LIGHT,
+                    BLUE_DARK,
+                    LIGHT_BLUE,
+                    LIGHT_BLUE_LIGHT,
+                    LIGHT_BLUE_DARK,
+                    CYAN,
+                    CYAN_LIGHT,
+                    CYAN_DARK,
+                    TEAL,
+                    TEAL_LIGHT,
+                    TEAL_DARK,
+                    GREEN,
+                    GREEN_LIGHT,
+                    GREEN_DARK,
+                    LIGHT_GREEN,
+                    LIGHT_GREEN_LIGHT,
+                    LIGHT_GREEN_DARK,
+                    LIME,
+                    LIME_LIGHT,
+                    LIME_DARK,
+                    YELLOW,
+                    YELLOW_LIGHT,
+                    YELLOW_DARK,
+                    AMBER,
+                    AMBER_LIGHT,
+                    AMBER_DARK,
+                    ORANGE,
+                    ORANGE_LIGHT,
+                    ORANGE_DARK,
+                    DEEP_ORANGE,
+                    DEEP_ORANGE_LIGHT,
+                    DEEP_ORANGE_DARK,
+                    BROWN,
+                    BROWN_LIGHT,
+                    BROWN_DARK,
+                    GRAY,
+                    GRAY_LIGHT,
+                    GRAY_DARK,
+                    BLUE_GRAY,
+                    BLUE_GRAY_LIGHT,
+                    BLUE_GRAY_DARK,
+                    WHITE,
+                    BLACK
+                )
         }
     }
-
 
 
     open class Default(
@@ -62,7 +109,7 @@ interface ColorDescription {
         override val value: Long
     ) : ColorDescription {
 
-        constructor(nameOrdinal: Int, alpha: String, value: Long): this(
+        constructor(nameOrdinal: Int, alpha: String, value: Long) : this(
             name = Name.all.find { it.ordinal == nameOrdinal } ?: Name.WHITE,
             alpha = alpha,
             value = value
@@ -91,7 +138,6 @@ interface ColorDescription {
             return result
         }
     }
-
 
 
     object White : Default(Name.WHITE, "1000", 0xffffffff)

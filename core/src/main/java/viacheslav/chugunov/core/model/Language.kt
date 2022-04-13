@@ -13,13 +13,11 @@ interface Language {
     val isUkrainian get() = locale.language == "uk"
 
 
-
     open class Default(
         override val locale: Locale,
         override val flagIconId: Int,
         override val nameId: Int
     ) : Language
-
 
 
     object English : Default(Locale("en"), R.drawable.flag_us, R.string.english)

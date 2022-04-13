@@ -11,7 +11,7 @@ import kotlin.coroutines.CoroutineContext
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class ViewModelModule {
+class AppModule {
 
     @Provides
     fun coroutineContext(): CoroutineContext =
