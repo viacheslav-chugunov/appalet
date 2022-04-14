@@ -8,14 +8,15 @@ import viacheslav.chugunov.core.datasource.PreferenceDataSource
 import viacheslav.chugunov.core.model.Coloring
 import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.repository.PreferredColorsRepository
+import viacheslav.chugunov.storage.datastore.model.DataStorePreferredColors
 
 class DefaultPreferredColorsRepository(
-    private val preference: PreferenceDataSource<PreferredColors>,
-    private val defaultColors: PreferredColors = PreferredColors.Default()
+    private val preference: PreferenceDataSource<DataStorePreferredColors>,
+    private val defaultColors: DataStorePreferredColors = DataStorePreferredColors()
 ) : PreferredColorsRepository {
 
     override fun getColorsFlow(): Flow<PreferredColors> =
-        preference.getFlow().map { it ?: defaultColors }
+        preference.getFlow().map { (it ?: defaultColors).asPreferredColors() }
 
     override suspend fun setLightBackground(color: Coloring) =
         setColors { PreferredColors.Default(color, it.darkBackground) }
@@ -31,7 +32,7 @@ class DefaultPreferredColorsRepository(
 
     private suspend fun setColors(map: (current: PreferredColors) -> PreferredColors) {
         val currentColors = preference.get() ?: defaultColors
-        val newColors = map(currentColors)
-        preference.set(newColors)
+        val newColors = map(currentColors.asPreferredColors())
+        preference.set(DataStorePreferredColors(newColors))
     }
 }

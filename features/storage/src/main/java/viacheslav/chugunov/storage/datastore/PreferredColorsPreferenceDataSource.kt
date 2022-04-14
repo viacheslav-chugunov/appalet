@@ -14,7 +14,7 @@ import viacheslav.chugunov.storage.datastore.model.DataStorePreferredColors
 class PreferredColorsPreferenceDataSource(
     context: Context,
     serializer: Serializer
-) : DefaultPreferenceDataSource<PreferredColors>(
+) : DefaultPreferenceDataSource<DataStorePreferredColors>(
     preference = context.preference,
     serializer = serializer,
     keyName = "preferredColors"

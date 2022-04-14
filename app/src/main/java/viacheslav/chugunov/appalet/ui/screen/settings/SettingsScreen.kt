@@ -72,25 +72,24 @@ private fun DrawScreen(
             onPerform = { onLanguageChangeIntent(Language.Ukrainian) }
         )
         Spacer(modifier = Modifier.height(8.dp))
-//        TODO for next release
-//        DrawTitle(
-//            titleId = R.string.background_colors,
-//            language = model.language
-//        )
-//        DrawBackgroundColorButton(
-//            labelId = R.string.light_theme,
-//            coloring = model.preferredColors.lightBackground,
-//            onChangeColorIntent = onLightBackgroundColorChangeIntent,
-//            onResetColorIntent = onLightBackgroundColorResetIntent
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//        DrawBackgroundColorButton(
-//            labelId = R.string.dark_theme,
-//            coloring = model.preferredColors.darkBackground,
-//            onChangeColorIntent = onDarkBackgroundColorChangeIntent,
-//            onResetColorIntent = onDarkBackgroundColorResetIntent
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
+        DrawTitle(
+            titleId = R.string.background_colors,
+            language = model.language
+        )
+        DrawBackgroundColorButton(
+            labelId = R.string.light_theme,
+            coloring = model.preferredColors.lightBackground,
+            onChangeColorIntent = onLightBackgroundColorChangeIntent,
+            onResetColorIntent = onLightBackgroundColorResetIntent
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        DrawBackgroundColorButton(
+            labelId = R.string.dark_theme,
+            coloring = model.preferredColors.darkBackground,
+            onChangeColorIntent = onDarkBackgroundColorChangeIntent,
+            onResetColorIntent = onDarkBackgroundColorResetIntent
+        )
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 

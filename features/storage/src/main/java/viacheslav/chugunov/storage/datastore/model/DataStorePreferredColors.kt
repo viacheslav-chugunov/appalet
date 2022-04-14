@@ -4,6 +4,9 @@ import viacheslav.chugunov.core.model.ColorDescription
 import viacheslav.chugunov.core.model.Coloring
 import viacheslav.chugunov.core.model.PreferredColors
 
+/**
+ * Gson-friendly preferredColors implementation
+ * */
 class DataStorePreferredColors(
     var lightColorNameOrdinal: Int = ColorDescription.White.name.ordinal,
     var lightColorAlpha: String = ColorDescription.White.alpha,
@@ -17,17 +20,35 @@ class DataStorePreferredColors(
     var darkOnColorNameOrdinal: Int = ColorDescription.White.name.ordinal,
     var darkOnColorAlpha: String = ColorDescription.White.alpha,
     var darkOnColorValue: Long = ColorDescription.White.value,
-) : PreferredColors {
+) {
 
-    override val lightBackground: Coloring
+    constructor(preferredColors: PreferredColors) : this(
+        lightColorNameOrdinal = preferredColors.lightBackground.color.name.ordinal,
+        lightColorAlpha = preferredColors.lightBackground.color.alpha,
+        lightColorValue = preferredColors.lightBackground.color.value,
+        lightOnColorNameOrdinal = preferredColors.lightBackground.onColor.name.ordinal,
+        lightOnColorAlpha = preferredColors.lightBackground.onColor.alpha,
+        lightOnColorValue = preferredColors.lightBackground.onColor.value,
+        darkColorNameOrdinal = preferredColors.darkBackground.color.name.ordinal,
+        darkColorAlpha = preferredColors.darkBackground.color.alpha,
+        darkColorValue = preferredColors.darkBackground.color.value,
+        darkOnColorNameOrdinal = preferredColors.darkBackground.onColor.name.ordinal,
+        darkOnColorAlpha = preferredColors.darkBackground.onColor.alpha,
+        darkOnColorValue = preferredColors.darkBackground.onColor.value
+    )
+
+    val lightBackground: Coloring
         get() = Coloring.Default(
             ColorDescription.Default(lightColorNameOrdinal, lightColorAlpha, lightColorValue),
             ColorDescription.Default(lightOnColorNameOrdinal, lightOnColorAlpha, lightOnColorValue)
         )
 
-    override val darkBackground: Coloring
+    val darkBackground: Coloring
         get() = Coloring.Default(
             ColorDescription.Default(darkColorNameOrdinal, darkColorAlpha, darkColorValue),
             ColorDescription.Default(darkOnColorNameOrdinal, darkOnColorAlpha, darkOnColorValue)
         )
+
+    fun asPreferredColors(): PreferredColors =
+        PreferredColors.Default(lightBackground, darkBackground)
 }
