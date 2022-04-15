@@ -8,6 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import dagger.hilt.android.AndroidEntryPoint
 import viacheslav.chugunov.appalet.ui.screen.main.MainScreen
+import java.lang.RuntimeException
 
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
