@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832615651353",
+    "project_id": "appalet",
+    "storage_bucket": "appalet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832615651353:android:01b2303d6a74b045ddb288",
+        "android_client_info": {
+          "package_name": "viacheslav.chugunov.appalet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832615651353-3gfcklksj13m74f4mn1k7kusuicd23pn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqCpAEVz5HI231X7E4-u9kmc5vyOKeIt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832615651353-3gfcklksj13m74f4mn1k7kusuicd23pn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
