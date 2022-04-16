@@ -32,8 +32,8 @@ class InputPreviewViewModel(
             while (model.input1.isNotBlank() || model.input2.isNotBlank()) {
                 var newInput1 = model.input1
                 var newInput2 = model.input2
-                if (model.input1.isNotBlank()) newInput1 = model.input1.substring(0, model.input1.length - 1)
-                if (model.input2.isNotBlank()) newInput2 = model.input2.substring(0, model.input2.length - 1)
+                if (model.input1.isNotBlank()) newInput1 = newInput1.substring(0, model.input1.length - 1)
+                if (model.input2.isNotBlank()) newInput2 = newInput2.substring(0, model.input2.length - 1)
                 updateModel(input1 = newInput1, input2 = newInput2)
                 delay(delay)
             }
