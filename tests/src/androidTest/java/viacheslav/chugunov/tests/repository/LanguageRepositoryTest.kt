@@ -10,7 +10,7 @@ import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.repository.LanguageRepository
 import viacheslav.chugunov.storage.reposiotry.DefaultLanguageRepository
 import viacheslav.chugunov.tests.util.AndroidTest
-import viacheslav.chugunov.tests.util.TestLanguagePreferenceDataSource
+import viacheslav.chugunov.tests.util.datasource.TestLanguagePreferenceDataSource
 
 @RunWith(AndroidJUnit4::class)
 class LanguageRepositoryTest : AndroidTest() {

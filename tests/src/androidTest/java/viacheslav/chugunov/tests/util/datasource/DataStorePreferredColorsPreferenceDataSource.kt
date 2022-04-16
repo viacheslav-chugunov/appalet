@@ -1,4 +1,4 @@
-package viacheslav.chugunov.tests.util
+package viacheslav.chugunov.tests.util.datasource
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

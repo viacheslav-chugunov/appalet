@@ -1,6 +1,5 @@
 package viacheslav.chugunov.tests.repository
 
-import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -12,7 +11,7 @@ import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.repository.PreferredColorsRepository
 import viacheslav.chugunov.storage.datastore.model.DataStorePreferredColors
 import viacheslav.chugunov.storage.reposiotry.DefaultPreferredColorsRepository
-import viacheslav.chugunov.tests.util.DataStorePreferredColorsPreferenceDataSource
+import viacheslav.chugunov.tests.util.datasource.DataStorePreferredColorsPreferenceDataSource
 
 @RunWith(AndroidJUnit4::class)
 class PreferredColorsRepositoryTest {
