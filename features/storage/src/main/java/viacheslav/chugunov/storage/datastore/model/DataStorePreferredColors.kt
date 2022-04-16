@@ -51,4 +51,28 @@ class DataStorePreferredColors(
 
     fun asPreferredColors(): PreferredColors =
         PreferredColors.Default(lightBackground, darkBackground)
+
+    fun copy(
+        lightBackground: Coloring = this.lightBackground,
+        darkBackground: Coloring = this.darkBackground
+    ): DataStorePreferredColors = DataStorePreferredColors(
+        lightColorNameOrdinal = lightBackground.color.name.ordinal,
+        lightColorAlpha = lightBackground.color.alpha,
+        lightColorValue = lightBackground.color.value,
+        lightOnColorNameOrdinal = lightBackground.onColor.name.ordinal,
+        lightOnColorAlpha = lightBackground.onColor.alpha,
+        lightOnColorValue = lightBackground.onColor.value,
+        darkColorNameOrdinal = darkBackground.color.name.ordinal,
+        darkColorAlpha = darkBackground.color.alpha,
+        darkColorValue = darkBackground.color.value,
+        darkOnColorNameOrdinal = darkBackground.onColor.name.ordinal,
+        darkOnColorAlpha = darkBackground.onColor.alpha,
+        darkOnColorValue = darkBackground.onColor.value
+    )
+
+    override fun toString(): String = asPreferredColors().toString()
+
+    override fun equals(other: Any?): Boolean = asPreferredColors() == other
+
+    override fun hashCode(): Int = asPreferredColors().hashCode()
 }

@@ -14,11 +14,11 @@ import viacheslav.chugunov.tests.util.TestLanguagePreferenceDataSource
 
 @RunWith(AndroidJUnit4::class)
 class LanguageRepositoryTest : AndroidTest() {
+    private val defaultLanguage: Language = Language.English
 
     @Test
     fun getDefaultLanguage() = runBlocking {
         val currentLanguage: Language? = null
-        val defaultLanguage = Language.English
         val repository = newRepository(currentLanguage, defaultLanguage)
         val language = repository.getLanguage()
         Assert.assertEquals(defaultLanguage, language)
@@ -27,7 +27,6 @@ class LanguageRepositoryTest : AndroidTest() {
     @Test
     fun getCurrentLanguage() = runBlocking {
         val currentLanguage = Language.Russian
-        val defaultLanguage = Language.English
         val repository = newRepository( currentLanguage, defaultLanguage)
         val language = repository.getLanguage()
         Assert.assertEquals(currentLanguage, language)
@@ -36,19 +35,18 @@ class LanguageRepositoryTest : AndroidTest() {
     @Test
     fun updateLanguage() = runBlocking {
         val currentLanguage = Language.Russian
-        val defaultLanguage = Language.English
-        val dataSource = TestLanguagePreferenceDataSource(currentLanguage)
-        val repository = newRepository(dataSource, defaultLanguage)
+        val preferences = TestLanguagePreferenceDataSource(currentLanguage)
+        val repository = newRepository(preferences, defaultLanguage)
         val newLanguage = Language.Ukrainian
         repository.setLanguage(newLanguage)
-        val language = dataSource.language
+        val language = preferences.language
         Assert.assertEquals(newLanguage, language)
     }
 
     private fun newRepository(
         currentLanguage: Language?,
         defaultLanguage: Language
-    ): LanguageRepository = DefaultLanguageRepository(
+    ): LanguageRepository = newRepository(
         preferences = TestLanguagePreferenceDataSource(currentLanguage),
         defaultLanguage = defaultLanguage
     )
