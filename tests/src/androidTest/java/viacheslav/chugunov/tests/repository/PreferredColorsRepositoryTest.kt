@@ -5,16 +5,14 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import viacheslav.chugunov.core.datasource.PreferenceDataSource
 import viacheslav.chugunov.core.model.Coloring
 import viacheslav.chugunov.core.model.PreferredColors
-import viacheslav.chugunov.core.repository.PreferredColorsRepository
 import viacheslav.chugunov.storage.datastore.model.DataStorePreferredColors
-import viacheslav.chugunov.storage.reposiotry.DefaultPreferredColorsRepository
-import viacheslav.chugunov.tests.util.datasource.DataStorePreferredColorsPreferenceDataSource
+import viacheslav.chugunov.tests.util.AndroidTest
+import viacheslav.chugunov.tests.util.datasource.TestDataStorePreferredColorsPreferenceDataSource
 
 @RunWith(AndroidJUnit4::class)
-class PreferredColorsRepositoryTest {
+class PreferredColorsRepositoryTest : AndroidTest() {
     private val defaultColors: DataStorePreferredColors =
         DataStorePreferredColors(PreferredColors.Default(Coloring.White, Coloring.Gray900))
     private val defaultInverseColors: DataStorePreferredColors =
@@ -23,7 +21,7 @@ class PreferredColorsRepositoryTest {
     @Test
     fun getDefaultColors() = runBlocking {
         val currentColors = null
-        val repository = newRepository(currentColors, defaultColors)
+        val repository = repositoryFactory.newPreferredColors(currentColors, defaultColors)
         val colors = repository.getColors()
         Assert.assertTrue(defaultColors.equals(colors))
     }
@@ -31,7 +29,7 @@ class PreferredColorsRepositoryTest {
     @Test
     fun getCurrentColors() = runBlocking {
         val currentColors = defaultInverseColors
-        val repository = newRepository(currentColors, defaultColors)
+        val repository = repositoryFactory.newPreferredColors(currentColors, defaultColors)
         val colors = repository.getColors()
         Assert.assertTrue(currentColors.equals(colors))
     }
@@ -40,8 +38,8 @@ class PreferredColorsRepositoryTest {
     fun updateLightBackground() = runBlocking {
         val currentColoring = Coloring.White
         val currentColors = defaultInverseColors.copy(lightBackground = currentColoring)
-        val preferences = DataStorePreferredColorsPreferenceDataSource(currentColors)
-        val repository = newRepository(preferences, defaultColors)
+        val preferences = TestDataStorePreferredColorsPreferenceDataSource(currentColors)
+        val repository = repositoryFactory.newPreferredColors(preferences, defaultColors)
         val newColoring = Coloring.Gray900
         repository.setLightBackground(newColoring)
         val lightColoring = preferences.colors!!.lightBackground
@@ -52,8 +50,8 @@ class PreferredColorsRepositoryTest {
     fun updateDarkBackground() = runBlocking {
         val currentColoring = Coloring.Gray900
         val currentColors = defaultInverseColors.copy(darkBackground = currentColoring)
-        val preferences = DataStorePreferredColorsPreferenceDataSource(currentColors)
-        val repository = newRepository(preferences, defaultColors)
+        val preferences = TestDataStorePreferredColorsPreferenceDataSource(currentColors)
+        val repository = repositoryFactory.newPreferredColors(preferences, defaultColors)
         val newColoring = Coloring.White
         repository.setDarkBackground(newColoring)
         val darkColoring = preferences.colors!!.darkBackground
@@ -65,8 +63,8 @@ class PreferredColorsRepositoryTest {
         val defaultColoring = defaultColors.lightBackground
         val currentColoring = Coloring.Gray900
         val currentColors = defaultInverseColors.copy(lightBackground = currentColoring)
-        val preferences = DataStorePreferredColorsPreferenceDataSource(currentColors)
-        val repository = newRepository(preferences, defaultColors)
+        val preferences = TestDataStorePreferredColorsPreferenceDataSource(currentColors)
+        val repository = repositoryFactory.newPreferredColors(preferences, defaultColors)
         repository.resetLightBackground()
         val lightColoring = preferences.colors!!.lightBackground
         Assert.assertTrue(defaultColoring == lightColoring)
@@ -77,26 +75,10 @@ class PreferredColorsRepositoryTest {
         val defaultColoring = defaultColors.darkBackground
         val currentColoring = Coloring.White
         val currentColors = defaultInverseColors.copy(darkBackground = currentColoring)
-        val preferences = DataStorePreferredColorsPreferenceDataSource(currentColors)
-        val repository = newRepository(preferences, defaultColors)
+        val preferences = TestDataStorePreferredColorsPreferenceDataSource(currentColors)
+        val repository = repositoryFactory.newPreferredColors(preferences, defaultColors)
         repository.resetDarkBackground()
         val darkColoring = preferences.colors!!.darkBackground
         Assert.assertTrue(defaultColoring == darkColoring)
     }
-
-    private fun newRepository(
-        currentColors: DataStorePreferredColors?,
-        defaultColors: DataStorePreferredColors
-    ): PreferredColorsRepository = newRepository(
-        preference = DataStorePreferredColorsPreferenceDataSource(currentColors),
-        defaultColors = defaultColors
-    )
-
-    private fun newRepository(
-        preference: PreferenceDataSource<DataStorePreferredColors>,
-        defaultColors: DataStorePreferredColors
-    ): PreferredColorsRepository = DefaultPreferredColorsRepository(
-        preference = preference,
-        defaultColors = defaultColors
-    )
 }

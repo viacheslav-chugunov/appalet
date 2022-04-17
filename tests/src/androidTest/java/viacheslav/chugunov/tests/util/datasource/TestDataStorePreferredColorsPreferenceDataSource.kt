@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.flowOf
 import viacheslav.chugunov.core.datasource.PreferenceDataSource
 import viacheslav.chugunov.storage.datastore.model.DataStorePreferredColors
 
-class DataStorePreferredColorsPreferenceDataSource(
+class TestDataStorePreferredColorsPreferenceDataSource(
     var colors: DataStorePreferredColors?
 ) : PreferenceDataSource<DataStorePreferredColors> {
 

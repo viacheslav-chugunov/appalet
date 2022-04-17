@@ -6,10 +6,6 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import viacheslav.chugunov.core.model.Theme
-import viacheslav.chugunov.core.repository.PreferredThemesRepository
-import viacheslav.chugunov.storage.reposiotry.DefaultPreferredThemesRepository
-import viacheslav.chugunov.storage.room.ThemeDao
-import viacheslav.chugunov.storage.room.ThemeDatabaseDataSource
 import viacheslav.chugunov.tests.util.AndroidTest
 import viacheslav.chugunov.tests.util.TestThemeDao
 
@@ -20,7 +16,7 @@ class PreferredThemesRepositoryTest : AndroidTest() {
     @Test
     fun getThemes() = runBlocking {
         val initialThemes = listOf(defaultTheme)
-        val repository = newRepository(initialThemes)
+        val repository = repositoryFactory.newPreferredThemes(initialThemes)
         val themes = repository.getThemes()
         val initialThemesArray = initialThemes.toTypedArray()
         val themesArray = themes.toTypedArray()
@@ -31,7 +27,7 @@ class PreferredThemesRepositoryTest : AndroidTest() {
     fun addTheme() = runBlocking {
         val initialThemes = emptyList<Theme>()
         val dao = TestThemeDao(initialThemes)
-        val repository = newRepository(dao)
+        val repository = repositoryFactory.newPreferredThemes(dao)
         repository.addTheme(defaultTheme)
         val theme = dao.themes.first()
         Assert.assertEquals(defaultTheme, theme)
@@ -41,7 +37,7 @@ class PreferredThemesRepositoryTest : AndroidTest() {
     fun removeTheme() = runBlocking {
         val initialThemes = listOf(defaultTheme)
         val dao = TestThemeDao(initialThemes)
-        val repository = newRepository(dao)
+        val repository = repositoryFactory.newPreferredThemes(dao)
         repository.removeTheme(defaultTheme)
         val themes = dao.themes
         Assert.assertTrue(themes.isEmpty())
@@ -50,14 +46,8 @@ class PreferredThemesRepositoryTest : AndroidTest() {
     @Test
     fun containsTheme() = runBlocking {
         val initialThemes = listOf(defaultTheme)
-        val repository = newRepository(initialThemes)
+        val repository = repositoryFactory.newPreferredThemes(initialThemes)
         val contains = repository.isThemeAdded(defaultTheme)
         Assert.assertTrue(contains)
     }
-
-    private fun newRepository(themes: List<Theme>): PreferredThemesRepository =
-        newRepository(TestThemeDao(themes))
-
-    private fun newRepository(dao: ThemeDao): PreferredThemesRepository =
-        DefaultPreferredThemesRepository(ThemeDatabaseDataSource(dao))
 }
