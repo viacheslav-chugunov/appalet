@@ -17,10 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import viacheslav.chugunov.core.model.ColorDescription
 import viacheslav.chugunov.core.model.Theme
 import viacheslav.chugunov.appalet.extension.*
-import viacheslav.chugunov.appalet.ui.animation.slideInBottom
-import viacheslav.chugunov.appalet.ui.animation.slideInRight
-import viacheslav.chugunov.appalet.ui.animation.slideOutLeft
-import viacheslav.chugunov.appalet.ui.animation.slideOutTop
+import viacheslav.chugunov.appalet.ui.animation.*
 import viacheslav.chugunov.appalet.ui.theme.LocalTheme
 import viacheslav.chugunov.appalet.ui.view.TextView
 
@@ -106,8 +103,8 @@ private fun DrawColor(
 ) {
     AnimatedVisibility(
         visible = visible,
-        enter = slideInBottom(),
-        exit = slideOutTop()
+        enter = slideInBottomFast(),
+        exit = slideOutTopFast()
     ) {
         Column(modifier = Modifier.background(background)) {
             TextView(

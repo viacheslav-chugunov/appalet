@@ -26,7 +26,7 @@ class ColorsViewModel(
         modelMutableFlow.value = model
     }
 
-    fun showInitialAnimation(delay: Long = 500L) {
+    fun showInitialAnimation(delay: Long = 200L) {
         viewModelScope.launch(coroutineContext) {
             for (i in 1..7) {
                 delay(delay)

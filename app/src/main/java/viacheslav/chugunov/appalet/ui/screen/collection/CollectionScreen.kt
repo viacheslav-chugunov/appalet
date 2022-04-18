@@ -1,11 +1,13 @@
 package viacheslav.chugunov.appalet.ui.screen.collection
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +22,10 @@ import kotlinx.coroutines.launch
 import viacheslav.chugunov.appalet.extension.*
 import viacheslav.chugunov.appalet.ui.view.ClickableIconView
 import viacheslav.chugunov.appalet.R
+import viacheslav.chugunov.appalet.ui.animation.slideInBottom
+import viacheslav.chugunov.appalet.ui.animation.slideInBottomFast
+import viacheslav.chugunov.appalet.ui.animation.slideOutTop
+import viacheslav.chugunov.appalet.ui.animation.slideOutTopFast
 import viacheslav.chugunov.appalet.ui.theme.LocalTheme
 import viacheslav.chugunov.core.model.Theme
 
@@ -51,17 +57,27 @@ private fun DrawScreen(
     onRemoveThemeIntent: (Theme) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(model.themes) { theme ->
-            Row(modifier = Modifier.clickable { onApplyThemeIntent(theme) }) {
-                DrawColor(theme.primaryLight)
-                DrawColor(theme.primaryRegular)
-                DrawColor(theme.primaryDark)
-                DrawColor(theme.secondaryLight)
-                DrawColor(theme.secondaryRegular)
-                DrawColor(theme.secondaryDark)
-                DrawColor(theme.background, theme.onBackground) { onRemoveThemeIntent(theme) }
+        itemsIndexed(model.themes) { index, theme ->
+            AnimatedVisibility(
+                visible = model.visibleItemsCount >= index + 1,
+                enter = slideInBottomFast(),
+                exit = slideOutTopFast()
+            ) {
+                Column {
+                    Row(modifier = Modifier.clickable { onApplyThemeIntent(theme) }) {
+                        DrawColor(theme.primaryLight)
+                        DrawColor(theme.primaryRegular)
+                        DrawColor(theme.primaryDark)
+                        DrawColor(theme.secondaryLight)
+                        DrawColor(theme.secondaryRegular)
+                        DrawColor(theme.secondaryDark)
+                        DrawColor(theme.background, theme.onBackground) { onRemoveThemeIntent(theme) }
+                    }
+                    if (index + 1 < model.themes.size) {
+                        Spacer(modifier = Modifier.height(1.dp))
+                    }
+                }
             }
-            Spacer(modifier = Modifier.height(0.5.dp))
         }
     }
 }

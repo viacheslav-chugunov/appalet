@@ -50,3 +50,25 @@ fun slideOutBottom(): ExitTransition =
     ) { it } + fadeOut(
         spring(stiffness = Spring.StiffnessVeryLow)
     )
+
+@Stable
+fun slideInBottomFast(): EnterTransition =
+    slideInVertically(
+        spring(
+            stiffness = Spring.StiffnessMedium,
+            visibilityThreshold = IntOffset.VisibilityThreshold
+        )
+    ) { -it } + fadeIn(
+        spring(stiffness = Spring.StiffnessLow)
+    )
+
+@Stable
+fun slideOutTopFast(): ExitTransition =
+    slideOutVertically(
+        spring(
+            stiffness = Spring.StiffnessMedium,
+            visibilityThreshold = IntOffset.VisibilityThreshold
+        )
+    ) { -it } + fadeOut(
+        spring(stiffness = Spring.StiffnessLow)
+    )

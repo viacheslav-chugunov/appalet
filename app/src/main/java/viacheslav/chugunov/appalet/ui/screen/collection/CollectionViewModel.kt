@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import viacheslav.chugunov.core.model.Theme
 import viacheslav.chugunov.core.usecase.GetCollectedThemesUseCase
@@ -30,8 +31,11 @@ class CollectionViewModel(
         subscribeOnObservable()
     }
 
-    fun updateModel(themes: List<Theme> = model.themes) {
-        model = CollectionModel(themes)
+    fun updateModel(
+        themes: List<Theme> = model.themes,
+        visibleItemsCount: Int = model.visibleItemsCount
+    ) {
+        model = CollectionModel(themes, visibleItemsCount)
         modelMutableFlow.value = model
     }
 
@@ -39,9 +43,20 @@ class CollectionViewModel(
         viewModelScope.launch(coroutineContext) {
             getCollectedThemesUseCase.invoke().collect { themes ->
                 updateModel(themes = themes)
+                if (themes.isNotEmpty() && model.visibleItemsCount == 0)
+                    showInitialAnimation()
             }
         }
 
     suspend fun removeTheme(theme: Theme) =
         removeCollectedThemeUseCase.invoke(theme)
+
+    fun showInitialAnimation(delay: Long = 200L): Job =
+        viewModelScope.launch(coroutineContext) {
+            for (i in 1..model.themes.size) {
+                delay(delay)
+                updateModel(visibleItemsCount = i)
+            }
+        }
+
 }
