@@ -82,7 +82,7 @@ fun MainScreen() {
         onCollectionPerform = { navController.navigate(Screen.Collection) },
         onCurrentScreenChanged = { viewModel.updateModel(currentScreen = it) },
         onFavouritesChanged = viewModel::updateFavourites,
-        addThemeToFavourites = viewModel::addThemeToCollection
+        addThemeToFavourites = viewModel::changeFavourites
     )
 }
 
@@ -120,8 +120,7 @@ private fun DrawScreen(
                 visible = model.currentScreen.hasTitle,
                 title = model.currentScreen.getTitle(LocalContext.current),
                 actionIconId = if (model.inFavourites) R.drawable.ic_favourite else R.drawable.ic_not_favourite,
-                onActionPerform = addThemeToFavourites,
-                actionClickable = !model.inFavourites
+                onActionPerform = addThemeToFavourites
             )
         },
         bottomBar = {

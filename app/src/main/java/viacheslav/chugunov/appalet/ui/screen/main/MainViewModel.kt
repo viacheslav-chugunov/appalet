@@ -7,10 +7,7 @@ import kotlinx.coroutines.launch
 import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.model.Theme
-import viacheslav.chugunov.core.usecase.AddThemeToCollectionUseCase
-import viacheslav.chugunov.core.usecase.GetRandomThemeUseCase
-import viacheslav.chugunov.core.usecase.GetSettingsUseCase
-import viacheslav.chugunov.core.usecase.IsThemeInCollectionUseCase
+import viacheslav.chugunov.core.usecase.*
 import viacheslav.chugunov.core.util.BaseViewModel
 import viacheslav.chugunov.core.util.Screen
 import javax.inject.Inject
@@ -22,6 +19,7 @@ class MainViewModel(
     private val getSettingsUseCase: GetSettingsUseCase,
     private val isThemeInCollectionUseCase: IsThemeInCollectionUseCase,
     private val addThemeToCollectionUseCase: AddThemeToCollectionUseCase,
+    private val removeCollectedThemeUseCase: RemoveCollectedThemeUseCase,
     model: MainModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<MainModel>(model, coroutineContext) {
@@ -32,12 +30,14 @@ class MainViewModel(
         getSettingsUseCase: GetSettingsUseCase,
         isThemeInCollectionUseCase: IsThemeInCollectionUseCase,
         addThemeToCollectionUseCase: AddThemeToCollectionUseCase,
+        removeCollectedThemeUseCase: RemoveCollectedThemeUseCase,
         coroutineContext: CoroutineContext
     ) : this(
         getRandomThemeUseCase,
         getSettingsUseCase,
         isThemeInCollectionUseCase,
         addThemeToCollectionUseCase,
+        removeCollectedThemeUseCase,
         MainModel(),
         coroutineContext
     )
@@ -128,10 +128,15 @@ class MainViewModel(
             updateModel(inFavourites = inFavourites)
         }
 
-    fun addThemeToCollection(): Job =
+    fun changeFavourites(): Job =
         viewModelScope.launch(coroutineContext) {
             val theme = model.theme
-            addThemeToCollectionUseCase.invoke(theme)
+            val nowInFavourites = model.inFavourites
+            if (nowInFavourites) {
+                removeCollectedThemeUseCase.invoke(theme)
+            } else {
+                addThemeToCollectionUseCase.invoke(theme)
+            }
             val inFavourites = isThemeInCollectionUseCase.invoke(theme)
             updateModel(inFavourites = inFavourites)
         }
