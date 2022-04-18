@@ -2,7 +2,10 @@ package viacheslav.chugunov.appalet.ui.screen.settings
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -27,9 +30,11 @@ import viacheslav.chugunov.core.model.PreferredColors
 fun SettingsScreen() {
     val viewModel: SettingsViewModel = hiltViewModel()
     val model = viewModel.modelFlow.collectAsState().value
+    val scrollState = rememberScrollState()
 
     DrawScreen(
         model = model,
+        scrollState = scrollState,
         onLanguageChangeIntent = viewModel::changeLanguage,
         onLightBackgroundColorChangeIntent = viewModel::changeLightBackgroundColor,
         onLightBackgroundColorResetIntent = viewModel::resetLightBackgroundColor,
@@ -41,6 +46,7 @@ fun SettingsScreen() {
 @Composable
 private fun DrawScreen(
     model: SettingsModel,
+    scrollState: ScrollState,
     onLanguageChangeIntent: (Language) -> Unit,
     onLightBackgroundColorChangeIntent: () -> Unit,
     onDarkBackgroundColorChangeIntent: () -> Unit,
@@ -49,7 +55,11 @@ private fun DrawScreen(
 ) {
     LocalContext.current.setLanguage(model.language)
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
         DrawTitle(
             titleId = R.string.language,
             language = model.language
