@@ -3,6 +3,7 @@ package viacheslav.chugunov.appalet.ui.screen.main
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.PreferredColors
@@ -55,7 +56,8 @@ class MainViewModel(
         currentScreen: Screen = model.currentScreen,
         closeAppOnBackPress: Boolean = model.closeAppOnBackPress,
         inFavourites: Boolean = model.inFavourites,
-        loading: Boolean = model.loading
+        loading: Boolean = model.loading,
+        favouritesVisible: Boolean = model.favouritesVisible
     ) {
         model = MainModel(
             theme,
@@ -66,7 +68,8 @@ class MainViewModel(
             currentScreen,
             closeAppOnBackPress,
             inFavourites,
-            loading
+            loading,
+            favouritesVisible
         )
         modelMutableFlow.value = model
     }
@@ -121,11 +124,16 @@ class MainViewModel(
             )
         }
 
-    fun updateFavourites(): Job =
+    fun onThemeRemoved(theme: Theme): Job =
         viewModelScope.launch(coroutineContext) {
-            val theme = model.theme
-            val inFavourites = isThemeInCollectionUseCase.invoke(theme)
+            val currentTheme = model.theme
+            if (currentTheme == theme) {
+                updateModel(favouritesVisible = false)
+                delay(200)
+            }
+            val inFavourites = isThemeInCollectionUseCase.invoke(currentTheme)
             updateModel(inFavourites = inFavourites)
+            updateModel(favouritesVisible = true)
         }
 
     fun changeFavourites(): Job =
@@ -137,8 +145,11 @@ class MainViewModel(
             } else {
                 addThemeToCollectionUseCase.invoke(theme)
             }
+            updateModel(favouritesVisible = false)
+            delay(200)
             val inFavourites = isThemeInCollectionUseCase.invoke(theme)
             updateModel(inFavourites = inFavourites)
+            updateModel(favouritesVisible = true)
         }
 
     fun updatePreviewToPrevious() {

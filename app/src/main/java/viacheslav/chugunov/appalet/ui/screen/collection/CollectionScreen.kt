@@ -32,7 +32,7 @@ import viacheslav.chugunov.core.model.Theme
 @Composable
 fun CollectionScreen(
     onThemeApplied: (Theme) -> Unit,
-    onThemeRemoved: () -> Unit
+    onThemeRemoved: (Theme) -> Unit
 ) {
     val viewModel: CollectionViewModel = hiltViewModel()
     val model = viewModel.modelFlow.collectAsState().value
@@ -43,8 +43,8 @@ fun CollectionScreen(
         onApplyThemeIntent = onThemeApplied,
         onRemoveThemeIntent = {
             coroutineScope.launch {
-                viewModel.removeTheme(it)
-                onThemeRemoved()
+                val theme = viewModel.removeTheme(it)
+                onThemeRemoved(theme)
             }
         }
     )

@@ -48,15 +48,18 @@ class CollectionViewModel(
             }
         }
 
-    suspend fun removeTheme(theme: Theme) =
+    suspend fun removeTheme(theme: Theme): Theme =
         removeCollectedThemeUseCase.invoke(theme)
 
     fun showInitialAnimation(delay: Long = 200L): Job =
         viewModelScope.launch(coroutineContext) {
             for (i in 1..model.themes.size) {
                 delay(delay)
-                updateModel(visibleItemsCount = i)
+                if (i < model.themes.size) {
+                    updateModel(visibleItemsCount = i)
+                }
             }
+            updateModel(visibleItemsCount = Int.MAX_VALUE)
         }
 
 }

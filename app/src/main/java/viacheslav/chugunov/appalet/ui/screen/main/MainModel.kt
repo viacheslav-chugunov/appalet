@@ -1,5 +1,6 @@
 package viacheslav.chugunov.appalet.ui.screen.main
 
+import viacheslav.chugunov.appalet.R
 import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.model.Theme
@@ -14,5 +15,6 @@ data class MainModel(
     val currentScreen: Screen = Screen.Input,
     val closeAppOnBackPress: Boolean = false,
     val inFavourites: Boolean = false,
-    val loading: Boolean = true
+    val loading: Boolean = true,
+    val favouritesVisible: Boolean = true,
 )

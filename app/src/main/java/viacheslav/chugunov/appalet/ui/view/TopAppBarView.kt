@@ -30,6 +30,7 @@ fun TopAppBarView(
     actionIconId: Int? = null,
     onActionPerform: () -> Unit = {},
     actionClickable: Boolean = true,
+    actionVisible: Boolean = true,
     backgroundColor: Color = LocalTheme.current.primaryRegular,
     contentColor: Color = LocalTheme.current.primaryOnRegular,
 ) {
@@ -50,11 +51,17 @@ fun TopAppBarView(
                 align = TextAlign.Center
             )
             actionIconId?.let {
-                ClickableIconView(
-                    iconId = actionIconId,
-                    onPerform = onActionPerform,
-                    clickable = actionClickable
-                )
+                AnimatedVisibility(
+                    visible = actionVisible,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    ClickableIconView(
+                        iconId = actionIconId,
+                        onPerform = onActionPerform,
+                        clickable = actionClickable
+                    )
+                }
             }
         }
     }
