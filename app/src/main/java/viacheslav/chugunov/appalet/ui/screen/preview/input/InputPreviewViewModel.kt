@@ -10,12 +10,10 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
-class InputPreviewViewModel(
+class InputPreviewViewModel @Inject constructor(
     model: InputPreviewModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<InputPreviewModel>(model, coroutineContext) {
-
-    @Inject constructor(coroutineContext: CoroutineContext): this(InputPreviewModel(), coroutineContext)
 
     fun updateModel(
         input1: String = model.input1,

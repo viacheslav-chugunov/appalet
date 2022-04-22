@@ -8,7 +8,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.IntOffset
 
 @Stable
-fun slideInLeft(): EnterTransition =
+fun slideToRight(): EnterTransition =
     slideInHorizontally(
         spring(stiffness = Spring.StiffnessLow, visibilityThreshold = IntOffset.VisibilityThreshold)
     ) { it } + fadeIn(
@@ -16,7 +16,7 @@ fun slideInLeft(): EnterTransition =
     )
 
 @Stable
-fun slideInRight(): EnterTransition =
+fun slideToLeft(): EnterTransition =
     slideInHorizontally(
         spring(stiffness = Spring.StiffnessLow, visibilityThreshold = IntOffset.VisibilityThreshold)
     ) { -it } + fadeIn(
@@ -24,7 +24,7 @@ fun slideInRight(): EnterTransition =
     )
 
 @Stable
-fun slideOutLeft(): ExitTransition =
+fun slideFromRight(): ExitTransition =
     slideOutHorizontally(
         spring(stiffness = Spring.StiffnessLow, visibilityThreshold = IntOffset.VisibilityThreshold)
     ) { it } + fadeOut(
@@ -32,7 +32,7 @@ fun slideOutLeft(): ExitTransition =
     )
 
 @Stable
-fun slideOutRight(): ExitTransition =
+fun slideFromLeft(): ExitTransition =
     slideOutHorizontally(
         spring(stiffness = Spring.StiffnessLow, visibilityThreshold = IntOffset.VisibilityThreshold)
     ) { -it } + fadeOut(

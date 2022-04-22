@@ -7,12 +7,10 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
-class DialogPreviewViewModel(
+class DialogPreviewViewModel @Inject constructor(
     model: DialogPreviewModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<DialogPreviewModel>(model, coroutineContext) {
-
-    @Inject constructor(coroutineContext: CoroutineContext): this(DialogPreviewModel(), coroutineContext)
 
     fun updateModel(
         showDialog: Boolean = model.showDialog

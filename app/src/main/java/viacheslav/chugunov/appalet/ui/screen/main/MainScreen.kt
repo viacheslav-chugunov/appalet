@@ -282,8 +282,8 @@ private fun DrawScreen(
                 enterTransition = {
                     when (val route = initialState.destination.route) {
                         Screen.Route.INPUT -> fadeIn()
-                        Screen.Route.DIALOG -> slideInLeft()
-                        Screen.Route.LIST -> slideInRight()
+                        Screen.Route.DIALOG -> slideToRight()
+                        Screen.Route.LIST -> slideToLeft()
                         Screen.Route.SETTINGS,
                         Screen.Route.COLORS,
                         Screen.Route.COLLECTION -> slideInBottom()
@@ -293,8 +293,8 @@ private fun DrawScreen(
                 exitTransition = {
                     when (val route = targetState.destination.route) {
                         Screen.Route.INPUT -> fadeOut()
-                        Screen.Route.DIALOG -> slideOutLeft()
-                        Screen.Route.LIST -> slideOutRight()
+                        Screen.Route.DIALOG -> slideFromRight()
+                        Screen.Route.LIST -> slideFromLeft()
                         Screen.Route.SETTINGS,
                         Screen.Route.COLORS,
                         Screen.Route.COLLECTION -> slideOutTop()
@@ -310,8 +310,8 @@ private fun DrawScreen(
                 enterTransition = {
                     when (val route = initialState.destination.route) {
                         Screen.Route.LIST -> fadeIn()
-                        Screen.Route.INPUT -> slideInLeft()
-                        Screen.Route.DIALOG -> slideInRight()
+                        Screen.Route.INPUT -> slideToRight()
+                        Screen.Route.DIALOG -> slideToLeft()
                         Screen.Route.SETTINGS,
                         Screen.Route.COLORS,
                         Screen.Route.COLLECTION -> slideInBottom()
@@ -321,8 +321,8 @@ private fun DrawScreen(
                 exitTransition = {
                     when (val route = targetState.destination.route) {
                         Screen.Route.LIST -> fadeOut()
-                        Screen.Route.INPUT -> slideOutLeft()
-                        Screen.Route.DIALOG -> slideOutRight()
+                        Screen.Route.INPUT -> slideFromRight()
+                        Screen.Route.DIALOG -> slideFromLeft()
                         Screen.Route.SETTINGS,
                         Screen.Route.COLORS,
                         Screen.Route.COLLECTION -> slideOutTop()
@@ -338,8 +338,8 @@ private fun DrawScreen(
                 enterTransition = {
                     when (val route = initialState.destination.route) {
                         Screen.Route.DIALOG -> fadeIn()
-                        Screen.Route.LIST -> slideInLeft()
-                        Screen.Route.INPUT -> slideInRight()
+                        Screen.Route.LIST -> slideToRight()
+                        Screen.Route.INPUT -> slideToLeft()
                         Screen.Route.SETTINGS,
                         Screen.Route.COLORS,
                         Screen.Route.COLLECTION -> slideInBottom()
@@ -349,8 +349,8 @@ private fun DrawScreen(
                 exitTransition = {
                     when (val route = targetState.destination.route) {
                         Screen.Route.DIALOG -> fadeOut()
-                        Screen.Route.LIST -> slideOutLeft()
-                        Screen.Route.INPUT -> slideOutRight()
+                        Screen.Route.LIST -> slideFromRight()
+                        Screen.Route.INPUT -> slideFromLeft()
                         Screen.Route.SETTINGS,
                         Screen.Route.COLORS,
                         Screen.Route.COLLECTION -> slideOutTop()

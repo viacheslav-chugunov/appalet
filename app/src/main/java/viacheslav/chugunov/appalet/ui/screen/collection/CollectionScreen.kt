@@ -71,8 +71,8 @@ private fun DrawScreen(
         Box(
             modifier = Modifier
                 .padding(top = padding)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
+                .fillMaxSize(),
+            contentAlignment = Alignment.TopCenter
         ) {
             TextView(
                 text = R.string.empty_collection_message.stringRes,

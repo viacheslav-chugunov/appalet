@@ -15,7 +15,7 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
-class MainViewModel(
+class MainViewModel @Inject constructor(
     private val getRandomThemeUseCase: GetRandomThemeUseCase,
     private val getSettingsUseCase: GetSettingsUseCase,
     private val isThemeInCollectionUseCase: IsThemeInCollectionUseCase,
@@ -24,24 +24,6 @@ class MainViewModel(
     model: MainModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<MainModel>(model, coroutineContext) {
-
-    @Inject
-    constructor(
-        getRandomThemeUseCase: GetRandomThemeUseCase,
-        getSettingsUseCase: GetSettingsUseCase,
-        isThemeInCollectionUseCase: IsThemeInCollectionUseCase,
-        addThemeToCollectionUseCase: AddThemeToCollectionUseCase,
-        removeCollectedThemeUseCase: RemoveCollectedThemeUseCase,
-        coroutineContext: CoroutineContext
-    ) : this(
-        getRandomThemeUseCase,
-        getSettingsUseCase,
-        isThemeInCollectionUseCase,
-        addThemeToCollectionUseCase,
-        removeCollectedThemeUseCase,
-        MainModel(),
-        coroutineContext
-    )
 
     init {
         subscribeOnObservable()

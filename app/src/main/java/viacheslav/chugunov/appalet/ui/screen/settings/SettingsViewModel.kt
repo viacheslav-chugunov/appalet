@@ -15,7 +15,7 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
-class SettingsViewModel(
+class SettingsViewModel @Inject constructor(
     private val getSettingsUseCase: GetSettingsUseCase,
     private val changeLanguageUseCase: ChangeLanguageUseCase,
     private val changeBackgroundColorAsRandomUseCase: ChangeBackgroundColorAsRandomUseCase,
@@ -23,22 +23,6 @@ class SettingsViewModel(
     model: SettingsModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<SettingsModel>(model, coroutineContext) {
-
-    @Inject
-    constructor(
-        getSettingsUseCase: GetSettingsUseCase,
-        changeLanguageUseCase: ChangeLanguageUseCase,
-        changeBackgroundColorAsRandomUseCase: ChangeBackgroundColorAsRandomUseCase,
-        resetBackgroundColorUseCase: ResetBackgroundColorUseCase,
-        coroutineContext: CoroutineContext
-    ) : this(
-        getSettingsUseCase,
-        changeLanguageUseCase,
-        changeBackgroundColorAsRandomUseCase,
-        resetBackgroundColorUseCase,
-        SettingsModel(),
-        coroutineContext
-    )
 
     fun updateModel(
         preferredColors: PreferredColors = model.preferredColors,

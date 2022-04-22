@@ -9,13 +9,10 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
-class ColorsViewModel(
+class ColorsViewModel @Inject constructor(
     model: ColorsModel,
     coroutineContext: CoroutineContext
 ) : BaseViewModel<ColorsModel>(model, coroutineContext) {
-
-    @Inject
-    constructor(coroutineContext: CoroutineContext) : this(ColorsModel(), coroutineContext)
 
     init {
         showInitialAnimation()

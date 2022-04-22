@@ -14,18 +14,12 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
-class CollectionViewModel(
+class CollectionViewModel @Inject constructor(
     private val getCollectedThemesUseCase: GetCollectedThemesUseCase,
     private val removeCollectedThemeUseCase: RemoveCollectedThemeUseCase,
     model: CollectionModel,
-    coroutineContext: CoroutineContext = Dispatchers.IO
+    coroutineContext: CoroutineContext
 ) : BaseViewModel<CollectionModel>(model, coroutineContext) {
-
-    @Inject
-    constructor(
-        getCollectedThemesUseCase: GetCollectedThemesUseCase,
-        removeCollectedThemeUseCase: RemoveCollectedThemeUseCase
-    ) : this(getCollectedThemesUseCase, removeCollectedThemeUseCase, CollectionModel())
 
     init {
         subscribeOnObservable()
