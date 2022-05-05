@@ -17,4 +17,5 @@ data class MainModel(
     val inFavourites: Boolean = false,
     val loading: Boolean = true,
     val favouritesVisible: Boolean = true,
+    val changeTypeLetterRes: Int = R.string.theme_change_type_all
 )

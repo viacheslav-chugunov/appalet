@@ -6,7 +6,6 @@ interface Theme : SelectedTheme {
     val colorBackground: ColorDescription
     val colorOnBackground: ColorDescription
 
-
     abstract class Default : Theme {
         override fun toString(): String =
             """Theme {

@@ -1,8 +1,10 @@
 package viacheslav.chugunov.appalet.ui.screen.main
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -14,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -66,6 +69,7 @@ fun MainScreen() {
         navHostController = navController,
         snackbarHostState = snackbarHostState,
         model = model,
+        onChangeTypePerform = viewModel::updateThemeTypeChange,
         onChangeThemePerform = viewModel::changeThemeAsRandom,
         onApplyThemeIntent = viewModel::changeTheme,
         onModeDayPerform = viewModel::changeDayMode,
@@ -94,6 +98,7 @@ private fun DrawScreen(
     navHostController: NavHostController,
     snackbarHostState: SnackbarHostState,
     model: MainModel,
+    onChangeTypePerform: () -> Unit,
     onChangeThemePerform: () -> Unit,
     onApplyThemeIntent: (Theme) -> Unit,
     onModeDayPerform: () -> Unit,
@@ -186,11 +191,21 @@ private fun DrawScreen(
                 enter = slideInTop(),
                 exit = slideOutBottom()
             ) {
-                FloatingActionButtonView(
-                    visible = model.currentScreen.showButtonBar,
-                    iconId = R.drawable.ic_refresh,
-                    onPerform = onChangeThemePerform
-                )
+                Row {
+                    FloatingActionButtonView(
+                        visible = model.currentScreen.showButtonBar,
+                        text = model.changeTypeLetterRes.stringRes,
+                        textSize = 24.sp,
+                        onPerform = onChangeTypePerform,
+                        modifier = Modifier.padding(end = 2.dp)
+                    )
+                    FloatingActionButtonView(
+                        visible = model.currentScreen.showButtonBar,
+                        iconId = R.drawable.ic_refresh,
+                        onPerform = onChangeThemePerform,
+                        modifier = Modifier.padding(start = 2.dp)
+                    )
+                }
             }
         },
         isFloatingActionButtonDocked = true,

@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import viacheslav.chugunov.appalet.R
 import viacheslav.chugunov.core.model.Language
 import viacheslav.chugunov.core.model.PreferredColors
 import viacheslav.chugunov.core.model.Theme
@@ -39,7 +40,8 @@ class MainViewModel @Inject constructor(
         closeAppOnBackPress: Boolean = model.closeAppOnBackPress,
         inFavourites: Boolean = model.inFavourites,
         loading: Boolean = model.loading,
-        favouritesVisible: Boolean = model.favouritesVisible
+        favouritesVisible: Boolean = model.favouritesVisible,
+        changeTypeLetterRes: Int = model.changeTypeLetterRes
     ) {
         model = MainModel(
             theme,
@@ -51,7 +53,8 @@ class MainViewModel @Inject constructor(
             closeAppOnBackPress,
             inFavourites,
             loading,
-            favouritesVisible
+            favouritesVisible,
+            changeTypeLetterRes
         )
         modelMutableFlow.value = model
     }
@@ -77,13 +80,48 @@ class MainViewModel @Inject constructor(
             }
         }
 
+    fun updateThemeTypeChange() {
+        val type = when (model.changeTypeLetterRes) {
+            R.string.theme_change_type_all -> R.string.theme_change_type_primary
+            R.string.theme_change_type_primary -> R.string.theme_change_type_secondary
+            R.string.theme_change_type_secondary -> R.string.theme_change_type_all
+            else -> throw IllegalStateException()
+        }
+        updateModel(changeTypeLetterRes = type)
+    }
+
     fun changeThemeAsRandom(): Job =
         viewModelScope.launch(coroutineContext) {
             val isLight = model.modeDay
             val preferredColors = model.preferredColors
             val theme = getRandomThemeUseCase.invoke(isLight, preferredColors)
+            val newPrimarySet = theme.colorsPrimary
+            val newSecondarySet = theme.colorsSecondary
+            val curPrimarySet = model.theme.colorsPrimary
+            val curSecondarySet = model.theme.colorsSecondary
+            val newTheme = when (model.changeTypeLetterRes) {
+                R.string.theme_change_type_all -> Theme.Adaptive(
+                    isLight,
+                    newPrimarySet,
+                    newSecondarySet,
+                    preferredColors
+                )
+                R.string.theme_change_type_primary -> Theme.Adaptive(
+                    isLight,
+                    newPrimarySet,
+                    curSecondarySet,
+                    preferredColors
+                )
+                R.string.theme_change_type_secondary -> Theme.Adaptive(
+                    isLight,
+                    curPrimarySet,
+                    newSecondarySet,
+                    preferredColors
+                )
+                else -> throw IllegalStateException()
+            }
             val inFavourites = isThemeInCollectionUseCase.invoke(theme)
-            updateModel(theme = theme, inFavourites = inFavourites)
+            updateModel(theme = newTheme, inFavourites = inFavourites)
         }
 
     fun changeTheme(theme: Theme): Job =

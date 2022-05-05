@@ -107,9 +107,7 @@ private fun DrawScreen(
                         iconId = R.drawable.ic_update,
                         visible = model.showRefresh,
                         loading = !model.uiEnabled,
-                        onPerform = {
-                            onRefreshIntent()
-                        }
+                        onPerform = onRefreshIntent
                     )
                 }
             }

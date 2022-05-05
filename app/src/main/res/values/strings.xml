@@ -10,6 +10,9 @@
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
     <string name="empty_collection_message">Your collection is empty, add colors to see them here.</string>
+    <string name="theme_change_type_all" translatable="false">All</string>
+    <string name="theme_change_type_primary" translatable="false">Pr</string>
+    <string name="theme_change_type_secondary" translatable="false">Se</string>
     <string name="multiline_text" translatable="false">
         \t\t\tLorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis metus at diam pharetra fermentum
         et et magna. Morbi id urna at ipsum sollicitudin mollis. Pellentesque vehicula erat libero, ac
